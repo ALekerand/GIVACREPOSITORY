@@ -1,0 +1,18 @@
+
+LES UE comportent les ECUEs
+
+- integrer la pris en compte des devoirs
+
+formation classique et formation LMD ----> voir Oglet filière
+
+Sessio et parcours (Gestion des sessions) 
+
+- Relier typeFormation 
+
+- en LMD les semestres sont connus voir le cas des filières classiques
+
+- prendre en compte la validations des vacations des enseignants de sans pedro
+
+- cahier d'appel electronique
+
+
