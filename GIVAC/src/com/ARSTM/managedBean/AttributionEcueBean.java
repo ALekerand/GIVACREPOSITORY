@@ -89,7 +89,7 @@ public class AttributionEcueBean {
 	private List<Section> listeSection = new ArrayList<Section>();
 	private List<Ecue> listeEcue = new ArrayList<Ecue>();
 	private List<Enseignant> listeEnseignant = new ArrayList<Enseignant>();
-	
+	private Ecue ecueSelectionne = new Ecue();
 	private List listeEnseigner = new ArrayList<>();
 
 	private int totalCreditEcue;
@@ -138,19 +138,19 @@ public void initialiser(){
 		
 	}
 	
-  public void chargerSemestreLmd(){
+  public void chargerSemestreEtSection(){
+	listSemestreLmd.clear();
 	listSemestreLmd = requeteSemestreLmd.recupSemestreByNiveau(choosedMention.getNiveauMention());
-	chargerEcueMention();
-	
+	listeSection.clear();
+	listeSection = requeteSection2.recupSectionByMention(choosedMention.getCodeMention());
 	}
   
   
  public void chargerListEcueAttibues(){
-	 listeEnseigner.clear();
+	listeEnseigner.clear();
 	listeEnseigner = requeteEnseigner.recupEnsegnerBySection1(anneEncoure.getCodeAnnees(), selectedSection.getCodeSection());
  }
 		
-	
 	
 public void chargerFiliere(){
 	listFiliere.clear();
@@ -160,15 +160,9 @@ public void chargerFiliere(){
 public void chargerMention(){
 	listMention.clear();
 	listMention = requeteMention.recupMentionByEcoleFiliere(choosedFiliere.getCodeFiliere());
-	//System.out.println("------- Taille de la liste mention"+listMention.size());
 }
 
-public void chargerSection(){
-	listeSection.clear();
-	listeSection = requeteSection2.recupSectionByMention(choosedMention.getCodeMention());
-	chargerListEcueAttibues();
 	
-		}
 
 public void chargerEnseignant(){
 	listeEnseignant.clear();
@@ -180,6 +174,7 @@ public void chargerEcueMention(){
 	listeUe.clear();
 	listeEcue.clear();
 	listeUe = requeteUes.recupUesByMentionSemestre(choosedMention.getCodeMention(),selectedSemestreLmd.getCodeSemestreLmd());
+	System.out.println("===Taille liste UE:"+listeUe.size());
 	totalCreditEcue =0;
 	for (Ues varUE : listeUe) {
 		for (Ecue varEcue : varUE.getEcues()) {
@@ -187,49 +182,35 @@ public void chargerEcueMention(){
 			totalCreditEcue += varEcue.getCreditEcue();
 		}
 	}
+	System.out.println("===Taille liste ECUE:"+listeEcue.size());
 }
 			
 	public void enregistrer(){
-		enseigner.setEcue(selectedEcue);
+		enseigner.setEcue(ecueSelectionne);
 		enseigner.setEnseignant(selectedEnseignant);
 		enseigner.setSection(selectedSection);
 		enseigner.setTauxHoraireEffectif(selectedSection.getMention().getCycle().getTauxHoraire());
-		System.out.println("================Objet:"+selectedEcue);
-		System.out.println("Cours:"+selectedEcue.getCoursEcue());
-		System.out.println("Cours:"+selectedEcue.getTpEcue());
-		enseigner.setVhEffectif((int) (selectedEcue.getCoursEcue()+ selectedEcue.getTpEcue()));
+		enseigner.setVhEffectif((int) (ecueSelectionne.getCoursEcue()+ ecueSelectionne.getTpEcue()));
 		enseigner.setAnneesScolaire(anneEncoure);
+		System.out.println(" Enregistrement");
 		service.addObject(enseigner);
-		FacesContext.getCurrentInstance().addMessage(null,
-		new FacesMessage(FacesMessage.SEVERITY_INFO, "Enregistrement effcetué!", null));
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Enregistrement effcetué!", null));
 		chargerListEcueAttibues();
-	}
-	
-	
-	public void retournerSelection(){
-		System.out.println("==========================Objet selectioné"+selectedEcue);
-		System.out.println("Cours:"+selectedEcue.getCoursEcue());
-		System.out.println("Cours:"+selectedEcue.getTpEcue());
-		System.out.println("Cours:"+selectedEcue.getTpEcue());
-		System.out.println("+++++++++++++++++++++++++++++++++++++++++++++");
-		System.out.println("Enseignant:"+selectedEnseignant);
-	}
-	
-	public void modifier(){
-		if (etatEcue.equals("true")) {
-			ecue.setEtatEcue(true);
-		}
 		
-		if (etatEcue.equals("false")) {
-			ecue.setEtatEcue(false);
-		}
-		ecue.setUes(selectedUe);
-		ecue.setAbrevEcue(getEcue().getAbrevEcue().toUpperCase());
-		getService().updateObject(ecue);
-		vider(ecue);
-		actualiserList();
-		FacesContext.getCurrentInstance().addMessage(null,
-		new FacesMessage(FacesMessage.SEVERITY_INFO, "Modification effcetuée!", null));
+		
+	}
+		
+	public void modifier(){
+		/*
+		 * if (etatEcue.equals("true")) { ecue.setEtatEcue(true); }
+		 * 
+		 * if (etatEcue.equals("false")) { ecue.setEtatEcue(false); }
+		 * ecue.setUes(selectedUe);
+		 * ecue.setAbrevEcue(getEcue().getAbrevEcue().toUpperCase());
+		 * getService().updateObject(ecue); vider(ecue); actualiserList();
+		 * FacesContext.getCurrentInstance().addMessage(null, new
+		 * FacesMessage(FacesMessage.SEVERITY_INFO, "Modification effcetuée!", null));
+		 */
 	}
 	
 	
@@ -238,25 +219,22 @@ public void chargerEcueMention(){
 		btnValider.setDisabled(false);
 		btnSuprimer.setDisabled(true);
 		btnModifier.setDisabled(true);
-		vider(ecue);
+		vider(enseigner);
 	}
 	
-	public void vider(Ecue objEcue) {
-		objEcue.setAbrevEcue(null);
-		objEcue.setLibEcue(null);
-		objEcue.setCoursEcue(null);
-		objEcue.setCreditEcue(null);
-		objEcue.setCoefEcue(null);
-		objEcue.setCttEcue(null);
-		objEcue.setTpEcue(null);
-		objEcue.setTpeEcue(null);
+	public void vider(Enseigner objEnseig) {
+		objEnseig.setSemestres(null);
+		objEnseig.setEcue(null);
+		objEnseig.setEnseignant(null);
+		objEnseig.setSection(null);
+		objEnseig.setAnneesScolaire(null);
+		objEnseig.setTauxHoraireEffectif(null);
 	}
 	
-	public void actualiserList(){
-		chargerSection();
+	public void chargerListeEcue(){
 		chargerEcueMention();
 		chargerEnseignant();
-		//chargerListEcueAttibues();
+		chargerListEcueAttibues();
 		}
 	
 	public void selectionner(){
@@ -269,22 +247,6 @@ public void chargerEcueMention(){
 	
 	
 	public void supprimer() {
-		Ecue EcueTemp = new Ecue();
-		EcueTemp.setCodeEcue(selectedEcue.getCodeEcue());
-		//EcueTemp.setUes(selectedEcue.getUes().getCodeEus());
-		//EcueTemp.setUes(selectedUe.getCodeEus());
-		EcueTemp.setUes(selectedUe);
-		EcueTemp.setLibEcue(selectedEcue.getLibEcue());
-		EcueTemp.setAbrevEcue(selectedEcue.getAbrevEcue());
-		EcueTemp.setCoursEcue(selectedEcue.getCoursEcue());
-		EcueTemp.setCoefEcue(selectedEcue.getCoefEcue());
-		EcueTemp.setCreditEcue(selectedEcue.getCreditEcue());
-		EcueTemp.setCttEcue(selectedEcue.getCttEcue());
-		EcueTemp.setTpEcue(selectedEcue.getTpEcue());
-		EcueTemp.setTpeEcue(selectedEcue.getTpeEcue());
-		getService().deleteObject(EcueTemp);
-		vider(EcueTemp);
-		vider(ecue);
 		btnValider.setDisabled(false);
 		btnSuprimer.setDisabled(true);
 		btnModifier.setDisabled(true);
@@ -328,9 +290,6 @@ public void chargerEcueMention(){
 	}
 
 	public List getListMention() {
-		/*if (listMention.isEmpty()) {
-		listMention = getService().getObjects("Mention");
-	}*/
 		return listMention;
 	}
 
@@ -374,9 +333,6 @@ public void chargerEcueMention(){
 	}
 
 	public List getListFiliere() {
-		/*if (listFiliere.isEmpty()) {
-			listFiliere = getService().getObjects("Filieres");
-		}*/
 		return listFiliere;
 	}
 
@@ -401,8 +357,6 @@ public void chargerEcueMention(){
 	}
 	
 	
-	
-	//Recent
 	public List getListSemestreLmd() {
 		return listSemestreLmd ;
 	}
@@ -559,13 +513,22 @@ public void chargerEcueMention(){
 
 
 	public List getListeEnseigner() {
-		//listeEnseigner = service.getObjects("Enseigner");
 		return listeEnseigner;
 	}
 
 
 	public void setListeEnseigner(List listeEnseigner) {
 		this.listeEnseigner = listeEnseigner;
+	}
+
+
+	public Ecue getEcueSelectionne() {
+		return ecueSelectionne;
+	}
+
+
+	public void setEcueSelectionne(Ecue ecueSelectionne) {
+		this.ecueSelectionne = ecueSelectionne;
 	}
 
 	

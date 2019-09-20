@@ -11,7 +11,6 @@
 			<h1 class="page-title">ATTRIBUTION ECUES</h1>
 			<p:messages autoUpdate="true" closable="true" showDetail="false" />
 			<div class="widget-content">
-				<!-- <h:form id="form"> -->
 				
 				<table>
 					<tr>
@@ -40,17 +39,17 @@
 		      
 		    <p:outputLabel for="ment" value="Mention"/>
 			<p:selectOneMenu id="ment" value="#{attributionEcueBean.choosedMention}" converter="#{entityConverter}">
-			<p:ajax listener="#{attributionEcueBean.chargerSemestreLmd}" event="change" process="@this" update="table_semestre"></p:ajax>
+			<p:ajax listener="#{attributionEcueBean.chargerSemestreEtSection}" event="change" process="@this" update="table_semestre,table_parcours "></p:ajax>
 			<f:selectItem  itemLabel="Selectionnez"  itemValue=""/>
 			<f:selectItems value="#{attributionEcueBean.listMention}" var="tata" itemLabel="#{tata.abrevMention}" itemValue="#{tata}"></f:selectItems>
 		    </p:selectOneMenu>		    
 			</h:panelGrid>
 						</td>
 						<td>
-					<p:dataTable id="table_semestre"  var="tata"
+				    <p:dataTable id="table_semestre"  var="tata"
 					value="#{attributionEcueBean.listSemestreLmd}" selection="#{attributionEcueBean.selectedSemestreLmd}"
 					rowKey="#{tata.codeSemestreLmd}" emptyMessage="Aucun enregistrement" selectionMode="single">
-					<p:ajax event="rowSelect" listener="#{attributionEcueBean.actualiserList}" update=":form_gnl" process="@this"/>
+					 <p:ajax event="rowSelect" process="@this"/>
 					<f:facet name="header">SEMESTRE LMD</f:facet>
 					<p:column selectionMode="single" style="width:16px;text-align:center"/>
 					<p:column headerText="Libellé Semestre" style="width:100%">#{tata.libSemestreLmd}</p:column>
@@ -58,12 +57,11 @@
 						</td>
 						<td>
 						
-						<p:dataTable id="table1" var="tata"
-					value="#{attributionEcueBean.listeSection}" selection="#{attributionEcueBean.selectedSection}"
+					<p:dataTable id="table_parcours" var="tata" value="#{attributionEcueBean.listeSection}" selection="#{attributionEcueBean.selectedSection}"
 					rowKey="#{tata.codeSection}" emptyMessage="Aucun enregistrement" scrollable="true" scrollHeight="150" selectionMode="single">
-					<p:ajax event="rowSelect" listener="#{attributionEcueBean.chargerSection}" update=":form_gnl" process="@this"/>
+					<p:ajax event="rowSelect" listener="#{attributionEcueBean.chargerListeEcue}" update=":form_gnl:table_ecue, :form_gnl:table_enseignant, :form_gnl:table_enseigner" process="@this"/>
 					<f:facet name="header">LISTE DES PARCOURS</f:facet>
-					<p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+					<!-- <p:column selectionMode="single" style="width:16px;text-align:center"/> -->
 					<p:column headerText="LIBELLE PARCOURS" style="width:100%">#{tata.abrevSection}</p:column>
 						</p:dataTable>
 						
@@ -72,27 +70,22 @@
 					</tr>
 				</table>	
 				
-			<table>
+			<table id="">
 					<tr>
 						<td>
 							<fieldset>
-			<legend class="legend">Information ECUE</legend>
-				
-			<h:panelGrid columns="4" cellpadding="10"> 
-			
-						<p:dataTable id="table2" var="tata"
-					value="#{attributionEcueBean.listeEcue}" selection="#{attributionEcueBean.selectedEcue}" 
-					rowKey="#{tata.codeEcue}" emptyMessage="Aucun enregistrement" scrollable="true" scrollHeight="150" selectionMode="single">
-					<p:ajax event="rowSelect" listener="#{attributionEcueBean.retournerSelection}"  process="@this"/> 
+			<legend class="legend">Information ECUE</legend>			
+					<p:dataTable id="table_ecue" var="tata"
+					value="#{attributionEcueBean.listeEcue}" selection="#{attributionEcueBean.ecueSelectionne}" selectionMode="single"
+					rowKey="#{tata.codeEcue}" emptyMessage="Aucun enregistrement" scrollable="true" scrollHeight="100">
+					<!-- <p:ajax event="rowSelect"  process="@this"/>  -->
 					<f:facet name="header">LISTE DES ECUES</f:facet>
-					<p:column selectionMode="single" style="width:16px;text-align:center"/>
+					<!-- <p:column selectionMode="single" style="width:16px;text-align:center"/> -->
 					
 					<p:column headerText="Libellé ECUE" style="width:70%">#{tata.libEcue}</p:column>
 					<p:column headerText="Abréviation" style="width:30%">#{tata.abrevEcue}</p:column>
 						</p:dataTable>
-			
-			</h:panelGrid>	
-			
+						
 			</fieldset>
 						</td>
 						
@@ -101,18 +94,15 @@
 							<fieldset>
 			<legend class="legend">Information ENSEIGNANTS</legend>
 				
-			<h:panelGrid columns="4" cellpadding="10">
-						<p:dataTable id="table3" var="tata"
+					<p:dataTable id="table_enseignant" var="tata"
 					value="#{attributionEcueBean.listeEnseignant}" selection="#{attributionEcueBean.selectedEnseignant}"
-					rowKey="#{tata.userId}" emptyMessage="Aucun enregistrement" scrollable="true" scrollHeight="150" selectionMode="single">
-					<p:ajax event="rowSelect" listener="#{attributionEcueBean.retournerSelection}"  process="@this"/>
+					rowKey="#{tata.userId}" emptyMessage="Aucun enregistrement" scrollable="true" scrollHeight="150">
+					<!-- <p:ajax event="rowSelect" listener="#{attributionEcueBean.retournerSelection}"  process="@this"/> -->
 					<f:facet name="header">LISTE DES ENSEIGNANTS</f:facet>
 					<p:column selectionMode="single" style="width:16px;text-align:center"/>
 					<p:column headerText="Nom" style="width:40%">#{tata.nom}</p:column>
 					<p:column headerText="Prénoms" style="width:60%">#{tata.prenoms}</p:column>
-						</p:dataTable>
-			
-			</h:panelGrid>	
+					</p:dataTable>	
 			
 			</fieldset>
 						</td>
@@ -124,7 +114,7 @@
 						<legend class="legend">Actions</legend>
 					<h:panelGrid id="grid_button" columns="1" cellpadding="4">
 					<p:commandButton value="Valider"
-						actionListener="#{attributionEcueBean.enregistrer}" update=":form_gnl" binding="#{attributionEcueBean.btnValider}">
+						actionListener="#{attributionEcueBean.enregistrer}" update=":form_gnl:table_enseigner" binding="#{attributionEcueBean.btnValider}">
 						<!-- <p:confirm header="Confirmation"
 							message="Confirmez-vous l'enregistrement" icon="ui-icon-alert" /> -->
 					</p:commandButton>
@@ -146,7 +136,7 @@
 					</tr>
 				</table>
 						
-				<p:dataTable id="table"  var="tata"
+				<p:dataTable id="table_enseigner"  var="tata"
 					value="#{attributionEcueBean.listeEnseigner}"
 					selection="#{attributionEcueBean.selectedEcue}"
 					emptyMessage="Aucun enregistrement" scrollable="true" scrollHeight="100">

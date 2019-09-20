@@ -87,7 +87,8 @@ public class DisponibiliteCoursBean {
 	private Filieres choosedFiliere = new Filieres();
 	private List<Filieres> listeFiliere = new ArrayList<>();
 	
-	private int vhLundi;
+	private int vhLundi, vhMardi, vhMercredi, vhJeudi, vhVendredi, vhSamedi;
+	
 	
 	
 	
@@ -401,13 +402,42 @@ public class DisponibiliteCoursBean {
 	
 	
 	public int calculerVHLundi(){
-		System.out.println(">>>>>>>>>>>>>>> Méthode de calcul de VH calculé");//Clean after
 		vhLundi=0;
 		vhLundi = getHfin1() - gethDebut1();
-		System.out.println(">>>>> Debut: " +hDebut1 );//Clean after
-		System.out.println(">>>>> Fin: " +hfin1 );//Clean after
-		System.out.println(">>>>> Resultat: " +vhLundi );//Clean after
 		return vhLundi;
+	}
+	
+	
+	public int calculerVHLMardi(){
+		vhMardi=0;
+		vhMardi = getHfin2() - getHdebut2();
+		return vhMardi;
+	}
+	
+	public int calculerVHLMercredi(){
+		vhMercredi=0;
+		vhMercredi = getHfin3() - getHdebut3();
+		return vhMercredi;
+	}
+	
+	public int calculerVHLJeudi(){
+		vhJeudi=0;
+		vhJeudi = getHfin4() - getHdebut4();
+		return vhJeudi;
+	}
+	
+	
+	public int calculerVHLVendredi(){
+		vhVendredi=0;
+		vhVendredi = getHfin5() - getHdebut5();
+		return vhVendredi;
+	}
+	
+	
+	public int calculerVHLSamedi(){
+		vhSamedi=0;
+		vhSamedi = getHfin6() - getHdebut6();
+		return vhVendredi;
 	}
 
 	//******************************Accesseurs****************************************//*	
@@ -1002,5 +1032,45 @@ public class DisponibiliteCoursBean {
 
 		public void setSelectedEnseigner(Enseigner selectedEnseigner) {
 			this.selectedEnseigner = selectedEnseigner;
+		}
+
+		public int getVhMardi() {
+			return vhMardi;
+		}
+
+		public void setVhMardi(int vhMardi) {
+			this.vhMardi = vhMardi;
+		}
+
+		public int getVhMercredi() {
+			return vhMercredi;
+		}
+
+		public void setVhMercredi(int vhMercredi) {
+			this.vhMercredi = vhMercredi;
+		}
+
+		public int getVhJeudi() {
+			return vhJeudi;
+		}
+
+		public void setVhJeudi(int vhJeudi) {
+			this.vhJeudi = vhJeudi;
+		}
+
+		public int getVhVendredi() {
+			return vhVendredi;
+		}
+
+		public void setVhVendredi(int vhVendredi) {
+			this.vhVendredi = vhVendredi;
+		}
+
+		public int getVhSamedi() {
+			return vhSamedi;
+		}
+
+		public void setVhSamedi(int vhSamedi) {
+			this.vhSamedi = vhSamedi;
 		}
 }

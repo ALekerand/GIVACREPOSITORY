@@ -89,13 +89,23 @@
 			<legend class="legend">Information ECUE</legend>
 				
 			<h:panelGrid columns="4" cellpadding="10"> 			
-			<p:dataTable id="maTable" var="tata" value="#{disponibiliteCoursBean.listeEnseigner}" rowKey="#{tata.codeEnseigner}">
-			<p:column headerText="Abréviation">
-				<p:outputLabel value="#{tata.codeEnseigner}"></p:outputLabel>
+			<p:dataTable id="maTable" var="tata" value="#{disponibiliteCoursBean.listEnseigner}" rowKey="#{tata.codeEnseigner}" scrollable="true" scrollHeight="110" selection="#{disponibiliteCoursBean.choosedEnseigner}">
+			
+			<p:column selectionMode="single" style="width:10%">
 			</p:column>
-			<p:column headerText="ECUE">
-				<p:outputLabel ></p:outputLabel>
+			
+			<p:column headerText="Code" style="width:15%">
+				<p:outputLabel value="#{tata.ecue.codeEcue}"></p:outputLabel>
 			</p:column>
+			
+			<p:column headerText="Abréviation" style="width:15%">
+				<p:outputLabel value="#{tata.ecue.abrevEcue}"></p:outputLabel>
+			</p:column>
+			
+			<p:column headerText="Libéllé">
+				<p:outputLabel value="#{tata.ecue.libEcue}"></p:outputLabel>
+			</p:column>
+					
 			</p:dataTable>
 			
 			</h:panelGrid>	
@@ -130,7 +140,9 @@
        					 </p:selectBooleanCheckbox>	
        					 <h:outputText value="MARDI" />
        					 <p:spinner id="debMard" value="#{disponibiliteCoursBean.hdebut2}" min="8" max="18"  binding="#{disponibiliteCoursBean.spinnerDebMard}"/>
-       					 <p:spinner id="finMard"  value="#{disponibiliteCoursBean.hfin2}"   min="8" max="18"  binding="#{disponibiliteCoursBean.spinnerFinMard}"/>
+       					 <p:spinner id="finMard"  value="#{disponibiliteCoursBean.hfin2}"   min="8" max="18"  binding="#{disponibiliteCoursBean.spinnerFinMard}">
+							<p:ajax update="vh_mar" listener="#{disponibiliteCoursBean.calculerVHLMardi}" process="debMard, @this"/>
+						</p:spinner>
 						<p:inputText id="vh_mar" value=" " style="width:20px" binding="#{disponibiliteCoursBean.inputTextMardi}" readonly="true"/>
 						<h:outputText value="H" style="width:10px" />
 						
@@ -139,7 +151,9 @@
        					 </p:selectBooleanCheckbox>	
        					 <h:outputText value="MERCREDI" />
        					 <p:spinner id="debMecred" value="#{disponibiliteCoursBean.hdebut3}"   min="8" max="18"  binding="#{disponibiliteCoursBean.spinnerDebMerc}"/>
-       					 <p:spinner id="finMercred"  value="#{disponibiliteCoursBean.hfin3}"   min="8" max="18"  binding="#{disponibiliteCoursBean.spinnerFinMerc}"/>
+       					 <p:spinner id="finMercred"  value="#{disponibiliteCoursBean.hfin3}"   min="8" max="18"  binding="#{disponibiliteCoursBean.spinnerFinMerc}">
+       					 	<p:ajax update="vh_mer" listener="#{disponibiliteCoursBean.calculerVHLMercredi}" process="debMecred, @this"/>
+       					 </p:spinner>
        					 <p:inputText id="vh_mer" value=" " style="width:20px" binding="#{disponibiliteCoursBean.inputTextMercredi}" readonly="true"/>
        					 <h:outputText value="H" style="width:10px" />
        					 
@@ -148,7 +162,9 @@
        					 </p:selectBooleanCheckbox>	
        					 <h:outputText value="JEUDI" />
        					 <p:spinner id="debJeud" value="#{disponibiliteCoursBean.hdebut4}"   min="8" max="18"  binding="#{disponibiliteCoursBean.spinnerDebJeud}"/>
-       					 <p:spinner id="finJeud"  value="#{disponibiliteCoursBean.hfin4}"   min="8" max="18"  binding="#{disponibiliteCoursBean.spinnerFinJeud}"/>
+       					 <p:spinner id="finJeud"  value="#{disponibiliteCoursBean.hfin4}"   min="8" max="18"  binding="#{disponibiliteCoursBean.spinnerFinJeud}">
+							<p:ajax update="vh_jeu" listener="#{disponibiliteCoursBean.calculerVHLJeudi}" process="debJeud, @this"/>
+						</p:spinner>
 						<p:inputText id="vh_jeu" value=" " style="width:20px" binding="#{disponibiliteCoursBean.inputTextJeudi}" readonly="true"/>
 						<h:outputText value="H" style="width:10px"/>
 						
@@ -157,7 +173,9 @@
        					 </p:selectBooleanCheckbox>	
        					 <h:outputText value="VENDREDI" />
        					 <p:spinner id="debVend" value="#{disponibiliteCoursBean.hdebut5}"   min="8" max="18"  binding="#{disponibiliteCoursBean.spinnerDebVend}"/>
-       					 <p:spinner id="finVend"  value="#{disponibiliteCoursBean.hfin5}"    min="8" max="18"  binding="#{disponibiliteCoursBean.spinnerFinVend}"/>
+       					 <p:spinner id="finVend"  value="#{disponibiliteCoursBean.hfin5}"    min="8" max="18"  binding="#{disponibiliteCoursBean.spinnerFinVend}">
+							<p:ajax update="vh_ven" listener="#{disponibiliteCoursBean.calculerVHLVendredi}" process="debVend, @this"/>
+						</p:spinner>	
 						<p:inputText id="vh_ven" value=" " style="width:20px" binding="#{disponibiliteCoursBean.inputTextVendredi}" readonly="true"/>
 						<h:outputText value="H" style="width:10px"/>
 						
@@ -166,7 +184,9 @@
        					 </p:selectBooleanCheckbox>	
        					 <h:outputText value="SAMEDI" />
        					 <p:spinner id="debSam" value="#{disponibiliteCoursBean.hdebut6}"   min="8" max="18"  binding="#{disponibiliteCoursBean.spinnerDebSam}"/>
-       					 <p:spinner id="finSam"  value="#{disponibiliteCoursBean.hfin6}"    min="8" max="18"  binding="#{disponibiliteCoursBean.spinnerFinSam}"/>
+       					 <p:spinner id="finSam"  value="#{disponibiliteCoursBean.hfin6}"    min="8" max="18"  binding="#{disponibiliteCoursBean.spinnerFinSam}">
+						 	<p:ajax update="vh_sam" listener="#{disponibiliteCoursBean.calculerVHLSamedi}" process="debSam, @this"/>
+						 </p:spinner>	
 						 <p:inputText id="vh_sam" value=" " style="width:20px" binding="#{disponibiliteCoursBean.inputTextSamedi}" readonly="true"/>
 						 <h:outputText value="H" style="width:10px"/>
 					
