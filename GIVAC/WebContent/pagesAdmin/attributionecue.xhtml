@@ -63,7 +63,7 @@
 					<f:facet name="header">LISTE DES PARCOURS</f:facet>
 					<!-- <p:column selectionMode="single" style="width:16px;text-align:center"/> -->
 					<p:column headerText="LIBELLE PARCOURS" style="width:100%">#{tata.abrevSection}</p:column>
-						</p:dataTable>
+					</p:dataTable>
 						
 						</td>
 						
@@ -76,11 +76,12 @@
 							<fieldset>
 			<legend class="legend">Information ECUE</legend>			
 					<p:dataTable id="table_ecue" var="tata"
-					value="#{attributionEcueBean.listeEcue}" selection="#{attributionEcueBean.ecueSelectionne}" selectionMode="single"
+					value="#{attributionEcueBean.listeEcue}" selection="#{attributionEcueBean.ecueSelectionne}" 
 					rowKey="#{tata.codeEcue}" emptyMessage="Aucun enregistrement" scrollable="true" scrollHeight="100">
 					<!-- <p:ajax event="rowSelect"  process="@this"/>  -->
 					<f:facet name="header">LISTE DES ECUES</f:facet>
-					<!-- <p:column selectionMode="single" style="width:16px;text-align:center"/> -->
+					<p:column selectionMode="single" style="width:12% ">
+					</p:column>
 					
 					<p:column headerText="Libellé ECUE" style="width:70%">#{tata.libEcue}</p:column>
 					<p:column headerText="Abréviation" style="width:30%">#{tata.abrevEcue}</p:column>

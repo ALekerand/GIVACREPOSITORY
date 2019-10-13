@@ -231,8 +231,7 @@ public class DisponibiliteCoursBean {
 			
 			emploiT.setEnseigner(getChoosedEnseigner());
 			emploiT.setJourSemaine((JourSemaine) getService().getObjectById((planHyb.getJourSemaine()-1), "JourSemaine"));
-			//emploiT.setHeureDebut(planHyb.getHeureDebut());
-			//emploiT.setHeureFin(planHyb.getHeureFin());
+			emploiT.setVhJour(planHyb.getVolHoraire());
 			listEmploitemps.add(emploiT);
 		}
 	}
@@ -262,6 +261,8 @@ public class DisponibiliteCoursBean {
 			plannigHybryde.setHeureDebut(hDebut1);
 			plannigHybryde.setHeureFin(hfin1);
 			plannigHybryde.setJourSemaine(Calendar.MONDAY);
+			plannigHybryde.setVolHoraire(hfin1-hDebut1);
+		
 			listPlanningHyb.add(plannigHybryde);
 		}
 		
@@ -273,6 +274,7 @@ public class DisponibiliteCoursBean {
 					plannigHybryde.setHeureFin(hfin2);
 					plannigHybryde.setJourSemaine(Calendar.TUESDAY);
 					listPlanningHyb.add(plannigHybryde);
+					plannigHybryde.setVolHoraire(hfin2-hdebut2);
 				}
 				
 				
@@ -284,6 +286,7 @@ public class DisponibiliteCoursBean {
 					plannigHybryde.setHeureFin(hfin3);
 					plannigHybryde.setJourSemaine(Calendar.WEDNESDAY);
 					listPlanningHyb.add(plannigHybryde);
+					plannigHybryde.setVolHoraire(hfin3-hdebut3);
 				}
 				
 				
@@ -295,6 +298,7 @@ public class DisponibiliteCoursBean {
 					plannigHybryde.setHeureFin(hfin4);
 					plannigHybryde.setJourSemaine(Calendar.THURSDAY);
 					listPlanningHyb.add(plannigHybryde);
+					plannigHybryde.setVolHoraire(hfin4-hdebut4);
 				}
 				
 				
@@ -306,6 +310,7 @@ public class DisponibiliteCoursBean {
 					plannigHybryde.setHeureFin(hfin5);
 					plannigHybryde.setJourSemaine(Calendar.FRIDAY);
 					listPlanningHyb.add(plannigHybryde);
+					plannigHybryde.setVolHoraire(hfin5-hdebut5);
 				}
 				
 				
@@ -317,6 +322,7 @@ public class DisponibiliteCoursBean {
 					plannigHybryde.setHeureFin(hfin6);
 					plannigHybryde.setJourSemaine(Calendar.SATURDAY);
 					listPlanningHyb.add(plannigHybryde);
+					plannigHybryde.setVolHoraire(hfin6-hdebut6);
 				}
 	}
 	
@@ -411,6 +417,8 @@ public class DisponibiliteCoursBean {
 	public int calculerVHLMardi(){
 		vhMardi=0;
 		vhMardi = getHfin2() - getHdebut2();
+		
+		System.out.println("Mtéhode mardi lancée VH MARDI = "+vhMardi);
 		return vhMardi;
 	}
 	
@@ -467,14 +475,6 @@ public class DisponibiliteCoursBean {
 		public void setListeSection(List<Section> listeSection) {
 			this.listeSection = listeSection;
 		}
-
-	/*	public ReqEnseigner getReqEnseigner() {
-			return reqEnseigner;
-		}
-
-		public void setReqEnseigner(ReqEnseigner reqEnseigner) {
-			this.reqEnseigner = reqEnseigner;
-		}*/
 
 		
 		public CommandButton getBtnValider() {

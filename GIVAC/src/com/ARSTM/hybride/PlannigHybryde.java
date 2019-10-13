@@ -5,12 +5,9 @@ public class PlannigHybryde {
 	private int  jourSemaine;
 	private int heureDebut;
 	private int heureFin;
+	private int volHoraire;
 	
 	
-	
-	
-	
-
 	public boolean isValeurEtat() {
 		return valeurEtat;
 	}
@@ -42,6 +39,15 @@ public class PlannigHybryde {
 
 	public void setJourSemaine(int jourSemaine) {
 		this.jourSemaine = jourSemaine;
+	}
+
+	
+	public int getVolHoraire() {
+		return volHoraire;
+	}
+
+	public void setVolHoraire(int volHoraire) {
+		this.volHoraire = volHoraire;
 	}
 
 }

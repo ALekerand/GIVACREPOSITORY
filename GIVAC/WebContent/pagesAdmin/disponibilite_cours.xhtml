@@ -11,10 +11,8 @@
 			<h1 class="page-title">DISPONIBILITE DE L'ENSEIGNANT</h1>
 			<p:messages autoUpdate="true" closable="true" showDetail="false" />
 			<div class="widget-content">
-						<p:panel header="Choix de la matière">
+					<p:panel header="Choix de la matière">
 					<table>
-					
-					
 						<tr valign="top">
 							<!-- ici les critères de selection -->
 							<td style="width: 40%;"><h:panelGrid id="affectation_grid"
@@ -143,7 +141,7 @@
        					 <p:spinner id="finMard"  value="#{disponibiliteCoursBean.hfin2}"   min="8" max="18"  binding="#{disponibiliteCoursBean.spinnerFinMard}">
 							<p:ajax update="vh_mar" listener="#{disponibiliteCoursBean.calculerVHLMardi}" process="debMard, @this"/>
 						</p:spinner>
-						<p:inputText id="vh_mar" value=" " style="width:20px" binding="#{disponibiliteCoursBean.inputTextMardi}" readonly="true"/>
+						<p:inputText id="vh_mar" value="#{disponibiliteCoursBean.vhMardi}" style="width:20px" binding="#{disponibiliteCoursBean.inputTextMardi}" readonly="true"/>
 						<h:outputText value="H" style="width:10px" />
 						
 						<p:selectBooleanCheckbox value="#{disponibiliteCoursBean.valMercred}">	
@@ -154,7 +152,7 @@
        					 <p:spinner id="finMercred"  value="#{disponibiliteCoursBean.hfin3}"   min="8" max="18"  binding="#{disponibiliteCoursBean.spinnerFinMerc}">
        					 	<p:ajax update="vh_mer" listener="#{disponibiliteCoursBean.calculerVHLMercredi}" process="debMecred, @this"/>
        					 </p:spinner>
-       					 <p:inputText id="vh_mer" value=" " style="width:20px" binding="#{disponibiliteCoursBean.inputTextMercredi}" readonly="true"/>
+       					 <p:inputText id="vh_mer" value="#{disponibiliteCoursBean.vhMercredi}" style="width:20px" binding="#{disponibiliteCoursBean.inputTextMercredi}" readonly="true"/>
        					 <h:outputText value="H" style="width:10px" />
        					 
        					 <p:selectBooleanCheckbox value="#{disponibiliteCoursBean.valJeudi}">	
@@ -165,7 +163,7 @@
        					 <p:spinner id="finJeud"  value="#{disponibiliteCoursBean.hfin4}"   min="8" max="18"  binding="#{disponibiliteCoursBean.spinnerFinJeud}">
 							<p:ajax update="vh_jeu" listener="#{disponibiliteCoursBean.calculerVHLJeudi}" process="debJeud, @this"/>
 						</p:spinner>
-						<p:inputText id="vh_jeu" value=" " style="width:20px" binding="#{disponibiliteCoursBean.inputTextJeudi}" readonly="true"/>
+						<p:inputText id="vh_jeu" value="#{disponibiliteCoursBean.vhJeudi}" style="width:20px" binding="#{disponibiliteCoursBean.inputTextJeudi}" readonly="true"/>
 						<h:outputText value="H" style="width:10px"/>
 						
 						<p:selectBooleanCheckbox value="#{disponibiliteCoursBean.valVendred}">	
@@ -176,7 +174,7 @@
        					 <p:spinner id="finVend"  value="#{disponibiliteCoursBean.hfin5}"    min="8" max="18"  binding="#{disponibiliteCoursBean.spinnerFinVend}">
 							<p:ajax update="vh_ven" listener="#{disponibiliteCoursBean.calculerVHLVendredi}" process="debVend, @this"/>
 						</p:spinner>	
-						<p:inputText id="vh_ven" value=" " style="width:20px" binding="#{disponibiliteCoursBean.inputTextVendredi}" readonly="true"/>
+						<p:inputText id="vh_ven" value="#{disponibiliteCoursBean.vhVendredi}" style="width:20px" binding="#{disponibiliteCoursBean.inputTextVendredi}" readonly="true"/>
 						<h:outputText value="H" style="width:10px"/>
 						
 					<p:selectBooleanCheckbox value="#{disponibiliteCoursBean.valSamed}">	
@@ -187,7 +185,7 @@
        					 <p:spinner id="finSam"  value="#{disponibiliteCoursBean.hfin6}"    min="8" max="18"  binding="#{disponibiliteCoursBean.spinnerFinSam}">
 						 	<p:ajax update="vh_sam" listener="#{disponibiliteCoursBean.calculerVHLSamedi}" process="debSam, @this"/>
 						 </p:spinner>	
-						 <p:inputText id="vh_sam" value=" " style="width:20px" binding="#{disponibiliteCoursBean.inputTextSamedi}" readonly="true"/>
+						 <p:inputText id="vh_sam" value="#{disponibiliteCoursBean.vhSamedi}" style="width:20px" binding="#{disponibiliteCoursBean.inputTextSamedi}" readonly="true"/>
 						 <h:outputText value="H" style="width:10px"/>
 					
 					<p:commandButton value="OK" actionListener="#{disponibiliteCoursBean.ajouterPlanning}"
@@ -206,15 +204,14 @@
 					<p:column headerText="Jour" style="width:25%">
 					#{tata.jourSemaine.jour}
 					</p:column>
-
-					<p:column headerText="Heure début" style="width:40%">
-					#{tata.heureDebut}
+					
+					<p:column headerText="Heure debut">
 					</p:column>
 					
 					<p:column headerText="Heure fin">
-					#{tata.heureFin}
 					</p:column>
 					
+
 					<p:column headerText="V.H.">
 					#{tata.vhJour}
 					</p:column>
