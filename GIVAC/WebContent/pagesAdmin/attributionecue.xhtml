@@ -78,7 +78,6 @@
 					<p:dataTable id="table_ecue" var="tata"
 					value="#{attributionEcueBean.listeEcue}" selection="#{attributionEcueBean.ecueSelectionne}" 
 					rowKey="#{tata.codeEcue}" emptyMessage="Aucun enregistrement" scrollable="true" scrollHeight="100">
-					<!-- <p:ajax event="rowSelect"  process="@this"/>  -->
 					<f:facet name="header">LISTE DES ECUES</f:facet>
 					<p:column selectionMode="single" style="width:12% ">
 					</p:column>
@@ -98,7 +97,6 @@
 					<p:dataTable id="table_enseignant" var="tata"
 					value="#{attributionEcueBean.listeEnseignant}" selection="#{attributionEcueBean.selectedEnseignant}"
 					rowKey="#{tata.userId}" emptyMessage="Aucun enregistrement" scrollable="true" scrollHeight="150">
-					<!-- <p:ajax event="rowSelect" listener="#{attributionEcueBean.retournerSelection}"  process="@this"/> -->
 					<f:facet name="header">LISTE DES ENSEIGNANTS</f:facet>
 					<p:column selectionMode="single" style="width:16px;text-align:center"/>
 					<p:column headerText="Nom" style="width:40%">#{tata.nom}</p:column>
@@ -114,11 +112,11 @@
 						<fieldset>
 						<legend class="legend">Actions</legend>
 					<h:panelGrid id="grid_button" columns="1" cellpadding="4">
-					<p:commandButton value="Valider"
-						actionListener="#{attributionEcueBean.enregistrer}" update=":form_gnl:table_enseigner" binding="#{attributionEcueBean.btnValider}">
+					<h:commandButton value="Valider"
+						actionListener="#{attributionEcueBean.enregistrer}" update=":form_gnl:table_enseigner" >
 						<!-- <p:confirm header="Confirmation"
 							message="Confirmez-vous l'enregistrement" icon="ui-icon-alert" /> -->
-					</p:commandButton>
+					</h:commandButton>
 					<p:commandButton value="Imprimer"
 						action="#{attributionEcueBean.modifier}" update="form_gnl" binding="#{attributionEcueBean.btnModifier}">
 						<p:confirm header="Confirmation"

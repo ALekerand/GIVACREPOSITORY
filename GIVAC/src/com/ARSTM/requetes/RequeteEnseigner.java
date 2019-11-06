@@ -24,7 +24,7 @@ public class RequeteEnseigner {
 		}
 		
 		public List<Enseigner> recupEnseignerBySection(int codeAnneeScolaire, int codeSection,int userid){
-			String query  = "SELECT `enseigner`.* FROM `enseigner` WHERE (((`enseigner`.`CODE_ANNEES` = '"+codeAnneeScolaire+"') AND (`enseigner`.`CODE_SECTION` ='"+codeSection+"') AND (`enseigner`.`USER_ID` ='"+userid+"' )))";
+			String query  = "SELECT `enseigner`.* FROM `enseigner` WHERE ((`enseigner`.`CODE_ANNEES` = '"+codeAnneeScolaire+"') AND (`enseigner`.`CODE_SECTION` ='"+codeSection+"') AND (`enseigner`.`USER_ID` ='"+userid+"' ) AND (enseigner.ETAT_DISPO='1')";
 			List list = getSessionFactory().getCurrentSession().createSQLQuery(query).addEntity(Enseigner.class).list();
 				return list;
 			}

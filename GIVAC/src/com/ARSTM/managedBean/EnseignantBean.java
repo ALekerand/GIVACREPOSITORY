@@ -120,6 +120,7 @@ public class EnseignantBean {
 		objEnseignant.setPassword(null);
 		objEnseignant.setVhObligatoireSemaine(null);
 	}
+	
 
 	public void actualiserList(){
 		listEnseignant.clear();

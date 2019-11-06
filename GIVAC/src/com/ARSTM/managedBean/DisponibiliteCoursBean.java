@@ -2,6 +2,7 @@ package com.ARSTM.managedBean;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -196,7 +197,7 @@ public class DisponibiliteCoursBean {
 	public List<Enseigner> chargerListeEnseignant(){
 		list_cbEnseigner.clear();
 		listeEnseigner.clear();
-		list_cbEnseigner = requeteEnseigner.recupEnsegnerBySection1(choosedSection.getCodeSection(), getAnneesScolaire().getCodeAnnees());
+		list_cbEnseigner = requeteEnseigner.recupEnsegnerBySection1(getAnneesScolaire().getCodeAnnees(), choosedSection.getCodeSection());
 		
 		for ( Enseigner obEnseigner : list_cbEnseigner) {
 			if (!listEenseignantTrie.contains(obEnseigner.getEnseignant())) {
@@ -206,6 +207,8 @@ public class DisponibiliteCoursBean {
 			
 			
 		}
+		
+
 		
 		return list_cbEnseigner;
 	}
@@ -232,6 +235,8 @@ public class DisponibiliteCoursBean {
 			emploiT.setEnseigner(getChoosedEnseigner());
 			emploiT.setJourSemaine((JourSemaine) getService().getObjectById((planHyb.getJourSemaine()-1), "JourSemaine"));
 			emploiT.setVhJour(planHyb.getVolHoraire());
+			emploiT.setHeureDebut(planHyb.getHeureDebut());
+			emploiT.setHeureFin(planHyb.getHeureFin());
 			listEmploitemps.add(emploiT);
 		}
 	}
@@ -447,6 +452,10 @@ public class DisponibiliteCoursBean {
 		vhSamedi = getHfin6() - getHdebut6();
 		return vhVendredi;
 	}
+	
+	
+	
+	
 
 	//******************************Accesseurs****************************************//*	
 		

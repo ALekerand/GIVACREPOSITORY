@@ -39,7 +39,6 @@ import com.ARSTM.requetes.RequeteUes;
 import com.ARSTM.service.Iservice;
 
 @Component
-@Scope("session")
 public class AttributionEcueBean {
 	@Autowired
 	Iservice service;
@@ -93,8 +92,6 @@ public class AttributionEcueBean {
 	private List listeEnseigner = new ArrayList<>();
 
 	private int totalCreditEcue;
-	
-	
 	
 	
 	private Ecole choosedEcole = new Ecole();
@@ -187,6 +184,7 @@ public void chargerEcueMention(){
 			
 	public void enregistrer(){
 		enseigner.setEcue(ecueSelectionne);
+			System.out.println("========== Enseigant sélectionné: "+selectedEnseignant.getNom());
 		enseigner.setEnseignant(selectedEnseignant);
 		enseigner.setSection(selectedSection);
 		enseigner.setTauxHoraireEffectif(selectedSection.getMention().getCycle().getTauxHoraire());
@@ -201,16 +199,7 @@ public void chargerEcueMention(){
 	}
 		
 	public void modifier(){
-		/*
-		 * if (etatEcue.equals("true")) { ecue.setEtatEcue(true); }
-		 * 
-		 * if (etatEcue.equals("false")) { ecue.setEtatEcue(false); }
-		 * ecue.setUes(selectedUe);
-		 * ecue.setAbrevEcue(getEcue().getAbrevEcue().toUpperCase());
-		 * getService().updateObject(ecue); vider(ecue); actualiserList();
-		 * FacesContext.getCurrentInstance().addMessage(null, new
-		 * FacesMessage(FacesMessage.SEVERITY_INFO, "Modification effcetuée!", null));
-		 */
+
 	}
 	
 	
