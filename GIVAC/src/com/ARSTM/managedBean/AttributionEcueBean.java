@@ -163,9 +163,8 @@ public void initialiser(){
 		
 	}
 	 System.out.println("====Taille de la liste Tempom :"+listTempo.size());
-	 if (listeEcue.remove(listTempo)) {
-		 System.out.println("============= Remove OK :");
-	} 
+	 listeEcue.remove(listTempo);
+	 
 	 
 	 System.out.println("====Taille de la liste des Ecue :"+listeEcue.size());
 	return listeEcue;
