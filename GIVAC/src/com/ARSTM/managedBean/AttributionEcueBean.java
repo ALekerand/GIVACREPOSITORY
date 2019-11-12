@@ -89,7 +89,7 @@ public class AttributionEcueBean {
 	private List<Ecue> listeEcue = new ArrayList<Ecue>();
 	private List<Enseignant> listeEnseignant = new ArrayList<Enseignant>();
 	private Ecue ecueSelectionne = new Ecue();
-	private List listeEnseigner = new ArrayList<>();
+	private List<Enseigner> listeEnseigner = new ArrayList<>();
 
 	private int totalCreditEcue;
 	
@@ -147,6 +147,30 @@ public void initialiser(){
 	listeEnseigner.clear();
 	listeEnseigner = requeteEnseigner.recupEnsegnerBySection1(anneEncoure.getCodeAnnees(), selectedSection.getCodeSection());
  }
+ 
+ 
+ public List<Ecue> chargerListECUEActualisee() {
+	 List<Ecue> listTempo = new ArrayList<>();
+	 
+	 for (Ecue varEcue : listeEcue) {
+		 for (Enseigner varEnseig : listeEnseigner) {
+			if (varEcue.getCodeEcue() == varEnseig.getEcue().getCodeEcue()) {
+				listTempo.add(varEcue);
+				break;
+			}
+		}
+		 
+		
+	}
+	 System.out.println("====Taille de la liste Tempom :"+listTempo.size());
+	 if (listeEcue.remove(listTempo)) {
+		 System.out.println("============= Remove OK :");
+	} 
+	 
+	 System.out.println("====Taille de la liste des Ecue :"+listeEcue.size());
+	return listeEcue;
+
+ }
 		
 	
 public void chargerFiliere(){
@@ -171,8 +195,7 @@ public void chargerEcueMention(){
 	listeUe.clear();
 	listeEcue.clear();
 	listeUe = requeteUes.recupUesByMentionSemestre(choosedMention.getCodeMention(),selectedSemestreLmd.getCodeSemestreLmd());
-	System.out.println("===Taille liste UE:"+listeUe.size());
-	totalCreditEcue =0;
+	totalCreditEcue = 0;
 	for (Ues varUE : listeUe) {
 		for (Ecue varEcue : varUE.getEcues()) {
 			listeEcue.add(varEcue);
@@ -184,13 +207,12 @@ public void chargerEcueMention(){
 			
 	public void enregistrer(){
 		enseigner.setEcue(ecueSelectionne);
-			System.out.println("========== Enseigant sélectionné: "+selectedEnseignant.getNom());
 		enseigner.setEnseignant(selectedEnseignant);
 		enseigner.setSection(selectedSection);
 		enseigner.setTauxHoraireEffectif(selectedSection.getMention().getCycle().getTauxHoraire());
 		enseigner.setVhEffectif((int) (ecueSelectionne.getCoursEcue()+ ecueSelectionne.getTpEcue()));
 		enseigner.setAnneesScolaire(anneEncoure);
-		System.out.println(" Enregistrement");
+		enseigner.setEtatDispo(false);
 		service.addObject(enseigner);
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Enregistrement effcetué!", null));
 		chargerListEcueAttibues();
@@ -224,6 +246,7 @@ public void chargerEcueMention(){
 		chargerEcueMention();
 		chargerEnseignant();
 		chargerListEcueAttibues();
+		chargerListECUEActualisee();
 		}
 	
 	public void selectionner(){
@@ -501,14 +524,6 @@ public void chargerEcueMention(){
 	}
 
 
-	public List getListeEnseigner() {
-		return listeEnseigner;
-	}
-
-
-	public void setListeEnseigner(List listeEnseigner) {
-		this.listeEnseigner = listeEnseigner;
-	}
 
 
 	public Ecue getEcueSelectionne() {
@@ -518,6 +533,16 @@ public void chargerEcueMention(){
 
 	public void setEcueSelectionne(Ecue ecueSelectionne) {
 		this.ecueSelectionne = ecueSelectionne;
+	}
+
+
+	public List<Enseigner> getListeEnseigner() {
+		return listeEnseigner;
+	}
+
+
+	public void setListeEnseigner(List<Enseigner> listeEnseigner) {
+		this.listeEnseigner = listeEnseigner;
 	}
 
 	

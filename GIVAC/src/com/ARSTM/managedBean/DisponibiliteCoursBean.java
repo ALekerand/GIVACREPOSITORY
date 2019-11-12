@@ -180,6 +180,8 @@ public class DisponibiliteCoursBean {
 				//Vider les listes avant rechargement
 				listeSection.clear();
 				listeFiliere.clear();
+				listMention.clear();
+				listEenseignantTrie.clear();
 				listeFiliere = requeteFiliere.recupFiliereByEcole2(choosedEcole.getCodeEcole());
 			}
 			
@@ -216,7 +218,7 @@ public class DisponibiliteCoursBean {
 	public List<Enseigner> chargerEcue(){
 		listeEnseigner.clear();
 		listEnseigner = requeteEnseigner.recupEnseignerBySection(getAnneesScolaire().getCodeAnnees(), choosedSection.getCodeSection(), choosedEnseignant.getUserId());
-		System.out.println("Taille des enseigner"+listEnseigner.size());
+		System.out.println("========Taille des enseigner"+listEnseigner.size());
 		return listEnseigner;
 		}
 	
@@ -252,6 +254,7 @@ public class DisponibiliteCoursBean {
 		initialiser();//désactiver les champs
 		listeEnseigner.clear();
 		listEmploitemps.clear();
+		chargerEcue(); // actualiser la liste des ecues
 		FacesContext.getCurrentInstance().addMessage(null,
 		new FacesMessage(FacesMessage.SEVERITY_INFO, "Enregistrement effcetué!", null));
 	}

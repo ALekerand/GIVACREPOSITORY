@@ -12,10 +12,10 @@
 			<p:messages autoUpdate="true" closable="true" showDetail="false" />
 			<div class="widget-content">
 				
-				<table>
+				<table align="center">
 					<tr>
-						<td>
-						<h:panelGrid id="attr_grid" columns="4" cellpadding="10">
+						<td align="center" valign="top">
+						<h:panelGrid id="attr_grid" columns="4" cellpadding="4">
 						
 			<p:outputLabel for="ecol" value="Ecole"/>
 			<p:selectOneMenu id="ecol" value="#{attributionEcueBean.choosedEcole}" converter="#{entityConverter}">
@@ -25,7 +25,7 @@
 		    </p:selectOneMenu>
 		    
 		     <p:outputLabel />
-		      <p:outputLabel />
+		     <p:outputLabel />
 		    
 		    <p:outputLabel for="fil" value="Filière"/>
 			<p:selectOneMenu id="fil" value="#{attributionEcueBean.choosedFiliere}" converter="#{entityConverter}">
@@ -35,7 +35,7 @@
 		    </p:selectOneMenu>		    
 		    
 		     <p:outputLabel />
-		      <p:outputLabel />
+		     <p:outputLabel />
 		      
 		    <p:outputLabel for="ment" value="Mention"/>
 			<p:selectOneMenu id="ment" value="#{attributionEcueBean.choosedMention}" converter="#{entityConverter}">
@@ -45,7 +45,8 @@
 		    </p:selectOneMenu>		    
 			</h:panelGrid>
 						</td>
-						<td>
+						
+						<td align="center" valign="top">
 				    <p:dataTable id="table_semestre"  var="tata"
 					value="#{attributionEcueBean.listSemestreLmd}" selection="#{attributionEcueBean.selectedSemestreLmd}"
 					rowKey="#{tata.codeSemestreLmd}" emptyMessage="Aucun enregistrement" selectionMode="single">
@@ -58,10 +59,9 @@
 						<td>
 						
 					<p:dataTable id="table_parcours" var="tata" value="#{attributionEcueBean.listeSection}" selection="#{attributionEcueBean.selectedSection}"
-					rowKey="#{tata.codeSection}" emptyMessage="Aucun enregistrement" scrollable="true" scrollHeight="150" selectionMode="single">
+					rowKey="#{tata.codeSection}" emptyMessage="Aucun enregistrement" scrollable="true" scrollHeight="60" selectionMode="single">
 					<p:ajax event="rowSelect" listener="#{attributionEcueBean.chargerListeEcue}" update=":form_gnl:table_ecue, :form_gnl:table_enseignant, :form_gnl:table_enseigner" process="@this"/>
 					<f:facet name="header">LISTE DES PARCOURS</f:facet>
-					<!-- <p:column selectionMode="single" style="width:16px;text-align:center"/> -->
 					<p:column headerText="LIBELLE PARCOURS" style="width:100%">#{tata.abrevSection}</p:column>
 					</p:dataTable>
 						
@@ -70,9 +70,9 @@
 					</tr>
 				</table>	
 				
-			<table id="">
+			<table id="ecueTable">
 					<tr>
-						<td>
+						<td align="center" valign="top">
 							<fieldset>
 			<legend class="legend">Information ECUE</legend>			
 					<p:dataTable id="table_ecue" var="tata"
@@ -108,7 +108,7 @@
 						
 						
 						
-						<td>
+						<td align="center" valign="top">
 						<fieldset>
 						<legend class="legend">Actions</legend>
 					<h:panelGrid id="grid_button" columns="1" cellpadding="4">
