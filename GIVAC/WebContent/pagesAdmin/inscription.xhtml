@@ -92,6 +92,7 @@
 										itemValue="#{tata}"></f:selectItems>
 								</p:selectOneMenu>
 								
+								
 								<h:outputLabel for="t_formation" value="Formation" />
 								<p:selectOneMenu id="t_formation" value="#{inscriptionBean.choosedTformation}" converter="#{entityConverter}" style="width:50px">
 									<p:ajax listener="#{inscriptionBean.chargerFiliere}" event="change" update="filiere_eleve" process="@this,ecole_eleve"></p:ajax>
