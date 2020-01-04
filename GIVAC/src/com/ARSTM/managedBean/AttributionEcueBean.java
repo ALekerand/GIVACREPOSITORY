@@ -1,6 +1,7 @@
 package com.ARSTM.managedBean;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -126,15 +127,6 @@ public void initialiser(){
 	}
 
 	
-	public void activerChamps1(){
-		
-		if ((!(choosedEcole.getNomEcole().equals(null))))
-				{
-			chargerFiliere();
-		}
-		
-	}
-	
   public void chargerSemestreEtSection(){
 	listSemestreLmd.clear();
 	listSemestreLmd = requeteSemestreLmd.recupSemestreByNiveau(choosedMention.getNiveauMention());
@@ -151,19 +143,27 @@ public void initialiser(){
  
  public List<Ecue> chargerListECUEActualisee() {
 	 List<Ecue> listTempo = new ArrayList<>();
+	 List<Ecue> maList = new ArrayList<>();
+	 for (Ecue ecue : listeEcue) {
+		 maList.add(ecue);
+	}
 	 
-	 for (Ecue varEcue : listeEcue) {
+	 for (Ecue varEcue : maList) {
 		 for (Enseigner varEnseig : listeEnseigner) {
 			if (varEcue.getCodeEcue() == varEnseig.getEcue().getCodeEcue()) {
+				 System.out.println("==== Afficher code dans ListeEcue :"+varEcue.getCodeEcue());
+				 System.out.println("==== Afficher code dans Liste Enseigner :"+varEnseig.getEcue().getCodeEcue());
+				 System.out.println("===== Vérification: "+listeEcue.remove(varEcue));
 				listTempo.add(varEcue);
 				break;
 			}
 		}
-		 
-		
 	}
+	 
+	 
+	 
 	 System.out.println("====Taille de la liste Tempom :"+listTempo.size());
-	 listeEcue.remove(listTempo);
+	// listeEcue.remove(listTempo);
 	 
 	 
 	 System.out.println("====Taille de la liste des Ecue :"+listeEcue.size());
@@ -173,13 +173,32 @@ public void initialiser(){
 		
 	
 public void chargerFiliere(){
+	listMention.clear();
 	listFiliere.clear();
-	listFiliere = requeteFiliere.recupFiliereByEcole2(choosedEcole.getCodeEcole());
+	listSemestreLmd.clear();
+	listeSection.clear();
+	listeEcue.clear();
+	listeEnseignant.clear();
+	listeEnseigner.clear();
+	
+	 if (!(choosedEcole == null)) {
+			listFiliere = requeteFiliere.recupFiliereByEcole2(choosedEcole.getCodeEcole());
+}
+
 }
 
 public void chargerMention(){
 	listMention.clear();
-	listMention = requeteMention.recupMentionByEcoleFiliere(choosedFiliere.getCodeFiliere());
+	listSemestreLmd.clear();
+	listeSection.clear();
+	listeEcue.clear();
+	listeEnseignant.clear();
+	listeEnseigner.clear();
+	
+	 if (!(choosedFiliere == null)) {
+			listMention = requeteMention.recupMentionByEcoleFiliere(choosedFiliere.getCodeFiliere());
+}
+	
 }
 
 	
@@ -203,6 +222,8 @@ public void chargerEcueMention(){
 	}
 	System.out.println("===Taille liste ECUE:"+listeEcue.size());
 }
+
+
 			
 	public void enregistrer(){
 		enseigner.setEcue(ecueSelectionne);
@@ -212,14 +233,14 @@ public void chargerEcueMention(){
 		enseigner.setVhEffectif((int) (ecueSelectionne.getCoursEcue()+ ecueSelectionne.getTpEcue()));
 		enseigner.setAnneesScolaire(anneEncoure);
 		enseigner.setEtatDispo(false);
+		enseigner.setDateEnseigner(new Date());
 		service.addObject(enseigner);
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Enregistrement effcetué!", null));
 		chargerListEcueAttibues();
-		
-		
+		chargerListECUEActualisee();
 	}
 		
-	public void modifier(){
+	public void lierSemestre(){
 
 	}
 	
@@ -264,6 +285,10 @@ public void chargerEcueMention(){
 		FacesContext.getCurrentInstance().addMessage(null,
 		new FacesMessage(FacesMessage.SEVERITY_INFO, "Suppression effcetuée!", null));
 	}
+	
+	
+	
+	
 	
 	
 	/**************************ACCESSEURS*************************/

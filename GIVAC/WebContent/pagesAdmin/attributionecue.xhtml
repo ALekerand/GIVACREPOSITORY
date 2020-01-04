@@ -19,7 +19,8 @@
 						
 			<p:outputLabel for="ecol" value="Ecole"/>
 			<p:selectOneMenu id="ecol" value="#{attributionEcueBean.choosedEcole}" converter="#{entityConverter}">
-			<p:ajax listener="#{attributionEcueBean.activerChamps1}" event="change" update="fil" process="@this"></p:ajax>
+			<p:ajax listener="#{attributionEcueBean.chargerFiliere}" event="change" update="fil,ment,table_semestre,table_parcours,table_ecue,table_enseignant,table_enseigner" 
+			process="@this"></p:ajax>
 			<f:selectItem  itemLabel="Selectionnez"  itemValue=""/>
 			<f:selectItems value="#{attributionEcueBean.listEcole}" var="tata" itemLabel="#{tata.abrevEcole}" itemValue="#{tata}"></f:selectItems>
 		    </p:selectOneMenu>
@@ -29,7 +30,7 @@
 		    
 		    <p:outputLabel for="fil" value="Filière"/>
 			<p:selectOneMenu id="fil" value="#{attributionEcueBean.choosedFiliere}" converter="#{entityConverter}">
-			<p:ajax listener="#{attributionEcueBean.chargerMention}" event="change" update="ment" process="@this"></p:ajax>
+			<p:ajax listener="#{attributionEcueBean.chargerMention}" event="change" update="ment,table_semestre,table_parcours,table_ecue,table_enseignant,table_enseigner" process="@this"></p:ajax>
 			<f:selectItem  itemLabel="Selectionnez"  itemValue=""/>
 			<f:selectItems value="#{attributionEcueBean.listFiliere}" var="tata" itemLabel="#{tata.abrevFiliere}" itemValue="#{tata}"></f:selectItems>
 		    </p:selectOneMenu>		    
@@ -113,7 +114,7 @@
 						<legend class="legend">Actions</legend>
 					<h:panelGrid id="grid_button" columns="1" cellpadding="4">
 					<h:commandButton value="Valider"
-						actionListener="#{attributionEcueBean.enregistrer}" update=":form_gnl:table_enseigner" >
+						actionListener="#{attributionEcueBean.enregistrer}" update=":form_gnl:table_enseigner, :form_gnl:table_ecue" >
 						<!-- <p:confirm header="Confirmation"
 							message="Confirmez-vous l'enregistrement" icon="ui-icon-alert" /> -->
 					</h:commandButton>
@@ -140,7 +141,7 @@
 					selection="#{attributionEcueBean.selectedEcue}"
 					emptyMessage="Aucun enregistrement" scrollable="true" scrollHeight="100">
 					<p:ajax event="rowSelect" listener="#{attributionEcueBean.selectionner}" update=":form_gnl" />
- 					<f:facet name="header">LISTE DES ECUES ATTRIBUES</f:facet>
+ 					<f:facet name="header">LISTE DES ECUES ATTRIBUEES</f:facet>
 					<p:column headerText="NOM ET PRENOMS" style="width:35%" >#{tata.enseignant.nom} #{tata.enseignant.prenoms}</p:column>
 					<p:column headerText="PARCOURS" style="width:20%">#{tata.section.abrevSection}</p:column>
 					<p:column headerText="Libéllé ECUE" style="width:45%">#{tata.ecue.libEcue}</p:column>
