@@ -19,16 +19,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import com.ARSTM.model.Diplomes;
 import com.ARSTM.model.Ecole;
 import com.ARSTM.model.Enseignant;
 import com.ARSTM.model.EnseignatStatut;
 import com.ARSTM.model.EnseignatStatutId;
 import com.ARSTM.model.Etudiants;
 import com.ARSTM.model.Filieres;
+import com.ARSTM.model.Matrimoniales;
 import com.ARSTM.model.Mention;
 import com.ARSTM.model.Nationalites;
+import com.ARSTM.model.Niveaux;
 import com.ARSTM.model.Pays;
 import com.ARSTM.model.Regime;
+import com.ARSTM.model.Santes;
 import com.ARSTM.model.Section;
 import com.ARSTM.model.Sexe;
 import com.ARSTM.model.Specialite;
@@ -59,10 +63,10 @@ public class InscriptionBean {
 	@Autowired
 	RequeteSection requeteSection;
 	
-	//private Enseignant enseignant = new Enseignant();
+	
 	private Etudiants etudiants = new Etudiants();
 	private Enseignant selectedEnseignant = new Enseignant();
-	//private List listEnseignant = new ArrayList<>();
+	private Diplomes choosedDiplome = new Diplomes();
 	private Sexe chooseedSexe = new Sexe();
 	private Pays choosedPays =  new Pays();
 	private Ecole choosedEcole = new Ecole();
@@ -70,9 +74,20 @@ public class InscriptionBean {
 	private Mention choosedMention = new Mention();
 	private Section choosedSection = new Section();
 	private Regime choosedRegime = new Regime();
+	private Matrimoniales choosedMatrimoniale = new Matrimoniales();
+	private Santes choosedSante =new Santes();
+	private Niveaux choosedNiveau = new Niveaux();
 	private TypeLogement choosedTypeLogement = new TypeLogement();
 	private Tformation choosedTformation = new Tformation();
 	private Nationalites choosedNationalites = new Nationalites();
+	public Matrimoniales getChoosedMatrimoniale() {
+		return choosedMatrimoniale;
+	}
+
+	public void setChoosedMatrimoniale(Matrimoniales choosedMatrimoniale) {
+		this.choosedMatrimoniale = choosedMatrimoniale;
+	}
+
 	private List listeSexe = new ArrayList<>();
 	private List listePays = new ArrayList<>();
 	private List listeEcole = new ArrayList<>();
@@ -83,6 +98,9 @@ public class InscriptionBean {
 	private List listeRegime = new ArrayList<>();
 	private List listeTypeLogement = new ArrayList<>();
 	private List listeNationalites = new ArrayList<>();
+	private List listeNiveau = new ArrayList<>(); 
+	private List listeMatrimoniale = new ArrayList<>();
+	private List listeDiplome =  new ArrayList<>();
 	private UserAuthentication userAuthentication = new UserAuthentication();
 	private UserAuthorization userAuthorization = new UserAuthorization();
 	private int maxMatricule = (int) 0;
@@ -95,48 +113,21 @@ public class InscriptionBean {
 	private OutputLabel outputVhOblig = new OutputLabel();
 
 	public void enregistrer(){
-		//enregistrer dans la table UserAuthentication
-		/*
-		 * userAuthentication.setUsername(enseignant.getUsername());
-		 * userAuthentication.setPassword(enseignant.getPassword());
-		 * userAuthentication.setEnabled(true);
-		 * userAuthentication.setNom(enseignant.getNom());
-		 * userAuthentication.setPrenoms(enseignant.getPrenoms());
-		 * userAuthentication.setSexe(chooseedSexe);
-		 * userAuthentication.setPhone1(enseignant.getPhone1());
-		 * userAuthentication.setPhone2(enseignant.getPhone2());
-		 * userAuthentication.setPhoto(enseignant.getPhoto());
-		 * userAuthentication.setLieuNais(enseignant.getLieuNais());
-		 * userAuthentication.setDateNais(enseignant.getDateNais());
-		 * userAuthentication.setEmail(enseignant.getEmail());
-		 */
 		
-		//enregistrer das la table Enseignant
-		/*
-		 * enseignant.setMatriculeEns(maxMatricule);
-		 * enseignant.setCodeSexe(chooseedSexe.getCodeSexe());
-		 * enseignant.setSpecialite(choosedSpecialite); enseignant.setEnabled(true);
-		 * enseignant.setEtatEnseignant(true);
-		 * getService().addObject(userAuthentication);
-		 * enseignant.setUserAuthentication(userAuthentication);
-		 * getService().addObject(enseignant);
-		 */
-
-		//enregistrer dans la table Enseigant_Statut		
-		/*
-		 * EnseignatStatutId enseignatStatutId = new
-		 * EnseignatStatutId(enseignant.getUserId(), choosedStatut.getCodeStatut());
-		 * EnseignatStatut enseignatStatut = new EnseignatStatut(enseignatStatutId,
-		 * enseignant, choosedStatut); getService().addObject(enseignatStatut);
-		 */
-
-		//Enregistrer l'autorisation
-		userAuthorization.setUserAuthentication(userAuthentication);
-		userAuthorization.setRole("ROLE_ENSEIGNANT");
-		getService().addObject(userAuthorization);
+		//enregistrer das la table Etudiants
+		
+		
+		  etudiants.setDiplomes(choosedDiplome);
+		  etudiants.setMatrimoniales(choosedMatrimoniale);
+		  etudiants.setNationalites(choosedNationalites);
+		  etudiants.setSexe(chooseedSexe);
+		  etudiants.setSantes(choosedSante);
+		  etudiants.setNiveaux(choosedNiveau);
+		  etudiants.setPays(choosedPays);
+		  //enseignant.setCodeSexe(chooseedSexe.getCodeSexe());
+		  getService().addObject(etudiants);
 
 		actualiserList();
-		
 		vider(etudiants);
 		maxMatricule = (int) 0;
 		
@@ -269,6 +260,14 @@ public void upload(FileUploadEvent event) {
 		this.chooseedSexe = chooseedSexe;
 	}
 
+	public Diplomes getChoosedDiplome() {
+		return choosedDiplome;
+	}
+
+	public void setChoosedDiplome(Diplomes choosedDiplome) {
+		this.choosedDiplome = choosedDiplome;
+	}
+
 	public Pays getChoosedPays() {
 		return choosedPays;
 	}
@@ -339,6 +338,22 @@ public void upload(FileUploadEvent event) {
 
 	public void setChoosedTypeLogement(TypeLogement choosedTypeLogement) {
 		this.choosedTypeLogement = choosedTypeLogement;
+	}
+
+	public Santes getChoosedSante() {
+		return choosedSante;
+	}
+
+	public void setChoosedSante(Santes choosedSante) {
+		this.choosedSante = choosedSante;
+	}
+
+	public Niveaux getChoosedNiveau() {
+		return choosedNiveau;
+	}
+
+	public void setChoosedNiveau(Niveaux choosedNiveau) {
+		this.choosedNiveau = choosedNiveau;
 	}
 
 	public List getListePays() {
@@ -429,6 +444,39 @@ public void upload(FileUploadEvent event) {
 
 	public void setListeTypeLogement(List listeTypeLogement) {
 		this.listeTypeLogement = listeTypeLogement;
+	}
+
+	public List getListeNiveau() {
+		if (listeNiveau.isEmpty()) {
+			listeNiveau = getService().getObjects("Niveaux");
+		}
+		return listeNiveau;
+	}
+
+	public void setListeNiveau(List listeNiveau) {
+		this.listeNiveau = listeNiveau;
+	}
+
+	public List getListeMatrimoniale() {
+		if (listeMatrimoniale.isEmpty()) {
+			listeMatrimoniale = getService().getObjects("Matrimoniales");
+		}
+		return listeMatrimoniale;
+	}
+
+	public void setListeMatrimoniale(List listeMatrimoniale) {
+		this.listeMatrimoniale = listeMatrimoniale;
+	}
+
+	public List getListeDiplome() {
+		if (listeDiplome.isEmpty()) {
+			listeDiplome = getService().getObjects("Diplomes");
+		}
+		return listeDiplome;
+	}
+
+	public void setListeDiplome(List listeDiplome) {
+		this.listeDiplome = listeDiplome;
 	}
 
 	public InputText getInputVhOblig() {
