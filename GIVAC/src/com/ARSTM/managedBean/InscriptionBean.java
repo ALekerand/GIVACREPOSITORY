@@ -98,7 +98,8 @@ public class InscriptionBean {
 	private List listeRegime = new ArrayList<>();
 	private List listeTypeLogement = new ArrayList<>();
 	private List listeNationalites = new ArrayList<>();
-	private List listeNiveau = new ArrayList<>(); 
+	private List listeNiveau = new ArrayList<>();
+	private List listeSante = new ArrayList<>();
 	private List listeMatrimoniale = new ArrayList<>();
 	private List listeDiplome =  new ArrayList<>();
 	private UserAuthentication userAuthentication = new UserAuthentication();
@@ -116,18 +117,18 @@ public class InscriptionBean {
 		
 		//enregistrer das la table Etudiants
 		
-		
-		  etudiants.setDiplomes(choosedDiplome);
+		  etudiants.setNumetudiant(maxMatricule);
+		  etudiants.setNomEtudiant(getEtudiants().getNomEtudiant().toUpperCase());
 		  etudiants.setMatrimoniales(choosedMatrimoniale);
 		  etudiants.setNationalites(choosedNationalites);
 		  etudiants.setSexe(chooseedSexe);
 		  etudiants.setSantes(choosedSante);
 		  etudiants.setNiveaux(choosedNiveau);
 		  etudiants.setPays(choosedPays);
+		  etudiants.setSantes(choosedSante);
 		  //enseignant.setCodeSexe(chooseedSexe.getCodeSexe());
 		  getService().addObject(etudiants);
 
-		actualiserList();
 		vider(etudiants);
 		maxMatricule = (int) 0;
 		
@@ -138,23 +139,25 @@ public class InscriptionBean {
 	public void annuler() {
 		btnValider.setDisabled(false);
 		vider(etudiants);
-		actualiserList();
 	}
 
 	public void vider(Etudiants objEtudiants) {
-		/*
-		 * objEnseignant.setDateNais(null); objEnseignant.setLieuNais(null);
-		 * objEnseignant.setEmail(null); objEnseignant.setNom(null);
-		 * objEnseignant.setPrenoms(null); objEnseignant.setPhone1(null);
-		 * objEnseignant.setPhone2(null); objEnseignant.setUsername(null);
-		 * objEnseignant.setPassword(null); objEnseignant.setVhObligatoireSemaine(null);
-		 */
-	}
-	
-
-	public void actualiserList(){
-		//listEnseignant.clear();
-		//listEnseignant = getService().getObjects("Enseignant");
+		
+		  objEtudiants.setDatenais(null);
+		  objEtudiants.setLieunais(null);
+		  objEtudiants.setPrenomEtudiant(null);
+		  objEtudiants.setNomEtudiant(null);
+		  objEtudiants.setDiplomes(null);
+		  objEtudiants.setMatrimoniales(null);
+		  objEtudiants.setNbfreres(null);
+		  objEtudiants.setNbsoeurs(null);
+		  objEtudiants.setSantes(null);
+		  objEtudiants.setSexe(null);
+		  objEtudiants.setSections(null);
+		  objEtudiants.setTelEtudiant(null);
+		  objEtudiants.setNationalites(null);
+		  objEtudiants.setNiveaux(null);
+		 
 	}
 	
 	public void chargerFiliere(){
@@ -477,6 +480,17 @@ public void upload(FileUploadEvent event) {
 
 	public void setListeDiplome(List listeDiplome) {
 		this.listeDiplome = listeDiplome;
+	}
+
+	public List getListeSante() {
+		if (listeSante.isEmpty()) {
+			listeSante = getService().getObjects("Santes");
+		}
+		return listeSante;
+	}
+
+	public void setListeSante(List listeSante) {
+		this.listeSante = listeSante;
 	}
 
 	public InputText getInputVhOblig() {

@@ -23,7 +23,7 @@
 
 								<h:outputLabel for="nom_eleve" value="Nom" />
 								<p:inputText id="nom_eleve"
-									value="#{inscriptionBean.etudiants.nomEtudiant}" required="true" />
+									value="#{inscriptionBean.etudiants.nomEtudiant}" required="true" styleClass="upercase"/>
 
 								<h:outputLabel for="prenom_eleve" value="Prénoms" />
 								<p:inputText id="prenom_eleve"
@@ -91,7 +91,16 @@
 									<f:selectItems value="#{inscriptionBean.listeMatrimoniale}" var="tata"
 										itemLabel="#{tata.libmatrimoniale}" itemValue="#{tata}"></f:selectItems>
 								</p:selectOneMenu>
-
+								
+								<h:outputLabel for="sante_eleve" value="Santé" />
+								<p:selectOneMenu id="sante_eleve"
+									value="#{inscriptionBean.choosedSante}"
+									converter="#{entityConverter}">
+									<f:selectItem itemLabel="Selectionnez" itemValue="" />
+									<f:selectItems value="#{inscriptionBean.listeSante}" var="tata"
+										itemLabel="#{tata.libsante}" itemValue="#{tata}"></f:selectItems>
+								</p:selectOneMenu>
+								
 								<h:outputLabel for="phone_eleve" value="Télephone" />
 								<p:inputText id="phone_eleve"
 									value="#{inscriptionBean.etudiants.telEtudiant}" required="true" />
