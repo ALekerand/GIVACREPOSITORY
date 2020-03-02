@@ -8,6 +8,7 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
@@ -19,6 +20,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import com.ARSTM.model.Anneeconcours;
+import com.ARSTM.model.AnneesScolaire;
 import com.ARSTM.model.Diplomes;
 import com.ARSTM.model.Ecole;
 import com.ARSTM.model.Enseignant;
@@ -26,6 +29,7 @@ import com.ARSTM.model.EnseignatStatut;
 import com.ARSTM.model.EnseignatStatutId;
 import com.ARSTM.model.Etudiants;
 import com.ARSTM.model.Filieres;
+import com.ARSTM.model.Inscriptions;
 import com.ARSTM.model.Matrimoniales;
 import com.ARSTM.model.Mention;
 import com.ARSTM.model.Nationalites;
@@ -41,6 +45,7 @@ import com.ARSTM.model.Tformation;
 import com.ARSTM.model.TypeLogement;
 import com.ARSTM.model.UserAuthentication;
 import com.ARSTM.model.UserAuthorization;
+import com.ARSTM.requetes.ReqAnneeScolaire;
 import com.ARSTM.requetes.RequeteEnseignant;
 import com.ARSTM.requetes.RequeteFiliere;
 import com.ARSTM.requetes.RequeteInscription;
@@ -63,6 +68,9 @@ public class InscriptionBean {
 	@Autowired
 	RequeteSection requeteSection;
 	
+	@Autowired
+	ReqAnneeScolaire reqAnneeScolaire;
+	
 	
 	private Etudiants etudiants = new Etudiants();
 	private Enseignant selectedEnseignant = new Enseignant();
@@ -80,6 +88,8 @@ public class InscriptionBean {
 	private TypeLogement choosedTypeLogement = new TypeLogement();
 	private Tformation choosedTformation = new Tformation();
 	private Nationalites choosedNationalites = new Nationalites();
+	private Inscriptions inscriptions = new Inscriptions();
+	
 	public Matrimoniales getChoosedMatrimoniale() {
 		return choosedMatrimoniale;
 	}
@@ -106,15 +116,41 @@ public class InscriptionBean {
 	private UserAuthorization userAuthorization = new UserAuthorization();
 	private int maxMatricule = (int) 0;
 	
+	private AnneesScolaire anneEncoure = new AnneesScolaire();
+	
+	@PostConstruct
+	public AnneesScolaire recupererAnne(){
+		anneEncoure = reqAnneeScolaire.recupererDerniereAnneeScolaire().get(0);
+		return anneEncoure;
+	}
+	
 	private String destination="C:\\GIVAC\\PHOTO";
 
 	// Contrôle de composant
 	private CommandButton btnValider = new CommandButton();
 	private InputText inputVhOblig = new InputText();
 	private OutputLabel outputVhOblig = new OutputLabel();
+	
+	
+	public void enregistrerTout() {
+		enregistrer();
+		enregistrerInscription();
+		
+		
+	}
+	
+	public void enregistrerInscription() {
+		inscriptions.setSection(choosedSection);
+		inscriptions.setEtudiants(etudiants);
+		inscriptions.setAnneesScolaire(anneEncoure);
+		inscriptions.setRegime(choosedRegime);
+		
+		getService().addObject(inscriptions);
+		
+		
+	}
 
 	public void enregistrer(){
-		
 		//enregistrer das la table Etudiants
 		
 		  etudiants.setNumetudiant(maxMatricule);
@@ -126,7 +162,7 @@ public class InscriptionBean {
 		  etudiants.setNiveaux(choosedNiveau);
 		  etudiants.setPays(choosedPays);
 		  etudiants.setSantes(choosedSante);
-		  //enseignant.setCodeSexe(chooseedSexe.getCodeSexe());
+		  		  
 		  getService().addObject(etudiants);
 
 		vider(etudiants);
@@ -531,5 +567,13 @@ public void upload(FileUploadEvent event) {
 
 	public void setMaxMatricule(int maxMatricule) {
 		this.maxMatricule = maxMatricule;
+	}
+
+	public Inscriptions getInscriptions() {
+		return inscriptions;
+	}
+
+	public void setInscriptions(Inscriptions inscriptions) {
+		this.inscriptions = inscriptions;
 	}
 }
