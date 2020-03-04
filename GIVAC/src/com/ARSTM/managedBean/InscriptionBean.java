@@ -135,6 +135,7 @@ public class InscriptionBean {
 	public void enregistrerTout() {
 		enregistrer();
 		enregistrerInscription();
+		vider(etudiants);
 		
 		
 	}
@@ -165,12 +166,12 @@ public class InscriptionBean {
 		  		  
 		  getService().addObject(etudiants);
 
-		vider(etudiants);
-		maxMatricule = (int) 0;
+		//maxMatricule = (int) 0;
 		
 		FacesContext.getCurrentInstance().addMessage(null,
 				new FacesMessage(FacesMessage.SEVERITY_INFO, "Enregistrement effcetué!", null));
 	}
+	
 
 	public void annuler() {
 		btnValider.setDisabled(false);
