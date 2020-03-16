@@ -141,11 +141,12 @@ public class InscriptionBean {
 	}
 	
 	public void enregistrerInscription() {
+		System.out.println("--------section:"+choosedSection.getAbrevSection());//Clen after
 		inscriptions.setSection(choosedSection);
+		System.out.println("--------Regime:"+choosedRegime.getLibRegime());//Clen after
 		inscriptions.setEtudiants(etudiants);
 		inscriptions.setAnneesScolaire(anneEncoure);
 		inscriptions.setRegime(choosedRegime);
-		
 		getService().addObject(inscriptions);
 		
 		
@@ -163,6 +164,7 @@ public class InscriptionBean {
 		  etudiants.setNiveaux(choosedNiveau);
 		  etudiants.setPays(choosedPays);
 		  etudiants.setSantes(choosedSante);
+		  etudiants.setDiplomes(choosedDiplome);
 		  		  
 		  getService().addObject(etudiants);
 

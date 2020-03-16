@@ -213,12 +213,14 @@
 							<h:panelGrid columns="3" id="button_grid">
 								<p:commandButton value="Enregistrer"
 								
-								action="#{inscriptionBean.enregistrer}" immediate="true" update="@parent, :form"
+								action="#{inscriptionBean.enregistrerTout}" immediate="true" update="@parent, :form"
 								binding="#{inscriptionBean.btnValider}"
 								oncomplete="document.location.reload(false)">
 								<p:confirm header="Confirmation"
 								message="Confirmez-vous l'enregistrement?" icon="ui-icon-alert" />
 								</p:commandButton>
+								
+								
 
 								<p:commandButton value="Annuler"
 									action="#{enseignantBean.annuler}" update="form">
