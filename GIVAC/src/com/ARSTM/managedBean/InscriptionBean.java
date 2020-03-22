@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -147,10 +148,14 @@ public class InscriptionBean {
 		inscriptions.setEtudiants(etudiants);
 		inscriptions.setAnneesScolaire(anneEncoure);
 		inscriptions.setRegime(choosedRegime);
+		inscriptions.setDateInscription(new Date());
 		getService().addObject(inscriptions);
-		
-		
 	}
+	
+	public void verifier() {
+		System.out.println("---SECTION: "+choosedSection);
+	}
+	
 
 	public void enregistrer(){
 		//enregistrer das la table Etudiants
