@@ -16,3 +16,15 @@ Sessio et parcours (Gestion des sessions)
 - cahier d'appel electronique
 
 
+************************** MODIFICATION A APPORTER*****************************
+	MCD
+		- Mettre matricule en String (Table Etudiant)
+		- Trouver le mécanisme pour attribuer les matricules Ex: xxxxxx-2019 (XXXXX étant le numéro d"ordre)
+		- Mettre le type de l'attibut date inscription en dateheure et non time.
+
+
+		
+		
+		
+
+

@@ -142,9 +142,7 @@ public class InscriptionBean {
 	}
 	
 	public void enregistrerInscription() {
-		System.out.println("--------section:"+choosedSection.getAbrevSection());//Clen after
 		inscriptions.setSection(choosedSection);
-		System.out.println("--------Regime:"+choosedRegime.getLibRegime());//Clen after
 		inscriptions.setEtudiants(etudiants);
 		inscriptions.setAnneesScolaire(anneEncoure);
 		inscriptions.setRegime(choosedRegime);
@@ -152,11 +150,7 @@ public class InscriptionBean {
 		getService().addObject(inscriptions);
 	}
 	
-	public void verifier() {
-		System.out.println("---SECTION: "+choosedSection);
-	}
 	
-
 	public void enregistrer(){
 		//enregistrer das la table Etudiants
 		

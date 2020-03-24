@@ -174,7 +174,7 @@
 								<p:selectOneMenu id="parcours_eleve"
 									value="#{inscriptionBean.choosedSection}"
 									converter="#{entityConverter}">
-									<p:ajax listener="#{inscriptionBean.verifier}" event="change" process="@this"></p:ajax>
+									<p:ajax event="change" process="@this"></p:ajax>
 									<f:selectItem itemLabel="Selectionnez" itemValue="" />
 									<f:selectItems value="#{inscriptionBean.listeSection}"
 										var="tata" itemLabel="#{tata.abrevSection}"
@@ -185,7 +185,7 @@
 								<p:selectOneMenu id="regime_eleve"
 									value="#{inscriptionBean.choosedRegime}"
 									converter="#{entityConverter}">
-									<p:ajax listener="#{inscriptionBean.verifier}" event="change" process="@this"></p:ajax>
+									<p:ajax event="change" process="@this"></p:ajax>
 									<f:selectItem itemLabel="Selectionnez" itemValue="" />
 									<f:selectItems value="#{inscriptionBean.listeRegime}"
 										var="tata" itemLabel="#{tata.libRegime}"
