@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ARSTM.model.Enseignant;
 import com.ARSTM.model.Etudiants;
+import com.ARSTM.model.Inscriptions;
 
 @Transactional
 @Component
@@ -20,6 +21,13 @@ public class RequeteInscription {
 	public List<Etudiants> recupMaxNumetudiant(){
 		String query = "SELECT `etudiants`.*, `etudiants`.`NUMETUDIANT` FROM `etudiants` ORDER BY `etudiants`.`NUMETUDIANT` DESC";
 	List list = getSessionFactory().getCurrentSession().createSQLQuery(query).addEntity(Etudiants.class).list();		
+	return list;
+	}
+	
+	
+	public List<Inscriptions> recupInscriptionByNumEtudiant(int numeroEtudiant){
+		String query = "SELECT * FROM `inscriptions` WHERE inscriptions.NUMETUDIANT = '"+numeroEtudiant+"'";
+	List list = getSessionFactory().getCurrentSession().createSQLQuery(query).addEntity(Inscriptions.class).list();		
 	return list;
 	}
 	public SessionFactory getSessionFactory() {

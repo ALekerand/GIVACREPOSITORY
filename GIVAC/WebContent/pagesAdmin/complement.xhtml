@@ -10,58 +10,55 @@
 			<h1 class="page-title">COMPLEMENT</h1>
 			<p:messages autoUpdate="true" closable="true" showDetail="false" />
 			<div class="widget-content">
-				<p:panel header="Enregistrement">
+			<p:panel header="Enregistrement">
 					<br />
+			
+			<p:dataTable id="table" selectionMode="single" var="tata"
+						value="#{complementBean.listEtudiant}" selection="#{complementBean.selectedEtudiant}"
+						rowKey="#{tata.numetudiant}" emptyMessage="Aucun enregistrement">
+						<p:ajax event="rowSelect" listener="#{complementBean.selectionner}" update=":form" />
+						<f:facet name="header">LISTE DES ETUDIANTS</f:facet>
+						<p:column headerText="Nom" style="width:20%">#{tata.nomEtudiant}</p:column>
+						<p:column headerText="Prenoms" style="width:50%">#{tata.prenomEtudiant}</p:column>
+						<p:column headerText="Date Naissance" style="width:30%">#{tata.datenais}</p:column>
+						<p:column headerText="Nationalité" style="width:30%">#{tata.nationalites.libnationalite}</p:column>
+					</p:dataTable>
+		
+		<h:panelGrid id="rech_grid" columns="4" cellpadding="6">
+			<p:outputLabel for="matricule" value="Matricule" />
+			<p:inputText id="matricule" value="#{complementBean.matriculeRecherche}"  />
+			<p:commandButton value="Rechercher" actionListener="#{complementBean.rechercher}" partialSubmit="tue" process="@this,matricule" update="form"></p:commandButton>
+		
+		
+		</h:panelGrid>		
 					
 					<table>
-					  <tr>
+					  <tr valign="top">
 					    <td>
-					<!-- <p:dataTable id="table" selectionMode="single" var="tata"
-					value=" "
-					selection=" "
-					rowKey=" "
-					emptyMessage="Aucun enregistrement">
-					<p:ajax event="rowSelect" listener="#{complementBean.selectionner}"
-						update=":form" />
-					<f:facet name="header">LISTE DES FILIERES</f:facet>
-					<p:column headerText="Cycle" style="width:60%">#{tata.nomCycle}</p:column>
-					<p:column headerText="Coût" style="width:30%">
-					
-					<h:outputText value=" ">
-					<f:convertNumber pattern="##,###.###"></f:convertNumber>
-					</h:outputText>
-					</p:column>
-				</p:dataTable> -->
-					    </td>
-					    <td></td>
-					  </tr>
-					</table>
-
-					
-					<h:panelGrid id="annee" columns="4" cellpadding="6">
-						<p:outputLabel for="annee" value="Année accademique" />
-						<p:inputText id="annee" value=" "  />
+					    <h:panelGrid id="annee_grid" columns="4" cellpadding="6">
+						<p:outputLabel for="name" value="Nom:" />
+						<p:inputText id="name" value="#{complementBean.etudiants.nomEtudiant}" readonly="true"  />
 						
-						<p:outputLabel for="ecole" value="Ecole" styleClass="outputDecalage" />
-						<p:inputText id="ecole" value="" required="true" />
+						<p:outputLabel for="pren" value="Prenoms" styleClass="outputDecalage"/>
+						<p:inputText id="pren" value="#{complementBean.etudiants.prenomEtudiant}" readonly="true" />
 						
-						<p:outputLabel for="fil" value="Filière" styleClass="outputDecalage" />
-						<p:inputText id="fil" value=""  />
-						
-						
-						
-						<p:outputLabel for="opt" value="Option" />
-						<p:inputText id="opt" value=" "  />
+						<p:outputLabel for="dat_nais" value="Date naissance"  />
+						<p:inputText id="dat_nais" value="#{complementBean.etudiants.datenais}" pattern="dd/MM/yyyy">
+						<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+						</p:inputText>
 						
 						<p:outputLabel for="ses" value="Session" styleClass="outputDecalage" />
-						<p:inputText id="ses" value="" />
+						<p:inputText id="ses" value="#{complementBean.inscriptions.section.abrevSection}" />
 						
-						<p:outputLabel for="reg" value="Regime:" styleClass="outputDecalage" />
-						<p:inputText id="reg" value=""  />
-						
-						<p:outputLabel for="camp" value="Campus:" styleClass="outputDecalage" />
-						<p:inputText id="camp" value=""  />
 					</h:panelGrid>
+					    </td>
+					    <td align="right">
+					    <p:graphicImage id="graphIm" value="#{complementBean.content}" height="110" width="110"></p:graphicImage>	
+					    </td>
+					  </tr>
+					</table>
+	
+					
 					
 			<fieldset>
 				<legend>Informations complémentaires</legend>
@@ -69,76 +66,78 @@
 							<h:panelGrid id="complement_etud" columns="4" cellpadding="8">
 				
 				<p:outputLabel for="cni" value="Numéro CNI/PASS:" />
-						<p:inputText id="cni" value=" " required="true" />
-						
-						<p:outputLabel for="sit" value="Situation mat." styleClass="outputDecalage" />
-						<p:inputText id="sit" value="" required="true" />
-						
-						<p:outputLabel for="nbr_enf" value="Nbre enfant:" styleClass="outputDecalage" />
-						<p:inputText id="nbr_enf" value="" required="true" />
-						
-						
-						
-						<p:outputLabel for="sante" value="Etat santé:" />
-						<p:inputText id="sante" value=" " required="true" />
-						
-						<p:outputLabel for="niv" value="Niveau étude:" styleClass="outputDecalage" />
-						<p:inputText id="niv" value="" required="true" />
+				<p:inputText id="cni" value="#{complementBean.etudiants.numcni}" required="true" />
+				
+
 						
 						<p:outputLabel for="ecol_p" value="Etablis précédent:" styleClass="outputDecalage" />
-						<p:inputText id="ecol_p" value="" required="true" />
+						<p:inputText id="ecol_p" value="#{complementBean.etudiants.ecoleAncienneEtudiant}" required="true" />
 						
-						<p:outputLabel for="diplom" value="Diplome:" styleClass="outputDecalage" />
-						<p:inputText id="diplom" value="" required="true" />
-			</h:panelGrid>			
+						
+						
+<p:outputLabel for="tel" value="Téléphone:" styleClass="outputDecalage" />
+<p:inputText id="tel" value="#{complementBean.etudiants.telEtudiant}" />
+
+<p:outputLabel for="email" value="E-mail:" styleClass="outputDecalage" />
+<p:inputText id="email" value="#{complementBean.etudiants.mailEtudiant}" />
+			</h:panelGrid>
+			
+		
+				
+	<p:outputLabel  value="Photo ici" />
+	<p:fileUpload fileUploadListener="#{complementBean.upload}" mode="advanced" dragDropSupport="false" cancelLabel="Annuler"
+	uploadLabel="Valider" label="Jouindre une photo" sizeLimit="1000000" fileLimit="3" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" update="graphIm" />
+	
+	
 			</fieldset>
 			
-			<legend>Informations parents</legend>
+<legend>Informations parents</legend>
 				<h:panelGrid id="parent_grid" columns="4" cellpadding="6">
 				
-				<p:outputLabel for="pere" value="Nom mère:" />
-				<p:inputText id="pere" value=" " required="true" />
+				<p:outputLabel for="pere" value="Nom père:" />
+				<p:inputText id="pere" value="#{complementBean.etudiants.nomPrenomsPere}" required="true" />
 				
 				<p:outputLabel for="profes" value="Profession" styleClass="outputDecalage" />
-				<p:inputText id="profes" value="" required="true" />
+				<p:inputText id="profes" value="#{complementBean.etudiants.fonctionPere}" required="true"/>
 				
 				<p:outputLabel for="tel_pere" value="Telephone:" styleClass="outputDecalage" />
-				<p:inputText id="tel_pere" value="" required="true" />
+				<p:inputText id="tel_pere" value="#{complementBean.etudiants.telPere}" required="true" />
 				
 				
 				
 				<p:outputLabel for="mere" value="Nom mère:" styleClass="outputDecalage" />
-				<p:inputText id="mere" value="" required="true"/>
+				<p:inputText id="mere" value="#{complementBean.etudiants.nomPrenomsMere}" required="true"/>
 				
 				<p:outputLabel for="profmere" value="Prefession " />
-				<p:inputText id="profmere" value=" " required="true" />
+				<p:inputText id="profmere" value="#{complementBean.etudiants.fonctionMere}" required="true" />
 				
 				<p:outputLabel for="tel_mere" value="Telephone:" styleClass="outputDecalage" />
-				<p:inputText id="mere" value="" required="true"/>
+				<p:inputText id="tel_mere" value="#{complementBean.etudiants.telMere}" required="true"/>
 				
 				
 				
 				<p:outputLabel for="nom_cor" value="Nom corespondant:" styleClass="outputDecalage" />
-				<p:inputText id="nom_cor" value="" required="true" />
+				<p:inputText id="nom_cor" value="#{complementBean.etudiants.nomPrenomsTuteur}" required="true" />
 				
 				<p:outputLabel for="tel_cor" value="Téléphone" styleClass="outputDecalage" />
-				<p:inputText id="tel_cor" value="" required="true" />
+				<p:inputText id="tel_cor" value="#{complementBean.etudiants.telTuteur}" required="true" />
 				
-				<p:outputLabel for="adresse_cor" value="Adresse corespondant" styleClass="outputDecalage" />
-				<p:inputText id="ad_cor" value="" required="true" />
+				<p:outputLabel for="ad_cor" value="Adresse corespondant" styleClass="outputDecalage" />
+				<p:inputText id="ad_cor" value=" " required="true" />
 				
 				<p:outputLabel for="nom_med" value="Nom médecin:" styleClass="outputDecalage" />
-				<p:inputText id="nom_med" value="" required="true"/>
+				<p:inputText id="nom_med" value="#{complementBean.etudiants.nomPrenomsDocteut}" required="true"/>
 				
 				<p:outputLabel for="tel_med" value="Télephone:" styleClass="outputDecalage" />
-				<p:inputText id="nom_med" value="" required="true"/>
-			</h:panelGrid>
+				<p:inputText id="tel_med" value="#{complementBean.etudiants.telDocteur}" required="true"/>
+			</h:panelGrid>			
 			
 
 					<br></br>
 					<h:panelGrid columns="4">
+					<p:commandButton value="Save" actionListener="#{complementBean.enregistrer}"></p:commandButton>
 						<p:commandButton value="Enregistrer"
-							action="#{complementBean.enregistrer}" update="table, cycle_grid"
+							action="#{complementBean.enregistrer}" 
 							binding="#{complementBean.btnValider}">
 						</p:commandButton>
 						
@@ -151,23 +150,7 @@
 
 				<br />
 
-				<p:dataTable id="table" selectionMode="single" var="tata"
-					value="#{complementBean.listeCycle}"
-					selection="#{complementBean.selectedCycle}"
-					rowKey="#{tata.codeCycle}"
-					emptyMessage="Aucun enregistrement">
-					<p:ajax event="rowSelect" listener="#{complementBean.selectionner}"
-						update=":form" />
-					<f:facet name="header">LISTE DES FILIERES</f:facet>
-					<p:column headerText="Cycle" style="width:60%">#{tata.nomCycle}</p:column>
-					<p:column headerText="Coût" style="width:30%">
-					
-					<h:outputText value="#{tata.tauxHoraire}">
-					<f:convertNumber pattern="##,###.###"></f:convertNumber>
-					</h:outputText>
-					</p:column>
-				</p:dataTable>
-				<!-- </h:form> -->
+				
 
 			</div>
 			<!-- Boite de confirmation -->

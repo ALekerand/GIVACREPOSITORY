@@ -1,18 +1,39 @@
 package com.ARSTM.managedBean;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.servlet.ServletContext;
 
+import org.apache.commons.io.IOUtils;
 import org.primefaces.component.commandbutton.CommandButton;
+import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
+import org.primefaces.model.UploadedFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.ARSTM.model.AnneesScolaire;
+import com.ARSTM.model.Diplomes;
+import com.ARSTM.model.Etudiants;
+import com.ARSTM.model.Inscriptions;
+import com.ARSTM.model.Matrimoniales;
+import com.ARSTM.model.Niveaux;
+import com.ARSTM.model.Santes;
 import com.ARSTM.requetes.ReqAnneeScolaire;
+import com.ARSTM.requetes.ReqEtudiant;
+import com.ARSTM.requetes.RequeteInscription;
 import com.ARSTM.service.Iservice;
 
 @Component
@@ -22,13 +43,139 @@ public class ComplementBean {
 	private Iservice service;
 	@Autowired
 	ReqAnneeScolaire reqAnneeScolaire;
+	@Autowired
+	ReqEtudiant reqEtudiant;
+	@Autowired
+	RequeteInscription requeteInscription;
 
 	private AnneesScolaire anneeScolaire = new AnneesScolaire();
+	private Etudiants etudiants = new Etudiants();
+	private Matrimoniales choosedMatrimoniales;
+	private Santes chooseedsantes = new Santes();
+	private Niveaux choosedNiveaux = new Niveaux();
+	private Diplomes choosedDiplomes = new Diplomes();
+	private String matriculeRecherche;
+	private Inscriptions inscriptions = new Inscriptions();
+	private Etudiants selectedEtudiant = new Etudiants();
+	
+	
+	// Pour l'upload
+	private String destination = "E:/testFile/";
+	private String cheminFinal ="";
+	private	StreamedContent content = new DefaultStreamedContent() ;
+	
+	
+	private List listMatrimonale = new ArrayList<>();
+	private List listeSante = new ArrayList<>();
+	private List listeNiveaux = new ArrayList<>();
+	private List listDiplome = new ArrayList<>();
+	private List listEtudiant = new ArrayList<>();
 	
 	// Contrôle de coposant
 	private CommandButton btnValider = new CommandButton();
 	private CommandButton btnModifier = new CommandButton();
 	private List listeEtudiant = new ArrayList<>();
+	
+	
+	// Méthodes
+	public void rechercher() {
+		etudiants = reqEtudiant.recupererEtudiantByMlle(matriculeRecherche).get(0);
+		if (etudiants!= null) {
+			inscriptions = requeteInscription.recupInscriptionByNumEtudiant(etudiants.getNumetudiant()).get(0);
+			System.out.println("===========Le numero inscription"+inscriptions.getCodeInscription());
+		}
+	}
+	
+	
+	public void selectionner() {
+		etudiants = selectedEtudiant;
+	}
+	
+	public void enregistrer() {
+		System.out.println("=====Save");//Clean after
+		service.updateObject(etudiants);
+		System.out.println("===== Fin Save");//Clean after
+	}
+	
+//************************Pour le traitement de la photo
+	
+	public void upload(FileUploadEvent event) {
+        FacesMessage msg = new FacesMessage("Success! ", event.getFile().getFileName() + " is uploaded.");
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+        // Do what you want with the file
+        try {
+            copyFile(event.getFile().getFileName(), event.getFile().getInputstream());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+ 
+    }
+ 
+    public void copyFile(String fileName, InputStream in) {
+        try {
+        	cheminFinal = destination + fileName;
+            // write the inputStream to a FileOutputStream
+            OutputStream out = new FileOutputStream(new File(destination + fileName));
+ 
+            int read = 0;
+            byte[] bytes = new byte[1024];
+ 
+            while ((read = in.read(bytes)) != -1) {
+                out.write(bytes, 0, read);
+            }
+ 
+            in.close();
+            out.flush();
+            out.close();
+ // Charger le fichier dans le graphique image
+            
+            getContent();
+            System.out.println("New file created!");
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+        
+       
+    }
+    
+    /****** Accesseurs ***********************************/
+    
+    //Pour charger le graphiqueImage
+    public StreamedContent getContent() {
+		
+    	
+    	if ((cheminFinal.equals(""))) {
+    		setCheminFinal(destination + "avatar.jpg");
+    		System.out.println("====Valeur chemin final"+getCheminFinal());
+    	}
+    	
+    	try {
+			 
+ 			InputStream is = new FileInputStream(cheminFinal);
+ 			//is.close();  
+ 			content	= new DefaultStreamedContent(is);
+ 			
+ 		} catch (FileNotFoundException e) {
+ 			// TODO Auto-generated catch block
+ 			e.printStackTrace();
+ 		} catch (IOException e) {
+ 			// TODO Auto-generated catch block
+ 			e.printStackTrace();
+ 		}
+		  return content;	 
+	}
+    
+	public void setContent(StreamedContent content) {
+		this.content = content;
+	}
+
+	public String getCheminFinal() {
+		return cheminFinal;
+	}
+
+	public void setCheminFinal(String cheminFinal) {
+		this.cheminFinal = cheminFinal;
+	}
 	
 	
 	public List getListeEtudiant() {
@@ -42,9 +189,7 @@ public class ComplementBean {
 	public void actualiserList(){
 	}
 
-	public void enregistrer() {
-		
-	}
+
 
 	public void annuler() {
 		btnValider.setDisabled(false);
@@ -53,7 +198,7 @@ public class ComplementBean {
 	}
 	
 	
-	/****** Accesseurs ***********************************/
+	
 	public Iservice getService() {
 		return service;
 	}
@@ -96,4 +241,124 @@ public class ComplementBean {
 	public void setReqAnneeScolaire(ReqAnneeScolaire reqAnneeScolaire) {
 		this.reqAnneeScolaire = reqAnneeScolaire;
 	}
+
+	public Etudiants getEtudiants() {
+		return etudiants;
+	}
+
+	public void setEtudiants(Etudiants etudiants) {
+		this.etudiants = etudiants;
+	}
+
+	public List getListMatrimonale() {
+		listMatrimonale = service.getObjects("Matrimoniales");
+		return listMatrimonale;
+	}
+
+	public void setListMatrimonale(List listMatrimonale) {
+		this.listMatrimonale = listMatrimonale;
+	}
+
+	public Matrimoniales getChoosedMatrimoniales() {
+		return choosedMatrimoniales;
+	}
+
+	public void setChoosedMatrimoniales(Matrimoniales choosedMatrimoniales) {
+		this.choosedMatrimoniales = choosedMatrimoniales;
+	}
+
+	public Santes getChooseedsantes() {
+		return chooseedsantes;
+	}
+
+	public void setChooseedsantes(Santes chooseedsantes) {
+		this.chooseedsantes = chooseedsantes;
+	}
+
+	public List getListeSante() {
+		listeSante = service.getObjects("Santes");
+		return listeSante;
+	}
+
+	public void setListeSante(List listeSante) {
+		this.listeSante = listeSante;
+	}
+
+	public Niveaux getChoosedNiveaux() {
+		return choosedNiveaux;
+	}
+
+	public void setChoosedNiveaux(Niveaux choosedNiveaux) {
+		this.choosedNiveaux = choosedNiveaux;
+	}
+
+	public List getListeNiveaux() {
+		listeNiveaux = service.getObjects("Niveaux");
+		return listeNiveaux;
+	}
+
+	public void setListeNiveaux(List listeNiveaux) {
+		this.listeNiveaux = listeNiveaux;
+	}
+
+	public Diplomes getChoosedDiplomes() {
+		return choosedDiplomes;
+	}
+
+	public void setChoosedDiplomes(Diplomes choosedDiplomes) {
+		this.choosedDiplomes = choosedDiplomes;
+	}
+
+	public List getListDiplome() {
+		listDiplome = service.getObjects("Diplomes");
+		return listDiplome;
+	}
+
+	public void setListDiplome(List listDiplome) {
+		this.listDiplome = listDiplome;
+	}
+
+
+
+	public String getMatriculeRecherche() {
+		return matriculeRecherche;
+	}
+
+
+
+	public void setMatriculeRecherche(String matriculeRecherche) {
+		this.matriculeRecherche = matriculeRecherche;
+	}
+
+
+
+	public Inscriptions getInscriptions() {
+		return inscriptions;
+	}
+
+
+
+	public void setInscriptions(Inscriptions inscriptions) {
+		this.inscriptions = inscriptions;
+	}
+
+	public List getListEtudiant() {
+		return listEtudiant;
+	}
+
+	public void setListEtudiant(List listEtudiant) {
+		this.listEtudiant = listEtudiant;
+	}
+
+
+	public Etudiants getSelectedEtudiant() {
+		return selectedEtudiant;
+	}
+
+
+	public void setSelectedEtudiant(Etudiants selectedEtudiant) {
+		this.selectedEtudiant = selectedEtudiant;
+	}
+
+	
 }

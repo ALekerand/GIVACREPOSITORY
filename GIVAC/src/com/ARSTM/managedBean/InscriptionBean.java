@@ -115,22 +115,36 @@ public class InscriptionBean {
 	private List listeDiplome =  new ArrayList<>();
 	private UserAuthentication userAuthentication = new UserAuthentication();
 	private UserAuthorization userAuthorization = new UserAuthorization();
-	private int maxMatricule = (int) 0;
+	private int maxNumeEtudiant = (int) 0;
+	private String matricule;
 	
 	private AnneesScolaire anneEncoure = new AnneesScolaire();
 	
 	@PostConstruct
 	public AnneesScolaire recupererAnne(){
+		//Charger l'année scolaire en cours
 		anneEncoure = reqAnneeScolaire.recupererDerniereAnneeScolaire().get(0);
+		//générer le matricule de l'étudiant
+		genererMatricule();
 		return anneEncoure;
 	}
 	
-	private String destination="C:\\GIVAC\\PHOTO";
+	
+public String genererMatricule() {
+		try {
+			maxNumeEtudiant = requeteInscription.recupMaxNumetudiant().get(0).getNumetudiant();
+		} catch (IndexOutOfBoundsException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		matricule = ((maxNumeEtudiant+1) +"-"+anneEncoure.getAnneesDebut());
+		return matricule;
+	}
+	
+	//private String destination="C:\\GIVAC\\PHOTO";
 
 	// Contrôle de composant
 	private CommandButton btnValider = new CommandButton();
-	private InputText inputVhOblig = new InputText();
-	private OutputLabel outputVhOblig = new OutputLabel();
 	
 	
 	public void enregistrerTout() {
@@ -154,7 +168,7 @@ public class InscriptionBean {
 	public void enregistrer(){
 		//enregistrer das la table Etudiants
 		
-		  etudiants.setNumetudiant(maxMatricule);
+		  etudiants.setMle(genererMatricule());
 		  etudiants.setNomEtudiant(getEtudiants().getNomEtudiant().toUpperCase());
 		  etudiants.setMatrimoniales(choosedMatrimoniale);
 		  etudiants.setNationalites(choosedNationalites);
@@ -164,10 +178,10 @@ public class InscriptionBean {
 		  etudiants.setPays(choosedPays);
 		  etudiants.setSantes(choosedSante);
 		  etudiants.setDiplomes(choosedDiplome);
-		  		  
 		  getService().addObject(etudiants);
-
-		//maxMatricule = (int) 0;
+		  
+		  //Recharger le Matricule pour un nouvel enregistrement
+		  genererMatricule();
 		
 		FacesContext.getCurrentInstance().addMessage(null,
 				new FacesMessage(FacesMessage.SEVERITY_INFO, "Enregistrement effcetué!", null));
@@ -215,37 +229,26 @@ public class InscriptionBean {
 	}
 
 	
-public void upload(FileUploadEvent event) { 
-		       
-		try {
-		copyFile(event.getFile().getFileName(), event.getFile().getInputstream());
-		
-		//Mis à jour dans la table enseignant
-		//etudiants.setPhoto(destination);
-		} catch (IOException e) {
-		e.printStackTrace();
-		}
-		} 
-	
-	
-		public void copyFile(String fileName, InputStream in) {
-		try {
-		// write the inputStream to a FileOutputStream
-		OutputStream out = new FileOutputStream(new File(destination + fileName));
-		int read = 0;
-		byte[] bytes = new byte[1024];
-		while ((read = in.read(bytes)) != -1) {
-		out.write(bytes, 0, read);
-		}
-		in.close();
-		out.flush();
-		out.close();
-		System.out.println("New file created!");//Clean after
-		} catch (IOException e) {
-		System.out.println(e.getMessage());//Clean after
-
-		}
-		}
+	/*
+	 * public void upload(FileUploadEvent event) {
+	 * 
+	 * try { copyFile(event.getFile().getFileName(),
+	 * event.getFile().getInputstream());
+	 * 
+	 * //Mis à jour dans la table enseignant //etudiants.setPhoto(destination); }
+	 * catch (IOException e) { e.printStackTrace(); } }
+	 * 
+	 * 
+	 * public void copyFile(String fileName, InputStream in) { try { // write the
+	 * inputStream to a FileOutputStream OutputStream out = new FileOutputStream(new
+	 * File(destination + fileName)); int read = 0; byte[] bytes = new byte[1024];
+	 * while ((read = in.read(bytes)) != -1) { out.write(bytes, 0, read); }
+	 * in.close(); out.flush(); out.close();
+	 * System.out.println("New file created!");//Clean after } catch (IOException e)
+	 * { System.out.println(e.getMessage());//Clean after
+	 * 
+	 * } }
+	 */
 
 
 	//**************************ACCESSEURS*************************//*
@@ -531,21 +534,6 @@ public void upload(FileUploadEvent event) {
 		this.listeSante = listeSante;
 	}
 
-	public InputText getInputVhOblig() {
-		return inputVhOblig;
-	}
-
-	public void setInputVhOblig(InputText inputVhOblig) {
-		this.inputVhOblig = inputVhOblig;
-	}
-
-	public OutputLabel getOutputVhOblig() {
-		return outputVhOblig;
-	}
-
-	public void setOutputVhOblig(OutputLabel outputVhOblig) {
-		this.outputVhOblig = outputVhOblig;
-	}
 
 	public UserAuthorization getUserAuthorization() {
 		return userAuthorization;
@@ -555,27 +543,20 @@ public void upload(FileUploadEvent event) {
 		this.userAuthorization = userAuthorization;
 	}
 
-	public int getMaxMatricule() {
-		if (maxMatricule == 0) {
-			try {
-				maxMatricule = requeteInscription.recupMaxNumetudiant().get(0).getNumetudiant();
-				etudiants.setNumetudiant(maxMatricule++);
-			} catch (Exception e) {
-				maxMatricule = (int) 1;
-			}
-		}
-		return maxMatricule;
-	}
-
-	public void setMaxMatricule(int maxMatricule) {
-		this.maxMatricule = maxMatricule;
-	}
-
+	
 	public Inscriptions getInscriptions() {
 		return inscriptions;
 	}
 
 	public void setInscriptions(Inscriptions inscriptions) {
 		this.inscriptions = inscriptions;
+	}
+
+	public String getMatricule() {
+		return matricule;
+	}
+
+	public void setMatricule(String matricule) {
+		this.matricule = matricule;
 	}
 }

@@ -18,10 +18,15 @@ Sessio et parcours (Gestion des sessions)
 
 ************************** MODIFICATION A APPORTER*****************************
 	MCD
+	*Table Etudiant
 		- Mettre matricule en String (Table Etudiant)
 		- Trouver le mécanisme pour attribuer les matricules Ex: xxxxxx-2019 (XXXXX étant le numéro d"ordre)
+		- Insertion de l'attribut date_obtention_diplom
+		- attribut nomPrenomsDocteut rectifié en nomPrenomsDocteur
+		- ajout du champ photo pour garder l'info sur l'adresse de la photo de l'étudiant
+		
+*Table INSCRIPTION		
 		- Mettre le type de l'attibut date inscription en dateheure et non time.
-
 
 		
 		
