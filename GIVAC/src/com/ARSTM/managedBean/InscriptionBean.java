@@ -78,6 +78,7 @@ public class InscriptionBean {
 	private Diplomes choosedDiplome = new Diplomes();
 	private Sexe chooseedSexe = new Sexe();
 	private Pays choosedPays =  new Pays();
+	private Pays choosedPaysNaiss = new Pays();
 	private Ecole choosedEcole = new Ecole();
 	private Filieres choosedFiliere = new Filieres();
 	private Mention choosedMention = new Mention();
@@ -141,18 +142,15 @@ public String genererMatricule() {
 		return matricule;
 	}
 	
-	//private String destination="C:\\GIVAC\\PHOTO";
 
 	// Contrôle de composant
 	private CommandButton btnValider = new CommandButton();
 	
 	
 	public void enregistrerTout() {
-		enregistrer();
+		enregistrerEtudiant();
 		enregistrerInscription();
 		vider(etudiants);
-		
-		
 	}
 	
 	public void enregistrerInscription() {
@@ -165,9 +163,8 @@ public String genererMatricule() {
 	}
 	
 	
-	public void enregistrer(){
+	public void enregistrerEtudiant(){
 		//enregistrer das la table Etudiants
-		
 		  etudiants.setMle(genererMatricule());
 		  etudiants.setNomEtudiant(getEtudiants().getNomEtudiant().toUpperCase());
 		  etudiants.setMatrimoniales(choosedMatrimoniale);
@@ -175,6 +172,7 @@ public String genererMatricule() {
 		  etudiants.setSexe(chooseedSexe);
 		  etudiants.setSantes(choosedSante);
 		  etudiants.setNiveaux(choosedNiveau);
+		  etudiants.setPaysNaissanceEtudiant(choosedPaysNaiss.getLibpays());
 		  etudiants.setPays(choosedPays);
 		  etudiants.setSantes(choosedSante);
 		  etudiants.setDiplomes(choosedDiplome);
@@ -227,29 +225,6 @@ public String genererMatricule() {
 		listeSection.clear();
 		listeSection = requeteSection.recupSectionByMention(choosedMention.getCodeMention());
 	}
-
-	
-	/*
-	 * public void upload(FileUploadEvent event) {
-	 * 
-	 * try { copyFile(event.getFile().getFileName(),
-	 * event.getFile().getInputstream());
-	 * 
-	 * //Mis à jour dans la table enseignant //etudiants.setPhoto(destination); }
-	 * catch (IOException e) { e.printStackTrace(); } }
-	 * 
-	 * 
-	 * public void copyFile(String fileName, InputStream in) { try { // write the
-	 * inputStream to a FileOutputStream OutputStream out = new FileOutputStream(new
-	 * File(destination + fileName)); int read = 0; byte[] bytes = new byte[1024];
-	 * while ((read = in.read(bytes)) != -1) { out.write(bytes, 0, read); }
-	 * in.close(); out.flush(); out.close();
-	 * System.out.println("New file created!");//Clean after } catch (IOException e)
-	 * { System.out.println(e.getMessage());//Clean after
-	 * 
-	 * } }
-	 */
-
 
 	//**************************ACCESSEURS*************************//*
 
@@ -558,5 +533,13 @@ public String genererMatricule() {
 
 	public void setMatricule(String matricule) {
 		this.matricule = matricule;
+	}
+
+	public Pays getChoosedPaysNaiss() {
+		return choosedPaysNaiss;
+	}
+
+	public void setChoosedPaysNaiss(Pays choosedPaysNaiss) {
+		this.choosedPaysNaiss = choosedPaysNaiss;
 	}
 }

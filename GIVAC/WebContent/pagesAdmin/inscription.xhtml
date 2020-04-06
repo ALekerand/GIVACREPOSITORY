@@ -15,7 +15,7 @@
 					<p:tab id="identite" title="Identification">
 						<p:panel header="ELEVE">
 							<h:panelGrid id="eleve_grid" columns="4" cellpadding="5">
-								<h:outputLabel for="matric" value="Matricule" />
+								<h:outputLabel for="matricule" value="Matricule" />
 								<p:inputText id="matricule" 
 									value="#{inscriptionBean.matricule}" readonly="true" />
 								<h:outputLabel />
@@ -25,7 +25,7 @@
 								<p:inputText id="nom_eleve"
 									value="#{inscriptionBean.etudiants.nomEtudiant}" required="true" styleClass="upercase"/>
 
-								<h:outputLabel for="prenom_eleve" value="Prénoms" />
+								<h:outputLabel for="prenom_eleve" value="Prénoms" styleClass="outputDecalage"/>
 								<p:inputText id="prenom_eleve"
 									value="#{inscriptionBean.etudiants.prenomEtudiant}" required="true" />
 
@@ -33,11 +33,31 @@
        						    <p:calendar id="dateNais_eleve" value="#{inscriptionBean.etudiants.datenais}" 
        						    locale="fr" navigator="true" pattern="dd/MM/yyyy" required="true"/>
 
-								<h:outputLabel for="lieuNais_eleve" value="Lieu naissance" />
+								<h:outputLabel for="lieuNais_eleve" value="Lieu naissance" styleClass="outputDecalage"/>
 								<p:inputText id="lieuNais_eleve"
 									value="#{inscriptionBean.etudiants.lieunais}" required="true" />
+							
+							<h:outputLabel for="sexe_eleve" value="Genre" />
+								<p:selectOneMenu id="sexe_eleve"
+									value="#{inscriptionBean.chooseedSexe}"
+									converter="#{entityConverter}">
+									<f:selectItem itemLabel="Selectionnez" itemValue="" />
+									<f:selectItems value="#{inscriptionBean.listeSexe}" var="tata"
+										itemLabel="#{tata.libSexe}" itemValue="#{tata}"></f:selectItems>
+								</p:selectOneMenu>
+						
+						<h:outputLabel for="pays_nais" value="Pays de Naissance" styleClass="outputDecalage"/>
+								<p:selectOneMenu id="pays_nais"
+									value="#{inscriptionBean.choosedPaysNaiss}"
+									converter="#{entityConverter}">
+									<f:selectItem itemLabel="Selectionnez" itemValue="" />
+									<f:selectItems value="#{inscriptionBean.listePays}" var="tata"
+										itemLabel="#{tata.libpays}" itemValue="#{tata}"></f:selectItems>
+								</p:selectOneMenu>
+								
+								
 
-								<h:outputLabel for="pays_eleve" value="Pays" />
+								<h:outputLabel for="pays_eleve" value="Pays d'origine" />
 								<p:selectOneMenu id="pays_eleve"
 									value="#{inscriptionBean.choosedPays}"
 									converter="#{entityConverter}">
@@ -46,7 +66,7 @@
 										itemLabel="#{tata.libpays}" itemValue="#{tata}"></f:selectItems>
 								</p:selectOneMenu>
 
-								<h:outputLabel for="national_eleve" value="Nationalité" />
+								<h:outputLabel for="national_eleve" value="Nationalité" styleClass="outputDecalage"/>
 								<p:selectOneMenu id="national_eleve"
 									value="#{inscriptionBean.choosedNationalites}"
 									converter="#{entityConverter}">
@@ -55,14 +75,7 @@
 										itemLabel="#{tata.libnationalite}" itemValue="#{tata}"></f:selectItems>
 								</p:selectOneMenu>
 								
-								<h:outputLabel for="sexe_eleve" value="Sexe" />
-								<p:selectOneMenu id="sexe_eleve"
-									value="#{inscriptionBean.chooseedSexe}"
-									converter="#{entityConverter}">
-									<f:selectItem itemLabel="Selectionnez" itemValue="" />
-									<f:selectItems value="#{inscriptionBean.listeSexe}" var="tata"
-										itemLabel="#{tata.libSexe}" itemValue="#{tata}"></f:selectItems>
-								</p:selectOneMenu>
+								
 								
 								<h:outputLabel for="niveau_eleve" value="Niveau" />
 								<p:selectOneMenu id="niveau_eleve"
@@ -73,7 +86,7 @@
 										itemLabel="#{tata.libNiveau}" itemValue="#{tata}"></f:selectItems>
 								</p:selectOneMenu>
 								
-								<h:outputLabel for="diplome_eleve" value="Diplôme" />
+								<h:outputLabel for="diplome_eleve" value="Diplôme" styleClass="outputDecalage"/>
 								<p:selectOneMenu id="diplome_eleve"
 									value="#{inscriptionBean.choosedDiplome}"
 									converter="#{entityConverter}">
@@ -83,7 +96,7 @@
 								</p:selectOneMenu>
 								
 								
-								<h:outputLabel for="matrimoniale_eleve" value="Matrimoniale" />
+								<h:outputLabel for="matrimoniale_eleve" value="Stuation matrimoniale" />
 								<p:selectOneMenu id="matrimoniale_eleve"
 									value="#{inscriptionBean.choosedMatrimoniale}"
 									converter="#{entityConverter}">
@@ -92,7 +105,7 @@
 										itemLabel="#{tata.libmatrimoniale}" itemValue="#{tata}"></f:selectItems>
 								</p:selectOneMenu>
 								
-								<h:outputLabel for="sante_eleve" value="Santé" />
+								<h:outputLabel for="sante_eleve" value="Etat de santé" styleClass="outputDecalage"/>
 								<p:selectOneMenu id="sante_eleve"
 									value="#{inscriptionBean.choosedSante}"
 									converter="#{entityConverter}">
@@ -105,9 +118,23 @@
 								<p:inputText id="phone_eleve"
 									value="#{inscriptionBean.etudiants.telEtudiant}" required="true" />
 
-								<h:outputLabel for="mail_eleve" value="mail" />
+								<h:outputLabel for="mail_eleve" value="mail" styleClass="outputDecalage"/>
 								<p:inputText id="mail_eleve"
 									value="#{inscriptionBean.etudiants.mailEtudiant}"/>
+									
+							<h:outputLabel for="nbr_frer" value="Nombre de frères"/>
+								<p:inputText id="nbr_frer"
+									value="#{inscriptionBean.etudiants.nbfreres}" />
+								
+								
+							<h:outputLabel for="nbr_soeur" value="Nombre de soeurs" styleClass="outputDecalage"/>
+								<p:inputText id="nbr_soeur"
+									value="#{inscriptionBean.etudiants.nbsoeurs}" />	
+								
+								
+							<h:outputLabel for="nbr_enf" value="Nombre d'enfants"/>
+								<p:inputText id="nbr_enf"
+									value="#{inscriptionBean.etudiants.nbenfants}"/>
 							</h:panelGrid>
 
 							<br></br>
@@ -180,7 +207,7 @@
 								<h:outputLabel for="regime_eleve" value="Regime" />
 								<p:selectOneMenu id="regime_eleve"
 									value="#{inscriptionBean.choosedRegime}"
-									converter="#{entityConverter}">
+									converter="#{entityConverter}" required="true">
 									<p:ajax event="change" process="@this"></p:ajax>
 									<f:selectItem itemLabel="Selectionnez" itemValue="" />
 									<f:selectItems value="#{inscriptionBean.listeRegime}"
@@ -197,18 +224,12 @@
 										var="tata" itemLabel="#{tata.libtypeLogement}"
 										itemValue="#{tata}"></f:selectItems>
 								</p:selectOneMenu>
-								
-								<p:outputLabel for="nbre_frere" value="Nombre Frères" styleClass="outputDecalage" />
-								<p:inputText id="nbre_frere"
-								value="#{inscriptionBean.etudiants.nbfreres}" required="true" />
-								
-								<p:outputLabel for="nbre_soeur" value="Nombre Soeurs" styleClass="outputDecalage" />
-								<p:inputText id="nbre_soeur"
-								value="#{inscriptionBean.etudiants.nbsoeurs}" required="true" />
-		
-							<hr />
-							<h:panelGrid columns="3" id="button_grid">
-								<p:commandButton value="Enregistrer"
+							</h:panelGrid>
+							
+							
+							<p:toolbar >
+			<f:facet name="left">
+				<p:commandButton value="Enregistrer"
 								
 								action="#{inscriptionBean.enregistrerTout}" immediate="true" update="@parent, :form"
 								binding="#{inscriptionBean.btnValider}"
@@ -217,11 +238,12 @@
 								message="Confirmez-vous l'enregistrement?" icon="ui-icon-alert" />
 								</p:commandButton>
 								
-								<p:commandButton value="Annuler"
+				<p:commandButton value="Annuler"
 									action="#{enseignantBean.annuler}" update="form">
 								</p:commandButton>
-							</h:panelGrid>
-							</h:panelGrid>
+			</f:facet>
+		</p:toolbar>
+							
 						</p:panel>
 					</p:tab>
 				</p:wizard>

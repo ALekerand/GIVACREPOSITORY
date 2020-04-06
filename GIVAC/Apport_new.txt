@@ -27,6 +27,7 @@ Sessio et parcours (Gestion des sessions)
 		
 *Table INSCRIPTION		
 		- Mettre le type de l'attibut date inscription en dateheure et non time.
+		- Mettre un champs etat_complement pour faciliter la gestion des complements
 
 		
 		

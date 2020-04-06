@@ -49,8 +49,15 @@
 						
 						<p:outputLabel for="ses" value="Session" styleClass="outputDecalage" />
 						<p:inputText id="ses" value="#{complementBean.inscriptions.section.abrevSection}" />
-						
-					</h:panelGrid>
+						<p:outputLabel for="tel" value="Téléphone:" styleClass="outputDecalage" />
+
+<p:inputText id="tel" value="#{complementBean.etudiants.telEtudiant}" />
+
+<p:outputLabel for="email" value="E-mail:" styleClass="outputDecalage" />
+<p:inputText id="email" value="#{complementBean.etudiants.mailEtudiant}" />
+</h:panelGrid>
+	<p:fileUpload fileUploadListener="#{complementBean.upload}" mode="advanced" dragDropSupport="false" cancelLabel="Annuler"
+	uploadLabel="Valider" label="Jouindre une photo" sizeLimit="1000000" fileLimit="3" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" update="graphIm" />
 					    </td>
 					    <td align="right">
 					    <p:graphicImage id="graphIm" value="#{complementBean.content}" height="110" width="110"></p:graphicImage>	
@@ -75,18 +82,11 @@
 						
 						
 						
-<p:outputLabel for="tel" value="Téléphone:" styleClass="outputDecalage" />
-<p:inputText id="tel" value="#{complementBean.etudiants.telEtudiant}" />
 
-<p:outputLabel for="email" value="E-mail:" styleClass="outputDecalage" />
-<p:inputText id="email" value="#{complementBean.etudiants.mailEtudiant}" />
 			</h:panelGrid>
 			
 		
-				
-	<p:outputLabel  value="Photo ici" />
-	<p:fileUpload fileUploadListener="#{complementBean.upload}" mode="advanced" dragDropSupport="false" cancelLabel="Annuler"
-	uploadLabel="Valider" label="Jouindre une photo" sizeLimit="1000000" fileLimit="3" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" update="graphIm" />
+			
 	
 	
 			</fieldset>
@@ -97,10 +97,10 @@
 				<p:outputLabel for="pere" value="Nom père:" />
 				<p:inputText id="pere" value="#{complementBean.etudiants.nomPrenomsPere}" required="true" />
 				
-				<p:outputLabel for="profes" value="Profession" styleClass="outputDecalage" />
+				<p:outputLabel for="profes" value="Profession" styleClass="outputDecalage"/>
 				<p:inputText id="profes" value="#{complementBean.etudiants.fonctionPere}" required="true"/>
 				
-				<p:outputLabel for="tel_pere" value="Telephone:" styleClass="outputDecalage" />
+				<p:outputLabel for="tel_pere" value="Telephone:" />
 				<p:inputText id="tel_pere" value="#{complementBean.etudiants.telPere}" required="true" />
 				
 				
@@ -119,33 +119,31 @@
 				<p:outputLabel for="nom_cor" value="Nom corespondant:" styleClass="outputDecalage" />
 				<p:inputText id="nom_cor" value="#{complementBean.etudiants.nomPrenomsTuteur}" required="true" />
 				
-				<p:outputLabel for="tel_cor" value="Téléphone" styleClass="outputDecalage" />
+				<p:outputLabel for="tel_cor" value="Téléphone"/>
 				<p:inputText id="tel_cor" value="#{complementBean.etudiants.telTuteur}" required="true" />
 				
-				<p:outputLabel for="ad_cor" value="Adresse corespondant" styleClass="outputDecalage" />
-				<p:inputText id="ad_cor" value=" " required="true" />
-				
-				<p:outputLabel for="nom_med" value="Nom médecin:" styleClass="outputDecalage" />
-				<p:inputText id="nom_med" value="#{complementBean.etudiants.nomPrenomsDocteut}" required="true"/>
+				<p:outputLabel for="nom_med" value="Nom médecin:" />
+				<p:inputText id="nom_med" value="#{complementBean.etudiants.nomPrenomsDocteut}" required="true" styleClass="outputDecalage"/>
 				
 				<p:outputLabel for="tel_med" value="Télephone:" styleClass="outputDecalage" />
 				<p:inputText id="tel_med" value="#{complementBean.etudiants.telDocteur}" required="true"/>
 			</h:panelGrid>			
-			
-
-					<br></br>
-					<h:panelGrid columns="4">
-					<p:commandButton value="Save" actionListener="#{complementBean.enregistrer}"></p:commandButton>
-						<p:commandButton value="Enregistrer"
+					<p:toolbar >
+			<f:facet name="right">
+				<p:commandButton value="Enregistrer"
 							action="#{complementBean.enregistrer}" 
 							binding="#{complementBean.btnValider}">
 						</p:commandButton>
 						
-						<p:commandButton value="Annuler" action="#{complementBean.annuler}"
+				<p:commandButton value="Annuler" action="#{complementBean.annuler}"
+				binding="#{complementBean.btnAnuler}"
 							update="form">
 						</p:commandButton>
-
-					</h:panelGrid>
+				
+			</f:facet>
+		</p:toolbar>
+					
+					
 				</p:panel>
 
 				<br />

@@ -73,7 +73,7 @@ public class ComplementBean {
 	
 	// Contrôle de coposant
 	private CommandButton btnValider = new CommandButton();
-	private CommandButton btnModifier = new CommandButton();
+	private CommandButton btnAnuler = new CommandButton();
 	private List listeEtudiant = new ArrayList<>();
 	
 	
@@ -82,7 +82,6 @@ public class ComplementBean {
 		etudiants = reqEtudiant.recupererEtudiantByMlle(matriculeRecherche).get(0);
 		if (etudiants!= null) {
 			inscriptions = requeteInscription.recupInscriptionByNumEtudiant(etudiants.getNumetudiant()).get(0);
-			System.out.println("===========Le numero inscription"+inscriptions.getCodeInscription());
 		}
 	}
 	
@@ -92,10 +91,31 @@ public class ComplementBean {
 	}
 	
 	public void enregistrer() {
-		System.out.println("=====Save");//Clean after
 		service.updateObject(etudiants);
-		System.out.println("===== Fin Save");//Clean after
 	}
+	
+	
+	public void annuler() {
+		etudiants.setNomEtudiant(null);
+		etudiants.setPrenomEtudiant(null);
+		etudiants.setDatenais(null);
+		etudiants.setLieunais(null);
+		etudiants.setSections(null);
+		etudiants.setMailEtudiant(null);
+		etudiants.setTelEtudiant(null);
+		etudiants.setNumcni(null);
+		etudiants.setEcoleAncienneEtudiant(null);
+		etudiants.setNomPrenomsPere(null);
+		etudiants.setFonctionPere(null);
+		etudiants.setNomPrenomsMere(null);
+		etudiants.setFonctionMere(null);
+		etudiants.setNomPrenomsTuteur(null);
+		etudiants.setTelTuteur(null);
+		etudiants.setNomPrenomsDocteut(null);
+		etudiants.setTelDocteur(null);
+		
+	}
+	
 	
 //************************Pour le traitement de la photo
 	
@@ -189,16 +209,6 @@ public class ComplementBean {
 	public void actualiserList(){
 	}
 
-
-
-	public void annuler() {
-		btnValider.setDisabled(false);
-		btnModifier.setDisabled(true);
-		actualiserList();
-	}
-	
-	
-	
 	public Iservice getService() {
 		return service;
 	}
@@ -223,15 +233,6 @@ public class ComplementBean {
 
 	public void setAnneeScolaire(AnneesScolaire anneeScolaire) {
 		this.anneeScolaire = anneeScolaire;
-	}
-
-
-	public CommandButton getBtnModifier() {
-		return btnModifier;
-	}
-
-	public void setBtnModifier(CommandButton btnModifier) {
-		this.btnModifier = btnModifier;
 	}
 
 	public ReqAnneeScolaire getReqAnneeScolaire() {
@@ -358,6 +359,16 @@ public class ComplementBean {
 
 	public void setSelectedEtudiant(Etudiants selectedEtudiant) {
 		this.selectedEtudiant = selectedEtudiant;
+	}
+
+
+	public CommandButton getBtnAnuler() {
+		return btnAnuler;
+	}
+
+
+	public void setBtnAnuler(CommandButton btnAnuler) {
+		this.btnAnuler = btnAnuler;
 	}
 
 	
