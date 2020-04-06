@@ -79,7 +79,14 @@ public class ComplementBean {
 	
 	// Méthodes
 	public void rechercher() {
-		etudiants = reqEtudiant.recupererEtudiantByMlle(matriculeRecherche).get(0);
+		try {
+			etudiants = reqEtudiant.recupererEtudiantByMlle(matriculeRecherche).get(0);
+		} catch (IndexOutOfBoundsException e) {
+			System.out.println("======== Message à l'utilisateur");// Clean after
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_INFO, "Recherche infructueuse. Veuillez vérifier le matricule", null));
+		}
+		
 		if (etudiants!= null) {
 			inscriptions = requeteInscription.recupInscriptionByNumEtudiant(etudiants.getNumetudiant()).get(0);
 		}
@@ -92,6 +99,7 @@ public class ComplementBean {
 	
 	public void enregistrer() {
 		service.updateObject(etudiants);
+		annuler();
 	}
 	
 	

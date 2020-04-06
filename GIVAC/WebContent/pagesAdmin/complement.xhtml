@@ -11,9 +11,15 @@
 			<p:messages autoUpdate="true" closable="true" showDetail="false" />
 			<div class="widget-content">
 			<p:panel header="Enregistrement">
-					<br />
 			
-			<p:dataTable id="table" selectionMode="single" var="tata"
+			<table>
+  <tr>
+    <td>
+    <p:inputText id="matricule" value="#{complementBean.matriculeRecherche}" placeholder="Entrez le matricule" />
+			<p:commandButton value="Rechercher" actionListener="#{complementBean.rechercher}" partialSubmit="tue" process="@this,matricule" update="form"></p:commandButton>
+    </td>
+    <td>
+    <p:dataTable id="table" selectionMode="single" var="tata"
 						value="#{complementBean.listEtudiant}" selection="#{complementBean.selectedEtudiant}"
 						rowKey="#{tata.numetudiant}" emptyMessage="Aucun enregistrement">
 						<p:ajax event="rowSelect" listener="#{complementBean.selectionner}" update=":form" />
@@ -23,14 +29,16 @@
 						<p:column headerText="Date Naissance" style="width:30%">#{tata.datenais}</p:column>
 						<p:column headerText="Nationalité" style="width:30%">#{tata.nationalites.libnationalite}</p:column>
 					</p:dataTable>
+    </td>
+  </tr>
+</table>
+
+	<fieldset>
+	
+				<legend>Informations de base</legend>		
+			
 		
-		<h:panelGrid id="rech_grid" columns="4" cellpadding="6">
-			<p:outputLabel for="matricule" value="Matricule" />
-			<p:inputText id="matricule" value="#{complementBean.matriculeRecherche}"  />
-			<p:commandButton value="Rechercher" actionListener="#{complementBean.rechercher}" partialSubmit="tue" process="@this,matricule" update="form"></p:commandButton>
-		
-		
-		</h:panelGrid>		
+				
 					
 					<table>
 					  <tr valign="top">
@@ -42,15 +50,15 @@
 						<p:outputLabel for="pren" value="Prenoms" styleClass="outputDecalage"/>
 						<p:inputText id="pren" value="#{complementBean.etudiants.prenomEtudiant}" readonly="true" />
 						
-						<p:outputLabel for="dat_nais" value="Date naissance"  />
+						<p:outputLabel for="dat_nais" value="Date naissance" />
 						<p:inputText id="dat_nais" value="#{complementBean.etudiants.datenais}" pattern="dd/MM/yyyy">
 						<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
 						</p:inputText>
 						
-						<p:outputLabel for="ses" value="Session" styleClass="outputDecalage" />
+						<p:outputLabel for="ses" value="Session" styleClass="outputDecalage"/>
 						<p:inputText id="ses" value="#{complementBean.inscriptions.section.abrevSection}" />
-						<p:outputLabel for="tel" value="Téléphone:" styleClass="outputDecalage" />
-
+						
+						<p:outputLabel for="tel" value="Téléphone:"/>
 <p:inputText id="tel" value="#{complementBean.etudiants.telEtudiant}" />
 
 <p:outputLabel for="email" value="E-mail:" styleClass="outputDecalage" />
@@ -66,7 +74,7 @@
 					</table>
 	
 					
-					
+	</fieldset>				
 			<fieldset>
 				<legend>Informations complémentaires</legend>
 				
@@ -116,14 +124,14 @@
 				
 				
 				
-				<p:outputLabel for="nom_cor" value="Nom corespondant:" styleClass="outputDecalage" />
+				<p:outputLabel for="nom_cor" value="Nom corespondant:"/>
 				<p:inputText id="nom_cor" value="#{complementBean.etudiants.nomPrenomsTuteur}" required="true" />
 				
-				<p:outputLabel for="tel_cor" value="Téléphone"/>
+				<p:outputLabel for="tel_cor" value="Téléphone" styleClass="outputDecalage"/>
 				<p:inputText id="tel_cor" value="#{complementBean.etudiants.telTuteur}" required="true" />
 				
 				<p:outputLabel for="nom_med" value="Nom médecin:" />
-				<p:inputText id="nom_med" value="#{complementBean.etudiants.nomPrenomsDocteut}" required="true" styleClass="outputDecalage"/>
+				<p:inputText id="nom_med" value="#{complementBean.etudiants.nomPrenomsDocteut}" required="true"/>
 				
 				<p:outputLabel for="tel_med" value="Télephone:" styleClass="outputDecalage" />
 				<p:inputText id="tel_med" value="#{complementBean.etudiants.telDocteur}" required="true"/>

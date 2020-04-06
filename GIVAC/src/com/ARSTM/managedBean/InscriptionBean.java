@@ -138,7 +138,7 @@ public String genererMatricule() {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		matricule = ((maxNumeEtudiant+1) +"-"+anneEncoure.getAnneesDebut());
+		matricule = ((maxNumeEtudiant+1) +" - "+anneEncoure.getAnneesDebut());
 		return matricule;
 	}
 	
