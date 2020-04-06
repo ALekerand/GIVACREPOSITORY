@@ -60,7 +60,7 @@ public class ComplementBean {
 	
 	
 	// Pour l'upload
-	private String destination = "E:/testFile/";
+	private String destination = "C:/photo/";
 	private String cheminFinal ="";
 	private	StreamedContent content = new DefaultStreamedContent() ;
 	
