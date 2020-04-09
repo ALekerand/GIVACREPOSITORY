@@ -102,6 +102,7 @@ public class ComplementBean {
 	}
 	
 	public void enregistrer() {
+		inscriptions.setEtatComplemnt(true);
 		service.updateObject(etudiants);
 		annuler();
 	}
@@ -374,7 +375,9 @@ public class ComplementBean {
 
 
 	public List getListInscription() {
+		System.out.println("========Methode lancée");
 		listInscription = requeteInscription.recupListeComplement();
+		System.out.println("======="+listInscription.size());
 		return listInscription;
 	}
 
