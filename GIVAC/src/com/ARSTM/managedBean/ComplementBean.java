@@ -56,6 +56,7 @@ public class ComplementBean {
 	private Diplomes choosedDiplomes = new Diplomes();
 	private String matriculeRecherche;
 	private Inscriptions inscriptions = new Inscriptions();
+	private Inscriptions selectedInscription = new Inscriptions();
 
 	
 	
@@ -97,7 +98,7 @@ public class ComplementBean {
 	
 	
 	public void selectionner() {
-		etudiants = selectedEtudiant;
+		etudiants = selectedInscription.getEtudiants();
 	}
 	
 	public void enregistrer() {
@@ -362,17 +363,6 @@ public class ComplementBean {
 		this.listEtudiant = listEtudiant;
 	}
 
-
-	public Etudiants getSelectedEtudiant() {
-		return selectedEtudiant;
-	}
-
-
-	public void setSelectedEtudiant(Etudiants selectedEtudiant) {
-		this.selectedEtudiant = selectedEtudiant;
-	}
-
-
 	public CommandButton getBtnAnuler() {
 		return btnAnuler;
 	}
@@ -391,6 +381,16 @@ public class ComplementBean {
 
 	public void setListInscription(List listInscription) {
 		this.listInscription = listInscription;
+	}
+
+
+	public Inscriptions getSelectedInscription() {
+		return selectedInscription;
+	}
+
+
+	public void setSelectedInscription(Inscriptions selectedInscription) {
+		this.selectedInscription = selectedInscription;
 	}
 
 	

@@ -21,13 +21,13 @@
     <td>
     <p:dataTable id="table" selectionMode="single" var="tata"
 						value="#{complementBean.listInscription}" selection="#{complementBean.selectedInscription}"
-						rowKey="#{tata.numetudiant}" emptyMessage="Aucun enregistrement">
+						rowKey="#{tata.codeInscription}" emptyMessage="Aucun enregistrement">
 						<p:ajax event="rowSelect" listener="#{complementBean.selectionner}" update=":form" />
 						<f:facet name="header">LISTE DES ETUDIANTS</f:facet>
-						<p:column headerText="Nom" style="width:20%">#{tata.nomEtudiant}</p:column>
-						<p:column headerText="Prenoms" style="width:50%">#{tata.prenomEtudiant}</p:column>
-						<p:column headerText="Date Naissance" style="width:30%">#{tata.datenais}</p:column>
-						<p:column headerText="Nationalité" style="width:30%">#{tata.nationalites.libnationalite}</p:column>
+						<p:column headerText="Nom" style="width:20%">#{tata.etudiants.nomEtudiant}</p:column>
+						<p:column headerText="Prenoms" style="width:50%">#{tata.etudiants.prenomEtudiant}</p:column>
+						<p:column headerText="Date Naissance" style="width:30%">#{tata.etudiants.datenais}</p:column>
+						<p:column headerText="Nationalité" style="width:30%">#{tata.etudiants.nationalites.libnationalite}</p:column>
 					</p:dataTable>
     </td>
   </tr>
@@ -131,7 +131,7 @@
 				<p:inputText id="tel_cor" value="#{complementBean.etudiants.telTuteur}" required="true" />
 				
 				<p:outputLabel for="nom_med" value="Nom médecin:" />
-				<p:inputText id="nom_med" value="#{complementBean.etudiants.nomPrenomsDocteut}" required="true"/>
+				<p:inputText id="nom_med" value="#{complementBean.etudiants.nomPrenomsDocteur}" required="true"/>
 				
 				<p:outputLabel for="tel_med" value="Télephone:" styleClass="outputDecalage" />
 				<p:inputText id="tel_med" value="#{complementBean.etudiants.telDocteur}" required="true"/>
