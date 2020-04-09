@@ -35,7 +35,7 @@ public class RequeteInscription {
 	}
 	
 	public List<Inscriptions> recupListeComplement(){
-	String query = "SELECT `inscriptions`.*, `inscriptions`.`ETAT_COMPLEMNT` FROM `inscriptions` WHERE (`inscriptions`.`ETAT_COMPLEMNT` ='False')";
+	String query = "SELECT `inscriptions`.*, `inscriptions`.`ETAT_COMPLEMNT` FROM `inscriptions` WHERE (`inscriptions`.`ETAT_COMPLEMNT` ='0')";
 	List list = getSessionFactory().getCurrentSession().createSQLQuery(query).addEntity(Inscriptions.class).list();		
 	return list;
 	}
