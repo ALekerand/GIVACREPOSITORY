@@ -16,11 +16,11 @@
   <tr>
     <td>
     <p:inputText id="matricule" value="#{complementBean.matriculeRecherche}" placeholder="Entrez le matricule" />
-			<p:commandButton value="Rechercher" actionListener="#{complementBean.rechercher}" partialSubmit="tue" process="@this,matricule" update="form"></p:commandButton>
+			<p:commandButton value="Rechercher" actionListener="#{complementBean.rechercher}" partialSubmit="true" process="@this,matricule" update="form"></p:commandButton>
     </td>
     <td>
     <p:dataTable id="table" selectionMode="single" var="tata"
-						value="#{complementBean.listEtudiant}" selection="#{complementBean.selectedEtudiant}"
+						value="#{complementBean.listInscription}" selection="#{complementBean.selectedInscription}"
 						rowKey="#{tata.numetudiant}" emptyMessage="Aucun enregistrement">
 						<p:ajax event="rowSelect" listener="#{complementBean.selectionner}" update=":form" />
 						<f:facet name="header">LISTE DES ETUDIANTS</f:facet>

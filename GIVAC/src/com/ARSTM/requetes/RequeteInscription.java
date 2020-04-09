@@ -33,6 +33,12 @@ public class RequeteInscription {
 	public SessionFactory getSessionFactory() {
 		return sessionFactory;
 	}
+	
+	public List<Inscriptions> recupListeComplement(){
+	String query = "SELECT `inscriptions`.*, `inscriptions`.`ETAT_COMPLEMNT` FROM `inscriptions` WHERE (`inscriptions`.`ETAT_COMPLEMNT` ='Null')";
+	List list = getSessionFactory().getCurrentSession().createSQLQuery(query).addEntity(Inscriptions.class).list();		
+	return list;
+	}
 
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;

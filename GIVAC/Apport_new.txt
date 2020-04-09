@@ -1,21 +1,4 @@
 
-LES UE comportent les ECUEs
-
-- integrer la pris en compte des devoirs
-
-formation classique et formation LMD ----> voir Oglet filière
-
-Sessio et parcours (Gestion des sessions) 
-
-- Relier typeFormation 
-
-- en LMD les semestres sont connus voir le cas des filières classiques
-
-- prendre en compte la validations des vacations des enseignants de sans pedro
-
-- cahier d'appel electronique
-
-
 ************************** MODIFICATION A APPORTER*****************************
 	MCD
 	*Table Etudiant
@@ -28,6 +11,29 @@ Sessio et parcours (Gestion des sessions)
 *Table INSCRIPTION		
 		- Mettre le type de l'attibut date inscription en dateheure et non time.
 		- Mettre un champs etat_complement pour faciliter la gestion des complements
+
+
+
+
+-Ann�eScolaire
+-CaisseConcours
+-Ecolage
+-Enseigner
+-Etablisscolarite
+-Etudiant
+-Fonction
+-Frais annexe
+-Inscription
+- Mention		
+-Typelogement
+-typelogementNationalite
+-Versement
+
+
+
+
+
+
 
 		
 		

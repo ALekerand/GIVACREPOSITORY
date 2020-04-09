@@ -1,5 +1,6 @@
 package com.ARSTM.managedBean;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,7 +49,7 @@ public class FraisScolaireBean {
 	private List listFiliere = new ArrayList<>();
 	private Mention choosedMention = new Mention();
 	private List listeMention = new ArrayList<>();
-	private Float fraisExam;
+	private BigDecimal fraisExam;
 	
 	private Ecolages ecolageNation = new Ecolages();
 	private Ecolages ecolageNonNation = new Ecolages();
@@ -211,20 +212,20 @@ public class FraisScolaireBean {
 		this.fraisAnnexe = fraisAnnexe;
 	}
 
-	public Float getFraisExam() {
-		return fraisExam;
-	}
-
-	public void setFraisExam(Float fraisExam) {
-		this.fraisExam = fraisExam;
-	}
-
 	public FraisAnnexe getFraisAnnexeNonNation() {
 		return fraisAnnexeNonNation;
 	}
 
 	public void setFraisAnnexeNonNation(FraisAnnexe fraisAnnexeNonNation) {
 		this.fraisAnnexeNonNation = fraisAnnexeNonNation;
+	}
+
+	public BigDecimal getFraisExam() {
+		return fraisExam;
+	}
+
+	public void setFraisExam(BigDecimal fraisExam) {
+		this.fraisExam = fraisExam;
 	}
 
 

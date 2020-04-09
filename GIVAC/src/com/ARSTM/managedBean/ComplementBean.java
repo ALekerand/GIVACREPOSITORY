@@ -56,7 +56,7 @@ public class ComplementBean {
 	private Diplomes choosedDiplomes = new Diplomes();
 	private String matriculeRecherche;
 	private Inscriptions inscriptions = new Inscriptions();
-	private Etudiants selectedEtudiant = new Etudiants();
+
 	
 	
 	// Pour l'upload
@@ -70,11 +70,14 @@ public class ComplementBean {
 	private List listeNiveaux = new ArrayList<>();
 	private List listDiplome = new ArrayList<>();
 	private List listEtudiant = new ArrayList<>();
+	private List listInscription = new ArrayList<>();
 	
 	// Contrôle de coposant
 	private CommandButton btnValider = new CommandButton();
 	private CommandButton btnAnuler = new CommandButton();
 	private List listeEtudiant = new ArrayList<>();
+	
+	
 	
 	
 	// Méthodes
@@ -119,7 +122,7 @@ public class ComplementBean {
 		etudiants.setFonctionMere(null);
 		etudiants.setNomPrenomsTuteur(null);
 		etudiants.setTelTuteur(null);
-		etudiants.setNomPrenomsDocteut(null);
+		etudiants.setNomPrenomsDocteur(null);
 		etudiants.setTelDocteur(null);
 		
 	}
@@ -377,6 +380,17 @@ public class ComplementBean {
 
 	public void setBtnAnuler(CommandButton btnAnuler) {
 		this.btnAnuler = btnAnuler;
+	}
+
+
+	public List getListInscription() {
+		listInscription = requeteInscription.recupListeComplement();
+		return listInscription;
+	}
+
+
+	public void setListInscription(List listInscription) {
+		this.listInscription = listInscription;
 	}
 
 	
