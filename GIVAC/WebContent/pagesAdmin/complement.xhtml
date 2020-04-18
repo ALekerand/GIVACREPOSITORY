@@ -15,8 +15,11 @@
 			<table>
   <tr>
     <td>
-    <p:inputText id="matricule" value="#{complementBean.matriculeRecherche}" placeholder="Entrez le matricule" />
-			<p:commandButton value="Rechercher" actionListener="#{complementBean.rechercher}" partialSubmit="true" process="@this,matricule" update="form"></p:commandButton>
+    
+    <h:panelGrid columns="2" cellpadding="1">
+    <p:inputText id="matricule" value="#{complementBean.matriculeRecherche}" placeholder="Recherche par le matricule" />
+			<p:commandButton actionListener="#{complementBean.rechercher}" partialSubmit="true" process="@this,matricule" update="form" icon="ui-icon-search"></p:commandButton>
+    </h:panelGrid>
     </td>
     <td>
     <p:dataTable id="table" selectionMode="single" var="tata"

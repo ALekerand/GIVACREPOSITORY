@@ -83,7 +83,6 @@ public class ComplementBean {
 	
 	
 	// Méthodes
-	
 	@PostConstruct
 	public AnneesScolaire recupererAnne(){
 		//Charger l'année scolaire en cours
@@ -91,7 +90,8 @@ public class ComplementBean {
 		return anneEncoure;
 	}
 	
-	public void rechercher() {
+	public void rechercher() throws FileNotFoundException {
+		//annuler();
 		try {
 			etudiants = reqEtudiant.recupererEtudiantByMlle(matriculeRecherche).get(0);
 		} catch (IndexOutOfBoundsException e) {
@@ -99,7 +99,7 @@ public class ComplementBean {
 					new FacesMessage(FacesMessage.SEVERITY_INFO, "Recherche infructueuse. Veuillez vérifier le matricule", null));
 		}
 		
-		if (etudiants!= null) {
+		if (etudiants.getMle()!= null) {
 			inscriptions = requeteInscription.recupInscriptionByNumEtudiant(etudiants.getNumetudiant()).get(0);
 		}
 	}
@@ -151,6 +151,7 @@ public class ComplementBean {
 		etudiants.setNomPrenomsDocteur(null);
 		etudiants.setTelDocteur(null);
 		inscriptions.setSection(null);
+		matriculeRecherche = "";
 		viderPhoto();
 		
 	}
@@ -168,7 +169,7 @@ public StreamedContent viderPhoto() throws FileNotFoundException {
 //************************Pour le traitement de la photo
 	
 	public void upload(FileUploadEvent event) {
-        FacesMessage msg = new FacesMessage("Success! ", event.getFile().getFileName() + " is uploaded.");
+        FacesMessage msg = new FacesMessage("Photo validée!");
         FacesContext.getCurrentInstance().addMessage(null, msg);
         // Do what you want with the file
         try {
