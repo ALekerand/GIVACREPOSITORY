@@ -34,7 +34,8 @@ public class RequeteInscription {
 		return sessionFactory;
 	}
 	
-	public List<Inscriptions> recupListeComplement(){
+	public List<Inscriptions> recupListeComplement(int codeAnneeScolaire){
+	String query1 = "SELECT `inscriptions`.* FROM `inscriptions` WHERE ((`inscriptions`.`ETAT_COMPLEMNT` = '0') AND (`inscriptions`.`CODE_ANNEES` = '"+codeAnneeScolaire+"'))";
 	String query = "SELECT `inscriptions`.*, `inscriptions`.`ETAT_COMPLEMNT` FROM `inscriptions` WHERE (`inscriptions`.`ETAT_COMPLEMNT` ='0')";
 	List list = getSessionFactory().getCurrentSession().createSQLQuery(query).addEntity(Inscriptions.class).list();		
 	return list;

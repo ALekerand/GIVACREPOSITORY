@@ -10,6 +10,7 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletContext;
@@ -48,7 +49,7 @@ public class ComplementBean {
 	@Autowired
 	RequeteInscription requeteInscription;
 
-	private AnneesScolaire anneeScolaire = new AnneesScolaire();
+	private AnneesScolaire anneEncoure = new AnneesScolaire();
 	private Etudiants etudiants = new Etudiants();
 	private Matrimoniales choosedMatrimoniales;
 	private Santes chooseedsantes = new Santes();
@@ -82,11 +83,18 @@ public class ComplementBean {
 	
 	
 	// Méthodes
+	
+	@PostConstruct
+	public AnneesScolaire recupererAnne(){
+		//Charger l'année scolaire en cours
+		anneEncoure = reqAnneeScolaire.recupererDerniereAnneeScolaire().get(0);
+		return anneEncoure;
+	}
+	
 	public void rechercher() {
 		try {
 			etudiants = reqEtudiant.recupererEtudiantByMlle(matriculeRecherche).get(0);
 		} catch (IndexOutOfBoundsException e) {
-			System.out.println("======== Message à l'utilisateur");// Clean after
 			FacesContext.getCurrentInstance().addMessage(null,
 					new FacesMessage(FacesMessage.SEVERITY_INFO, "Recherche infructueuse. Veuillez vérifier le matricule", null));
 		}
@@ -98,17 +106,31 @@ public class ComplementBean {
 	
 	
 	public void selectionner() {
+		inscriptions = selectedInscription;
 		etudiants = selectedInscription.getEtudiants();
+		
 	}
 	
-	public void enregistrer() {
+	public void enregistrer() throws FileNotFoundException {
+		//Enregistrement du complement
 		inscriptions.setEtatComplemnt(true);
+		etudiants.setPhotoEtudiant(cheminFinal);
 		service.updateObject(etudiants);
+		service.updateObject(inscriptions);
+		
+		//Vider la page 
 		annuler();
+		
+		//Actualiser la liste des complements à faire
+		getListInscription();
 	}
 	
 	
-	public void annuler() {
+	
+	
+	
+	
+	public void annuler() throws FileNotFoundException {
 		etudiants.setNomEtudiant(null);
 		etudiants.setPrenomEtudiant(null);
 		etudiants.setDatenais(null);
@@ -120,13 +142,26 @@ public class ComplementBean {
 		etudiants.setEcoleAncienneEtudiant(null);
 		etudiants.setNomPrenomsPere(null);
 		etudiants.setFonctionPere(null);
+		etudiants.setTelPere(null);
 		etudiants.setNomPrenomsMere(null);
 		etudiants.setFonctionMere(null);
+		etudiants.setTelMere(null);
 		etudiants.setNomPrenomsTuteur(null);
 		etudiants.setTelTuteur(null);
 		etudiants.setNomPrenomsDocteur(null);
 		etudiants.setTelDocteur(null);
+		inscriptions.setSection(null);
+		viderPhoto();
 		
+	}
+	
+	
+public StreamedContent viderPhoto() throws FileNotFoundException {
+    		setCheminFinal(destination + "avatar.jpg");
+ 			InputStream is = new FileInputStream(cheminFinal);
+ 			//is.close();  
+ 			content	= new DefaultStreamedContent(is);
+		  return content;	 
 	}
 	
 	
@@ -179,7 +214,6 @@ public class ComplementBean {
     	
     	if ((cheminFinal.equals(""))) {
     		setCheminFinal(destination + "avatar.jpg");
-    		System.out.println("====Valeur chemin final"+getCheminFinal());
     	}
     	
     	try {
@@ -238,15 +272,6 @@ public class ComplementBean {
 		this.btnValider = btnValider;
 	}
 
-	
-
-	public AnneesScolaire getAnneeScolaire() {
-		return anneeScolaire;
-	}
-
-	public void setAnneeScolaire(AnneesScolaire anneeScolaire) {
-		this.anneeScolaire = anneeScolaire;
-	}
 
 	public ReqAnneeScolaire getReqAnneeScolaire() {
 		return reqAnneeScolaire;
@@ -375,9 +400,8 @@ public class ComplementBean {
 
 
 	public List getListInscription() {
-		System.out.println("========Methode lancée");
-		listInscription = requeteInscription.recupListeComplement();
-		System.out.println("======="+listInscription.size());
+		listInscription.clear();
+		listInscription = requeteInscription.recupListeComplement(anneEncoure.getCodeAnnees());
 		return listInscription;
 	}
 

@@ -140,12 +140,12 @@
 			<f:facet name="right">
 				<p:commandButton value="Enregistrer"
 							action="#{complementBean.enregistrer}" 
-							binding="#{complementBean.btnValider}">
+							binding="#{complementBean.btnValider}" update="form">
 						</p:commandButton>
 						
 				<p:commandButton value="Annuler" action="#{complementBean.annuler}"
 				binding="#{complementBean.btnAnuler}"
-							update="form">
+							update="form" process="@this">
 						</p:commandButton>
 				
 			</f:facet>
