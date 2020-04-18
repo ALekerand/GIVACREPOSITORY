@@ -196,7 +196,6 @@ public StreamedContent viderPhoto() throws FileNotFoundException {
             out.flush();
             out.close();
  // Charger le fichier dans le graphique image
-            
             getContent();
             System.out.println("New file created!");
         } catch (IOException e) {
