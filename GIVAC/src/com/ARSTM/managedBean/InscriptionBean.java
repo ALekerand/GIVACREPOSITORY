@@ -186,7 +186,6 @@ public String genererMatricule() {
 				new FacesMessage(FacesMessage.SEVERITY_INFO, "Enregistrement effcetué!", null));
 	}
 	
-
 	public void annuler() {
 		btnValider.setDisabled(false);
 		vider(etudiants);

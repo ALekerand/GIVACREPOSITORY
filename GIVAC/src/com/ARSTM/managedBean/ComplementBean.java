@@ -182,7 +182,6 @@ public StreamedContent viderPhoto() throws FileNotFoundException {
     public void copyFile(String fileName, InputStream in) {
         try {
         	cheminFinal = destination + fileName;
-            // write the inputStream to a FileOutputStream
             OutputStream out = new FileOutputStream(new File(destination + fileName));
  
             int read = 0;
@@ -195,6 +194,7 @@ public StreamedContent viderPhoto() throws FileNotFoundException {
             in.close();
             out.flush();
             out.close();
+            
  // Charger le fichier dans le graphique image
             getContent();
             System.out.println("New file created!");
