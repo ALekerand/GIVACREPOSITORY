@@ -181,6 +181,7 @@ public StreamedContent viderPhoto() throws FileNotFoundException {
  
     public void copyFile(String fileName, InputStream in) {
         try {
+        //lE CHEMIN
         	cheminFinal = destination + fileName;
             OutputStream out = new FileOutputStream(new File(destination + fileName));
  
