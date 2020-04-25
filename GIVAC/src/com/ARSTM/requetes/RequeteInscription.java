@@ -35,11 +35,16 @@ public class RequeteInscription {
 	}
 	
 	public List<Inscriptions> recupListeComplement(int codeAnneeScolaire){
-	String query1 = "SELECT `inscriptions`.* FROM `inscriptions` WHERE ((`inscriptions`.`ETAT_COMPLEMNT` = '0') AND (`inscriptions`.`CODE_ANNEES` = '"+codeAnneeScolaire+"'))";
-	String query = "SELECT `inscriptions`.*, `inscriptions`.`ETAT_COMPLEMNT` FROM `inscriptions` WHERE (`inscriptions`.`ETAT_COMPLEMNT` ='0')";
+	String query = "SELECT `inscriptions`.* FROM `inscriptions` WHERE ((`inscriptions`.`ETAT_COMPLEMNT` = '0') AND (`inscriptions`.`CODE_ANNEES` = '"+codeAnneeScolaire+"'))";
 	List list = getSessionFactory().getCurrentSession().createSQLQuery(query).addEntity(Inscriptions.class).list();		
 	return list;
 	}
+	
+	public List<Inscriptions> recupListeEtabScolarite(int codeAnneeScolaire){
+		String query = "SELECT `inscriptions`.* FROM `inscriptions` WHERE ((`inscriptions`.`ETAT_ETAB_SCOLARITE` = '0') AND (`inscriptions`.`CODE_ANNEES` = '"+codeAnneeScolaire+"'))";
+		List list = getSessionFactory().getCurrentSession().createSQLQuery(query).addEntity(Inscriptions.class).list();		
+		return list;
+		}
 
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;

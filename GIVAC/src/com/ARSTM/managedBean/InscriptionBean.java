@@ -160,6 +160,7 @@ public String genererMatricule() {
 		inscriptions.setRegime(choosedRegime);
 		inscriptions.setDateInscription(new Date());
 		inscriptions.setEtatComplemnt(false);
+		inscriptions.setEtatEtabScolarite(false);
 		getService().addObject(inscriptions);
 	}
 	
