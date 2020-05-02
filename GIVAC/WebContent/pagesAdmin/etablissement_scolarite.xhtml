@@ -67,50 +67,35 @@
 			<fieldset>
 				<legend>Frais ecolage</legend>
 					<h:panelGrid id="ecolage_gid" columns="4" cellpadding="8">
-					<p:outputLabel for="fr_ecol" value="Frais ecolage:" />
+					<p:outputLabel for="fr_ecol" value="Frais:" styleClass="outputDecalage" />
 					<p:inputText id="fr_ecol" value="#{etablisScolariteBean.etablScolarite.montantEcolageSco}" />
-					
-					<p:outputLabel for="check" value="Frais ecolage:" />
-					<p:selectBooleanCheckbox id="check" value="#{etablisScolariteBean.etatReduction}" itemLabel="Appliquer réduction">
-             
-            
-            <p:outputLabel for="p_reduc" value="Frais ecolage:" styleClass="outputDecalage" />
-					<p:inputText id="p_reduc" value="#{etablisScolariteBean.etablScolarite.tauxReduction}" />
-					
-			<p:outputLabel for="mt_reduct" value="Frais ecolage:" />
-			<p:inputText id="mt_reduct" value=" " />
-			
-			<p:outputLabel for="lib_reduc" value="Frais ecolage:" styleClass="outputDecalage" />
-			<p:inputText id="lib_reduc" value="#{etablisScolariteBean.etablScolarite.libeleReduction}" />
-			
-        </p:selectBooleanCheckbox>
 			</h:panelGrid>
 			</fieldset>
 			
 	<legend>Frais annexes</legend>
 				<h:panelGrid id="annex_grid" columns="4" cellpadding="6">
-				<p:outputLabel for="assur" value="Assurance:" styleClass="outputDecalage" />
+				<p:outputLabel for="assur" value="Frais:" styleClass="outputDecalage" />
 				<p:inputText id="assur" value="#{etablisScolariteBean.etablScolarite.fraisAssuranceSco}" />
 				
-				<p:outputLabel for="t_complet" value="Tenue complet" styleClass="outputDecalage" />
+				<p:outputLabel for="t_complet" value="Frais:" styleClass="outputDecalage" />
 				<p:inputText id="t_complet" value="#{etablisScolariteBean.etablScolarite.fraisTenueCompletSco}" />
 				
-				<p:outputLabel for="t_sport" value="Tenue sport" styleClass="outputDecalage" />
+				<p:outputLabel for="t_sport" value="Frais:" styleClass="outputDecalage" />
 				<p:inputText id="t_sport" value="#{etablisScolariteBean.etablScolarite.fraisTenueSportSco}" />
 				
-				<p:outputLabel for="f_resto" value="restauration:" styleClass="outputDecalage" />
+				<p:outputLabel for="f_resto" value="Frais:" styleClass="outputDecalage" />
 				<p:inputText id="f_resto" value="#{etablisScolariteBean.etablScolarite.fraisRestaurationSco}" />
 				
-				<p:outputLabel for="f_elearning" value="E-learning:" styleClass="outputDecalage" />
+				<p:outputLabel for="f_elearning" value="Frais:" styleClass="outputDecalage" />
 				<p:inputText id="f_elearning" value="#{etablisScolariteBean.etablScolarite.fraisElearningSco}" />
 				
-				<p:outputLabel for="f_medical" value="Viste médicale:" styleClass="outputDecalage" />
+				<p:outputLabel for="f_medical" value="Frais:" styleClass="outputDecalage" />
 				<p:inputText id="f_medical" value="#{etablisScolariteBean.etablScolarite.fraisVisiteMedicSco}" />
 				
-				<p:outputLabel for="f_ordi" value="Ordianteur:" styleClass="outputDecalage" />
+				<p:outputLabel for="f_ordi" value="Frais:" styleClass="outputDecalage" />
 				<p:inputText id="f_ordi" value="#{etablisScolariteBean.etablScolarite.fraisOrdinateurSco}" />
 				
-				<p:outputLabel for="f_autre" value="Autres:" styleClass="outputDecalage" />
+				<p:outputLabel for="f_autre" value="Frais:" styleClass="outputDecalage" />
 				<p:inputText id="f_autre" value="#{etablisScolariteBean.etablScolarite.autreFraisSco}" />
 			</h:panelGrid>			
 					<p:toolbar >
