@@ -70,10 +70,13 @@ public class FraisScolaireBean2 {
 	
 	public void enregistrerEcolage(){
 		//Setter les type de nationalite
-		ecolageNation.setTypenationalite(reqTypeNationalite.recupererTypeNationalite(1).get(0));
-		ecolageNation.setFraisExam(fraisExam);
-		ecolageNonNation.setTypenationalite(reqTypeNationalite.recupererTypeNationalite(2).get(0));
-		ecolageNonNation.setFraisExam(fraisExam);
+		/*
+		 * ecolageNation.setTypenationalite(reqTypeNationalite.recupererTypeNationalite(
+		 * 1).get(0)); ecolageNation.setFraisExam(fraisExam);
+		 * ecolageNonNation.setTypenationalite(reqTypeNationalite.
+		 * recupererTypeNationalite(2).get(0));
+		 * ecolageNonNation.setFraisExam(fraisExam);
+		 */
 		
 		//Faire l'enregistrement
 		service.addObject(ecolageNation);
@@ -81,17 +84,25 @@ public class FraisScolaireBean2 {
 	}
 	
 	public void repartirVersNation() {
-		ecolageNation.setMtEchance1((float) (ecolageNation.getMontantEcolage()*0.4));
-		ecolageNation.setMtEchance2((float) (ecolageNation.getMontantEcolage()*0.3));
-		ecolageNation.setMtEchance3((float) (ecolageNation.getMontantEcolage()*0.2));
-		ecolageNation.setMtEchance4((float) (ecolageNation.getMontantEcolage()*0.1));
+		/*
+		 * ecolageNation.setMtEchance1((float) (ecolageNation.getMontantEcolage()*0.4));
+		 * ecolageNation.setMtEchance2((float) (ecolageNation.getMontantEcolage()*0.3));
+		 * ecolageNation.setMtEchance3((float) (ecolageNation.getMontantEcolage()*0.2));
+		 * ecolageNation.setMtEchance4((float) (ecolageNation.getMontantEcolage()*0.1));
+		 */
 	}
 	
 	public void repartirVersNonNation() {
-		ecolageNonNation.setMtEchance1((float) (ecolageNonNation.getMontantEcolage()*0.4));
-		ecolageNonNation.setMtEchance2((float) (ecolageNonNation.getMontantEcolage()*0.3));
-		ecolageNonNation.setMtEchance3((float) (ecolageNonNation.getMontantEcolage()*0.2));
-		ecolageNonNation.setMtEchance4((float) (ecolageNonNation.getMontantEcolage()*0.1));
+		/*
+		 * ecolageNonNation.setMtEchance1((float)
+		 * (ecolageNonNation.getMontantEcolage()*0.4));
+		 * ecolageNonNation.setMtEchance2((float)
+		 * (ecolageNonNation.getMontantEcolage()*0.3));
+		 * ecolageNonNation.setMtEchance3((float)
+		 * (ecolageNonNation.getMontantEcolage()*0.2));
+		 * ecolageNonNation.setMtEchance4((float)
+		 * (ecolageNonNation.getMontantEcolage()*0.1));
+		 */
 	}
 	
 	public void enregistrerMentionEcolage() {

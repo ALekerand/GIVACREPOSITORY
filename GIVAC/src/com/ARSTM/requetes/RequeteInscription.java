@@ -45,7 +45,14 @@ public class RequeteInscription {
 		List list = getSessionFactory().getCurrentSession().createSQLQuery(query).addEntity(Inscriptions.class).list();		
 		return list;
 		}
-
+	
+	public List<Inscriptions> recupererListeSection(int numEtudiant){
+		String query = "SELECT `inscriptions`.* FROM `inscriptions` WHERE ((`inscriptions`.`NUMETUDIANT` = '"+numEtudiant+"'))";
+		List list = getSessionFactory().getCurrentSession().createSQLQuery(query).addEntity(Inscriptions.class).list();		
+		return list;
+		}
+	
+	
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
 	}

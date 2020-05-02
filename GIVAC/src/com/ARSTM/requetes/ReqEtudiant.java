@@ -24,6 +24,12 @@ public class ReqEtudiant {
 	}
 	
 	
+	public List<Etudiants> recupererEtudiant(){
+		String query = "SELECT * FROM `etudiants`";
+		List liste = getSessionFactory().getCurrentSession().createSQLQuery(query).addEntity(Etudiants.class).list();
+		return liste;
+	}
+	
 	public SessionFactory getSessionFactory() {
 		return sessionFactory;
 	}

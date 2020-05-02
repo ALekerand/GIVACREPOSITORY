@@ -129,7 +129,6 @@
      		<p:menuitem value="Type logement" outcome="/pagesAdmin/typelogement.xhtml"   icon="ui-icon-arrowrefresh-1-w" />
      		<p:menuitem value="Logement" outcome="/pagesAdmin/logement.xhtml"   icon="ui-icon-arrowrefresh-1-w" />
      		<p:menuitem value="Frais type logement" outcome="/pagesAdmin/frais_logement.xhtml"   icon="ui-icon-arrowrefresh-1-w" />
-     		
         </p:submenu>
         
         <p:submenu label="ECOLES ET FILIERES">
@@ -142,58 +141,63 @@
          <p:submenu label="PARCOURS ET SECTIONS">
            <p:menuitem value="Parcours" outcome="/pagesAdmin/parcours.xhtml"   icon="ui-icon-arrowrefresh-1-w" />
            <p:menuitem value="Section" outcome="/pagesAdmin/parcoursection.xhtml"   icon="ui-icon-arrowrefresh-1-w" />
-       	   <p:menuitem value="Modification de section"/>
-           <p:menuitem value="Ajout de matière" outcome="/pagesAdmin/ajout_matieres.xhtml"/>
+       	   <p:menuitem value="Modification de section" icon="ui-icon-arrowrefresh-1-w"/>
+           <p:menuitem value="Ajout de matière" outcome="/pagesAdmin/ajout_matieres.xhtml" icon="ui-icon-arrowrefresh-1-w"/>
            <p:menuitem value="Retrait de matière" outcome="/pagesAdmin/retrait_matiere.xhtml" icon="ui-icon-close"/>
         </p:submenu>
         
+         <p:submenu label="GESTION MATIERES ET UES">
+         	<p:menuitem value="Des Types UE" outcome="/pagesAdmin/typeue.xhtml" icon="ui-icon-arrowrefresh-1-w"/>
+         	<p:menuitem value="Des UE" outcome="/pagesAdmin/ue_parcours.xhtml" icon="ui-icon-arrowrefresh-1-w"/>
+         	<p:menuitem value="Des ECUES" outcome="/pagesAdmin/ecue.xhtml" icon="ui-icon-arrowrefresh-1-w"/>
+            <p:menuitem value="Par Section" outcome="/pagesAdmin/etat_matiere.xhtml" icon="ui-icon-arrowrefresh-1-w"/>
+            <p:menuitem value="Enregistrer Matière" outcome="/pagesAdmin/matiere.xhtml" icon=" ui-icon-documen"/>
+        </p:submenu>
         
-         <p:submenu label="CALENDRIER PEDAGOGIQUE">
+            <p:submenu label="CALENDRIER PEDAGOGIQUE">
             <p:menuitem value="Jour semaine" outcome="/pagesAdmin/jour_semaine.xhtml"   icon="ui-icon-arrowrefresh-1-w" />
             <p:menuitem value="Semaine" outcome="/pagesAdmin/semaine.xhtml"   icon="ui-icon-arrowrefresh-1-w" />
             <p:menuitem value="Jour non ouvré" outcome="/pagesAdmin/jour_non_ouvre.xhtml"   icon="ui-icon-arrowrefresh-1-w" />
         </p:submenu>
+        
         <p:submenu label="GESTION DES ENSEIGNANTS">
             <p:menuitem value="Enregistrer enseignant"  outcome="/pagesAdmin/enseignant.xhtml" icon="ui-icon-close"/>
             <p:menuitem value="Attribuer des Ecues"  outcome="/pagesAdmin/attributionecue.xhtml" icon="ui-icon-close"/>
             <p:menuitem value="Attribuer des matières"  outcome="/pagesAdmin/attributionMatieres.xhtml" icon="ui-icon-close"/>
-           	<p:menuitem value="Attribuer jours de cours LMD" outcome="/pagesAdmin/disponibilite_cours.xhtml"/>
-           	<p:menuitem value="Attribuer jours de cours Classic"/>
-            <p:menuitem value="Consulter emplois de temps"/>
+           	<p:menuitem value="Attribuer jours de cours LMD" outcome="/pagesAdmin/disponibilite_cours.xhtml" icon="ui-icon-arrowrefresh-1-w"/>
+           	<p:menuitem value="Attribuer jours de cours Classic" icon="ui-icon-arrowrefresh-1-w"/>
+            <p:menuitem value="Consulter emplois de temps" icon="ui-icon-arrowrefresh-1-w"/>
         </p:submenu>
         
         <p:submenu label="GESTION DES ETUDIANTS">
-           	<p:menuitem value="Inscription" outcome="/pagesAdmin/inscription.xhtml"/>
-            <p:menuitem value="Réinscription"/>
-            <p:menuitem value="Complement" outcome="/pagesAdmin/complement.xhtml"/>
-            <p:menuitem value="Etablissement Scolarité" outcome="/pagesAdmin/etablissement_scolarite.xhtml"/>
+           	<p:menuitem value="Inscription" outcome="/pagesAdmin/inscription.xhtml" icon="ui-icon-arrowrefresh-1-w"/>
+            <p:menuitem value="Réinscription" icon="ui-icon-arrowrefresh-1-w"/>
+            <p:menuitem value="Complement" outcome="/pagesAdmin/complement.xhtml" icon="ui-icon-arrowrefresh-1-w"/>
+            <p:menuitem value="Etablissement Scolarité" outcome="/pagesAdmin/etablissement_scolarite.xhtml" icon="ui-icon-arrowrefresh-1-w"/>
+            <p:menuitem value="Historique" outcome="/pagesAdmin/historique.xhtml" icon="ui-icon-disk"/>
+        </p:submenu>
+        
+          <p:submenu label="GESTION DE LA SCOLARITE">
+            <p:menuitem value="Etablissement Scolarité" outcome="/pagesAdmin/etablissement_scolarite.xhtml" icon="ui-icon-disk"/>
+        </p:submenu>
+        
+        <p:submenu label="GESTION DES COURS" >
+           <p:menuitem value="Edition de seances" outcome="/pagesAdmin/edition_seances.xhtml" icon="ui-icon-document" />
+           <p:menuitem value="Validation de Cours" outcome="/pagesAdmin/validation_admin.xhtml" icon="ui-icon-close"/>
+           <p:menuitem value="Plannifier les séances" outcome="/pagesAdmin/planning_seance.xhtml" icon="ui-icon-document" />
+        </p:submenu>
+        
+        <p:submenu label="ETATS" >
+            <p:submenu label="MARTIERE" icon="ui-icon-heart">
+            <p:menuitem value="Par Enseignant" url="#" icon="ui-icon-document" />
+          </p:submenu>
         </p:submenu>
         
         <p:submenu label="PERSONNEL UTILISATEUR">
             <p:menuitem value="Enregistrer Personnel"  outcome="/pagesAdmin/personnel_utilisateur.xhtml" icon="ui-icon-close"/>
         </p:submenu>
-         <p:submenu label="GESTION MATIERES ET UES">
-         	<p:menuitem value="Des Types UE" outcome="/pagesAdmin/typeue.xhtml"/>
-         	<p:menuitem value="Des UE" outcome="/pagesAdmin/ue_parcours.xhtml"/>
-         	<p:menuitem value="Des ECUES" outcome="/pagesAdmin/ecue.xhtml"/>
-            <p:menuitem value="Par Section" outcome="/pagesAdmin/etat_matiere.xhtml"/>
-            <p:menuitem value="Enregistrer Matière" outcome="/pagesAdmin/matiere.xhtml" icon=" ui-icon-documen"/>
-            
-        </p:submenu>
-              
-         <p:submenu label="GESTION DES COURS" >
-           <p:menuitem value="Edition de seances" outcome="/pagesAdmin/edition_seances.xhtml" icon="ui-icon-document" />
-           <p:menuitem value="Validation de Cours" outcome="/pagesAdmin/validation_admin.xhtml" icon="ui-icon-close"/>
-           <p:menuitem value="Plannifier les séances" outcome="/pagesAdmin/planning_seance.xhtml" icon="ui-icon-document" />
         
-        
-        </p:submenu>
         <p:separator />
-        <p:submenu label="ETATS" >
-                <p:submenu label="MARTIERE" icon="ui-icon-heart">
-                    <p:menuitem value="Par Enseignant" url="#" icon="ui-icon-document" />
-                </p:submenu>
-        </p:submenu>
         
         <p:submenu label="GESTION DES DROITS">
             <p:menuitem value="Attribution de droits"  outcome="/pagesAdmin/attribuer_droit.xhtml" icon="ui-icon-close"/>
