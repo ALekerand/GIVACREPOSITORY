@@ -90,13 +90,13 @@ public class HistoriqueBean {
 		if (etudiants.getMle()!= null) {
 			inscriptions = requeteInscription.recupInscriptionByNumEtudiant(etudiants.getNumetudiant()).get(0);
 			chargerPhoto();
+			
 		}
 	}
 	
 	
 	public void selectionner() throws FileNotFoundException {
-		inscriptions = selectedInscription;
-		etudiants = selectedInscription.getEtudiants();
+		etudiants = selectedEtudiant;
 		chargerPhoto();
 		
 	}
@@ -154,6 +154,7 @@ public StreamedContent viderPhoto() throws FileNotFoundException {
     
     
     public void chargerPhoto() throws FileNotFoundException {
+    	System.out.println("Chemin:======="+getEtudiants().getPhotoEtudiant());
     	cheminFinal = getEtudiants().getPhotoEtudiant();
     	InputStream is = new FileInputStream(cheminFinal);
 			//is.close();  
@@ -341,8 +342,7 @@ public StreamedContent viderPhoto() throws FileNotFoundException {
 
 	public List getListInscription() {
 		  listInscription.clear();
-		  requeteInscription.recupererListeSection(etudiants.getNumetudiant());
-		 
+		  listInscription= requeteInscription.recupererListeSection(etudiants.getNumetudiant());	 
 		return listInscription;
 	}
 

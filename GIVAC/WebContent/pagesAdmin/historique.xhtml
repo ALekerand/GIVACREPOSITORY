@@ -27,10 +27,10 @@
 						rowKey="#{tata.numetudiant}" emptyMessage="Aucun enregistrement">
 						<p:ajax event="rowSelect" listener="#{historiqueBean.selectionner}" update=":form" />
 						<f:facet name="header">LISTE DES ETUDIANTS</f:facet>
-						<p:column headerText="Nom" style="width:20%">#{tata.nomEtudiant}</p:column>
+						<p:column headerText="Nom" style="width:20%" sortBy="#{tata.nomEtudiant}" >#{tata.nomEtudiant}</p:column>
 						<p:column headerText="Prenoms" style="width:50%">#{tata.prenomEtudiant}</p:column>
 						<p:column headerText="Date Naissance" style="width:30%">#{tata.datenais}</p:column>
-						<p:column headerText="Nationalité" style="width:30%">#{tata.etudiants.nationalites.libnationalite}</p:column>
+						<p:column headerText="Nationalité" style="width:30%">#{tata.nationalites.libnationalite}</p:column>
 					</p:dataTable>
     </td>
   </tr>
