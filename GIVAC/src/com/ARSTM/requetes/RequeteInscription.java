@@ -25,8 +25,8 @@ public class RequeteInscription {
 	}
 	
 	
-	public List<Inscriptions> recupInscriptionByNumEtudiant(int numeroEtudiant){
-		String query = "SELECT * FROM `inscriptions` WHERE inscriptions.NUMETUDIANT = '"+numeroEtudiant+"'";
+	public List<Inscriptions> recupInscriptionByNumEtudiant(int numeroEtudiant, int codeAnneeScolaire){
+		String query = "SELECT * FROM `inscriptions` WHERE (inscriptions.NUMETUDIANT = '"+numeroEtudiant+"') AND (inscriptions.CODE_ANNEES = '"+codeAnneeScolaire+"')";
 	List list = getSessionFactory().getCurrentSession().createSQLQuery(query).addEntity(Inscriptions.class).list();		
 	return list;
 	}

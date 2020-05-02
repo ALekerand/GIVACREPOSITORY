@@ -100,7 +100,7 @@ public class ComplementBean {
 		}
 		
 		if (etudiants.getMle()!= null) {
-			inscriptions = requeteInscription.recupInscriptionByNumEtudiant(etudiants.getNumetudiant()).get(0);
+			inscriptions = requeteInscription.recupInscriptionByNumEtudiant(etudiants.getNumetudiant(), anneEncoure.getCodeAnnees()).get(0);
 		}
 	}
 	

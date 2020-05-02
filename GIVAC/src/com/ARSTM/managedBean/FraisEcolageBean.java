@@ -17,10 +17,7 @@ import com.ARSTM.model.AnneesScolaire;
 import com.ARSTM.model.Ecolages;
 import com.ARSTM.model.Ecole;
 import com.ARSTM.model.Filieres;
-import com.ARSTM.model.FraisAnnexe;
 import com.ARSTM.model.Mention;
-import com.ARSTM.model.MentionEcolage;
-import com.ARSTM.model.MentionEcolageId;
 import com.ARSTM.requetes.ReqAnneeScolaire;
 import com.ARSTM.requetes.ReqTypeNationalite;
 import com.ARSTM.requetes.RequeteFiliere;
@@ -29,7 +26,7 @@ import com.ARSTM.service.Iservice;
 
 @Component
 @Scope("session")
-public class FraisScolaireBean {
+public class FraisEcolageBean {
 	
 	@Autowired
 	Iservice service;
@@ -53,8 +50,6 @@ public class FraisScolaireBean {
 	
 	private Ecolages ecolageNation = new Ecolages();
 	private Ecolages ecolageNonNation = new Ecolages();
-	private FraisAnnexe fraisAnnexe = new FraisAnnexe();
-	private FraisAnnexe fraisAnnexeNonNation = new FraisAnnexe();
 	private AnneesScolaire anneEncoure = new AnneesScolaire();
 	
 	@PostConstruct
@@ -62,31 +57,21 @@ public class FraisScolaireBean {
 		anneEncoure = reqAnneeScolaire.recupererDerniereAnneeScolaire().get(0);
 		System.out.println("Année:"+anneEncoure.getLibAnneeScolaire());
 		return anneEncoure;
+		
 	}
 	
 	public String enregistrer(){
-		enregistrerFrais();
 		enregistrerEcolage();
-		enregistrerMentionEcolage();
+		//enregistrerMentionEcolage();
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Enregistrement effcetué!", null));
-		return "frais_scolaire.xhtml";
+		return "frais_scolaire2.xhtml";
 	}
-	
-	
-	public void enregistrerFrais(){
-		
-		//Recuperer ladernière année scolaire et l'affecter dans l'ojet FraisAnnexe
-		fraisAnnexe.setAnneesScolaire(anneEncoure);
-		fraisAnnexe.setTypenationalite(reqTypeNationalite.recupererTypeNationalite(1).get(0));
-		//fraisAnnexe.setMention(choosedMention);
-		service.addObject(fraisAnnexe);
-	}
-	
 	
 	public void enregistrerEcolage(){
-		//Setter les type de nationalite et frais d'exam
+		//Setter les type de nationalite
 		ecolageNation.setTypenationalite(reqTypeNationalite.recupererTypeNationalite(1).get(0));
 		ecolageNation.setFraisExam(fraisExam);
+		
 		ecolageNonNation.setTypenationalite(reqTypeNationalite.recupererTypeNationalite(2).get(0));
 		ecolageNonNation.setFraisExam(fraisExam);
 		
@@ -95,28 +80,43 @@ public class FraisScolaireBean {
 		service.addObject(ecolageNonNation);
 	}
 	
+	public void repartirVersNation() {
+		ecolageNation.setMtEchance1((ecolageNation.getMontantEcolage().multiply(new BigDecimal("0.4"))));
+		ecolageNation.setMtEchance2((ecolageNation.getMontantEcolage().multiply(new BigDecimal("03"))));
+		ecolageNation.setMtEchance3((ecolageNation.getMontantEcolage().multiply(new BigDecimal("0.2"))));
+		ecolageNation.setMtEchance4((ecolageNation.getMontantEcolage().multiply(new BigDecimal("0.1"))));
+	}
+	
+	public void repartirVersNonNation() {
+		ecolageNonNation.setMtEchance1((ecolageNonNation.getMontantEcolage().multiply(new BigDecimal("0.4"))));
+		ecolageNonNation.setMtEchance2((ecolageNonNation.getMontantEcolage().multiply(new BigDecimal("03"))));
+		ecolageNonNation.setMtEchance3((ecolageNonNation.getMontantEcolage().multiply(new BigDecimal("0.2"))));
+		ecolageNonNation.setMtEchance4((ecolageNonNation.getMontantEcolage().multiply(new BigDecimal("0.1"))));
+	}
+	
 	public void enregistrerMentionEcolage() {
 		System.out.println("VRIFICATION Année:"+anneEncoure.getLibAnneeScolaire());
+
 		
 		//Créer les objets MentionEcolage
 				//Pour les nationaux
-				MentionEcolage mentionEcolageNation = new MentionEcolage();
-				MentionEcolageId  menTEcoNatId = new MentionEcolageId(ecolageNation.getCodeEcolage(), choosedMention.getCodeMention());
-				mentionEcolageNation.setId(menTEcoNatId);
-				mentionEcolageNation.setEcolages(ecolageNation);
-				mentionEcolageNation.setMention(choosedMention);
-				mentionEcolageNation.setAnneeScolaireEcolage(anneEncoure.getLibAnneeScolaire());
-				
-				//Pour les non nationaux
-				MentionEcolage mentionEcolageNonNation = new MentionEcolage();
-				MentionEcolageId  menTEcoNonNatId = new MentionEcolageId(ecolageNonNation.getCodeEcolage(), choosedMention.getCodeMention());
-				mentionEcolageNonNation.setId(menTEcoNonNatId);
-				mentionEcolageNonNation.setEcolages(ecolageNonNation);
-				mentionEcolageNonNation.setMention(choosedMention);
-				mentionEcolageNonNation.setAnneeScolaireEcolage(anneEncoure.getLibAnneeScolaire());
-				
-				service.addObject(mentionEcolageNation);
-				service.addObject(mentionEcolageNonNation);
+		//MentionEcolage mentionEcolageNation = new MentionEcolage(); 
+		//MentionEcolageId  menTEcoNatId = new MentionEcolageId(ecolageNation.getCodeEcolage(), choosedMention.getCodeMention());
+		//mentionEcolageNation.setId(menTEcoNatId);
+		//mentionEcolageNation.setEcolages(ecolageNation);
+		//mentionEcolageNation.setMention(choosedMention);
+		//mentionEcolageNation.setAnneeScolaireEcolage(anneEncoure.getLibAnneeScolaire());
+		
+		//Pour les non nationaux
+		//MentionEcolage mentionEcolageNonNation = new MentionEcolage();
+		//MentionEcolageId  menTEcoNonNatId = new MentionEcolageId(ecolageNonNation.getCodeEcolage(), choosedMention.getCodeMention());
+		//mentionEcolageNonNation.setId(menTEcoNonNatId);
+		//mentionEcolageNonNation.setEcolages(ecolageNonNation);
+		//mentionEcolageNonNation.setMention(choosedMention);
+		//mentionEcolageNonNation.setAnneeScolaireEcolage(anneEncoure.getLibAnneeScolaire());
+		
+		//service.addObject(mentionEcolageNation);
+		//service.addObject(mentionEcolageNonNation);
 		
 	}
 
@@ -187,7 +187,6 @@ public class FraisScolaireBean {
 		this.listeMention = listeMention;
 	}
 
-
 	public Ecolages getEcolageNation() {
 		return ecolageNation;
 	}
@@ -204,22 +203,6 @@ public class FraisScolaireBean {
 		this.ecolageNonNation = ecolageNonNation;
 	}
 
-	public FraisAnnexe getFraisAnnexe() {
-		return fraisAnnexe;
-	}
-
-	public void setFraisAnnexe(FraisAnnexe fraisAnnexe) {
-		this.fraisAnnexe = fraisAnnexe;
-	}
-
-	public FraisAnnexe getFraisAnnexeNonNation() {
-		return fraisAnnexeNonNation;
-	}
-
-	public void setFraisAnnexeNonNation(FraisAnnexe fraisAnnexeNonNation) {
-		this.fraisAnnexeNonNation = fraisAnnexeNonNation;
-	}
-
 	public BigDecimal getFraisExam() {
 		return fraisExam;
 	}
@@ -227,6 +210,5 @@ public class FraisScolaireBean {
 	public void setFraisExam(BigDecimal fraisExam) {
 		this.fraisExam = fraisExam;
 	}
-
 
 }

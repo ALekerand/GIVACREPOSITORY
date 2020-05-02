@@ -13,20 +13,11 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.ARSTM.model.AnneesScolaire;
-import com.ARSTM.model.Ecolages;
-import com.ARSTM.model.Ecole;
-import com.ARSTM.model.Filieres;
-import com.ARSTM.model.FraisAnnexe;
-import com.ARSTM.model.Mention;
-import com.ARSTM.model.MentionEcolage;
-import com.ARSTM.model.MentionEcolageId;
 import com.ARSTM.model.TypeLogement;
 import com.ARSTM.model.TypeLogementNationalite;
 import com.ARSTM.model.Typenationalite;
 import com.ARSTM.requetes.ReqAnneeScolaire;
 import com.ARSTM.requetes.ReqTypeNationalite;
-import com.ARSTM.requetes.RequeteFiliere;
-import com.ARSTM.requetes.RequeteMention;
 import com.ARSTM.service.Iservice;
 
 @Component

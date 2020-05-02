@@ -7,6 +7,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,9 +25,11 @@ import org.springframework.stereotype.Component;
 
 import com.ARSTM.model.AnneesScolaire;
 import com.ARSTM.model.Diplomes;
+import com.ARSTM.model.EtablScolarite;
 import com.ARSTM.model.Etudiants;
 import com.ARSTM.model.Inscriptions;
 import com.ARSTM.model.Matrimoniales;
+import com.ARSTM.model.Mention;
 import com.ARSTM.model.Niveaux;
 import com.ARSTM.model.Santes;
 import com.ARSTM.requetes.ReqAnneeScolaire;
@@ -48,26 +51,19 @@ public class EtablisScolariteBean {
 
 	private AnneesScolaire anneEncoure = new AnneesScolaire();
 	private Etudiants etudiants = new Etudiants();
-	private Matrimoniales choosedMatrimoniales;
-	private Santes chooseedsantes = new Santes();
-	private Niveaux choosedNiveaux = new Niveaux();
-	private Diplomes choosedDiplomes = new Diplomes();
 	private String matriculeRecherche;
 	private Inscriptions inscriptions = new Inscriptions();
 	private Inscriptions selectedInscription = new Inscriptions();
+	private Mention  mention = new Mention();
+	private EtablScolarite etablScolarite = new EtablScolarite();
+	private boolean etatReduction;
 
-	
 	
 	// Pour l'upload
 	private String destination = "C:/photo/";
 	private String cheminFinal ="";
 	private	StreamedContent content = new DefaultStreamedContent() ;
 	
-	
-	private List listMatrimonale = new ArrayList<>();
-	private List listeSante = new ArrayList<>();
-	private List listeNiveaux = new ArrayList<>();
-	private List listDiplome = new ArrayList<>();
 	private List listEtudiant = new ArrayList<>();
 	private List listInscription = new ArrayList<>();
 	
@@ -75,8 +71,6 @@ public class EtablisScolariteBean {
 	private CommandButton btnValider = new CommandButton();
 	private CommandButton btnAnuler = new CommandButton();
 	private List listeEtudiant = new ArrayList<>();
-	
-	
 	
 	
 	// Méthodes
@@ -97,7 +91,11 @@ public class EtablisScolariteBean {
 		}
 		
 		if (etudiants.getMle()!= null) {
-			inscriptions = requeteInscription.recupInscriptionByNumEtudiant(etudiants.getNumetudiant()).get(0);
+			inscriptions = requeteInscription.recupInscriptionByNumEtudiant(etudiants.getNumetudiant(),anneEncoure.getCodeAnnees()).get(0);
+			mention = inscriptions.getSection().getMention();
+			
+			
+			
 			chargerPhoto();
 		}
 	}
@@ -107,7 +105,6 @@ public class EtablisScolariteBean {
 		inscriptions = selectedInscription;
 		etudiants = selectedInscription.getEtudiants();
 		chargerPhoto();
-		
 	}
 	
 	public void enregistrer() throws FileNotFoundException {
@@ -123,10 +120,6 @@ public class EtablisScolariteBean {
 		//Actualiser la liste des complements à faire
 		getListInscription();
 	}
-	
-	
-	
-	
 	
 	
 	public void annuler() throws FileNotFoundException {
@@ -220,25 +213,6 @@ public StreamedContent viderPhoto() throws FileNotFoundException {
     
     //Pour charger le graphiqueImage
     public StreamedContent getContent() {
-		
-    	
-    	
-    	
-    	
-    	
-    	
-		/*
-		 * if ((cheminFinal.equals(""))) { setCheminFinal(destination + "avatar.jpg"); }
-		 * 
-		 * try {
-		 * 
-		 * InputStream is = new FileInputStream(cheminFinal); //is.close(); content =
-		 * new DefaultStreamedContent(is);
-		 * 
-		 * } catch (FileNotFoundException e) { // TODO Auto-generated catch block
-		 * e.printStackTrace(); } catch (IOException e) { // TODO Auto-generated catch
-		 * block e.printStackTrace(); }
-		 */
 		  return content;	 
 	}
     
@@ -299,73 +273,63 @@ public StreamedContent viderPhoto() throws FileNotFoundException {
 		this.etudiants = etudiants;
 	}
 
-	public List getListMatrimonale() {
-		listMatrimonale = service.getObjects("Matrimoniales");
-		return listMatrimonale;
-	}
+	/*
+	 * public List getListMatrimonale() { listMatrimonale =
+	 * service.getObjects("Matrimoniales"); return listMatrimonale; }
+	 * 
+	 * public void setListMatrimonale(List listMatrimonale) { this.listMatrimonale =
+	 * listMatrimonale; }
+	 */
 
-	public void setListMatrimonale(List listMatrimonale) {
-		this.listMatrimonale = listMatrimonale;
-	}
+	/*
+	 * public Matrimoniales getChoosedMatrimoniales() { return choosedMatrimoniales;
+	 * }
+	 * 
+	 * public void setChoosedMatrimoniales(Matrimoniales choosedMatrimoniales) {
+	 * this.choosedMatrimoniales = choosedMatrimoniales; }
+	 * 
+	 * public Santes getChooseedsantes() { return chooseedsantes; }
+	 * 
+	 * public void setChooseedsantes(Santes chooseedsantes) { this.chooseedsantes =
+	 * chooseedsantes; }
+	 */
 
-	public Matrimoniales getChoosedMatrimoniales() {
-		return choosedMatrimoniales;
-	}
+	/*
+	 * public List getListeSante() { listeSante = service.getObjects("Santes");
+	 * return listeSante; }
+	 * 
+	 * public void setListeSante(List listeSante) { this.listeSante = listeSante; }
+	 */
 
-	public void setChoosedMatrimoniales(Matrimoniales choosedMatrimoniales) {
-		this.choosedMatrimoniales = choosedMatrimoniales;
-	}
+	/*
+	 * public Niveaux getChoosedNiveaux() { return choosedNiveaux; }
+	 * 
+	 * public void setChoosedNiveaux(Niveaux choosedNiveaux) { this.choosedNiveaux =
+	 * choosedNiveaux; }
+	 */
 
-	public Santes getChooseedsantes() {
-		return chooseedsantes;
-	}
+	/*
+	 * public List getListeNiveaux() { listeNiveaux = service.getObjects("Niveaux");
+	 * return listeNiveaux; }
+	 * 
+	 * public void setListeNiveaux(List listeNiveaux) { this.listeNiveaux =
+	 * listeNiveaux; }
+	 */
 
-	public void setChooseedsantes(Santes chooseedsantes) {
-		this.chooseedsantes = chooseedsantes;
-	}
+	/*
+	 * public Diplomes getChoosedDiplomes() { return choosedDiplomes; }
+	 * 
+	 * public void setChoosedDiplomes(Diplomes choosedDiplomes) {
+	 * this.choosedDiplomes = choosedDiplomes; }
+	 */
 
-	public List getListeSante() {
-		listeSante = service.getObjects("Santes");
-		return listeSante;
-	}
-
-	public void setListeSante(List listeSante) {
-		this.listeSante = listeSante;
-	}
-
-	public Niveaux getChoosedNiveaux() {
-		return choosedNiveaux;
-	}
-
-	public void setChoosedNiveaux(Niveaux choosedNiveaux) {
-		this.choosedNiveaux = choosedNiveaux;
-	}
-
-	public List getListeNiveaux() {
-		listeNiveaux = service.getObjects("Niveaux");
-		return listeNiveaux;
-	}
-
-	public void setListeNiveaux(List listeNiveaux) {
-		this.listeNiveaux = listeNiveaux;
-	}
-
-	public Diplomes getChoosedDiplomes() {
-		return choosedDiplomes;
-	}
-
-	public void setChoosedDiplomes(Diplomes choosedDiplomes) {
-		this.choosedDiplomes = choosedDiplomes;
-	}
-
-	public List getListDiplome() {
-		listDiplome = service.getObjects("Diplomes");
-		return listDiplome;
-	}
-
-	public void setListDiplome(List listDiplome) {
-		this.listDiplome = listDiplome;
-	}
+	/*
+	 * public List getListDiplome() { listDiplome = service.getObjects("Diplomes");
+	 * return listDiplome; }
+	 * 
+	 * public void setListDiplome(List listDiplome) { this.listDiplome =
+	 * listDiplome; }
+	 */
 
 
 
@@ -431,5 +395,28 @@ public StreamedContent viderPhoto() throws FileNotFoundException {
 		this.selectedInscription = selectedInscription;
 	}
 
+	public Mention getMention() {
+		return mention;
+	}
+
+	public void setMention(Mention mention) {
+		this.mention = mention;
+	}
+
+	public EtablScolarite getEtablScolarite() {
+		return etablScolarite;
+	}
+
+	public void setEtablScolarite(EtablScolarite etablScolarite) {
+		this.etablScolarite = etablScolarite;
+	}
+
+	public boolean isEtatReduction() {
+		return etatReduction;
+	}
+
+	public void setEtatReduction(boolean etatReduction) {
+		this.etatReduction = etatReduction;
+	}
 	
 }

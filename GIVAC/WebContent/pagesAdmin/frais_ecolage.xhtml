@@ -12,51 +12,51 @@
 			<div class="widget-content">
 
 				<!-- WIZARD ICI -->
-				<p:wizard id="wiz" flowListener="#{fraisScolaireBean2.onFlowProcess}">
+				<p:wizard id="wiz" flowListener="#{fraisEcolageBean.onFlowProcess}">
 					<p:tab id="tab_mention" title="Mention">
 						<p:panel header="Mention">
 							<h:panelGrid id="mention_grid" columns="2" cellpadding="6">
 							
 								<p:outputLabel for="cb_ecol" value="Ecole" />
 								<p:selectOneMenu id="cb_ecol" required="true"
-									value="#{fraisScolaireBean2.choosedEcole}"
+									value="#{fraisEcolageBean.choosedEcole}"
 									converter="#{entityConverter}">
-									<p:ajax listener="#{fraisScolaireBean2.chargerFiliere}" event="change"
+									<p:ajax listener="#{fraisEcolageBean.chargerFiliere}" event="change"
 										update="cb_filiere" process="@this">
 									</p:ajax>
 									
 									<f:selectItem itemLabel="Selectionnez" itemValue="" />
-									<f:selectItems value="#{fraisScolaireBean2.listEcole}" var="tata"
+									<f:selectItems value="#{fraisEcolageBean.listEcole}" var="tata"
 									itemLabel="#{tata.abrevEcole}" itemValue="#{tata}"></f:selectItems>
 								</p:selectOneMenu>								
 								
 								<p:outputLabel for="cb_filiere" value="Filière" />
 								<p:selectOneMenu id="cb_filiere" required="true"
-									value="#{fraisScolaireBean2.choosedFiliere}"
+									value="#{fraisEcolageBean.choosedFiliere}"
 									converter="#{entityConverter}">
 									
-									<p:ajax listener="#{fraisScolaireBean2.chargerMention}" event="change"
+									<p:ajax listener="#{fraisEcolageBean.chargerMention}" event="change"
 										update="cb_mention" process="@this">
 									</p:ajax>
 									
 									<f:selectItem itemLabel="Selectionnez" itemValue="" />
-									<f:selectItems value="#{fraisScolaireBean2.listFiliere}" var="tata"
+									<f:selectItems value="#{fraisEcolageBean.listFiliere}" var="tata"
 										itemLabel="#{tata.abrevFiliere}" itemValue="#{tata}"></f:selectItems>
 								</p:selectOneMenu>
 								
 								
 								<p:outputLabel for="cb_mention" value="Mention" />
 								<p:selectOneMenu id="cb_mention" required="true"
-									value="#{fraisScolaireBean2.choosedMention}"
+									value="#{fraisEcolageBean.choosedMention}"
 									converter="#{entityConverter}" >
-									<!-- <p:ajax listener="#{fraisScolaireBean2.chargerSection}" event="change"
+									<!-- <p:ajax listener="#{fraisEcolageBean.chargerSection}" event="change"
 										update="tab_section, nom_section" process="@this" /> -->
 									<f:selectItem itemLabel="Selectionnez" itemValue="" />
-									<f:selectItems value="#{fraisScolaireBean2.listeMention}" var="tata"
+									<f:selectItems value="#{fraisEcolageBean.listeMention}" var="tata"
 										itemLabel="#{tata.libMention}" itemValue="#{tata}"></f:selectItems>
 								</p:selectOneMenu>
 								<p:outputLabel value="Droit examen:" />
-								<p:inputText value="#{fraisScolaireBean2.fraisExam}">
+								<p:inputText value="#{fraisEcolageBean.fraisExam}">
 								<p:ajax event="click" update="@this" />
 									<f:convertNumber pattern="##,###.###"></f:convertNumber>
 								</p:inputText>
@@ -68,13 +68,13 @@
 					<p:tab id="nationaux" title="Nationaux">
 					<p:panel header="Frais Ecolage Nationaux">
 					<br/>
-						<p:outputLabel value="#{fraisScolaireBean2.choosedMention.libMention}" style="font-size:20px; font-weight: bold; color: #FF0000;"></p:outputLabel>
+						<p:outputLabel value="#{fraisEcolageBean.choosedMention.libMention}" style="font-size:20px; font-weight: bold; color: #FF0000;"></p:outputLabel>
 					<br/>
 							
 							<h:panelGrid id="nfrais_grid" columns="4" cellpadding="6">
 							<p:outputLabel value="Montant Ecolage:" />
-							<p:inputText value="#{fraisScolaireBean2.ecolageNation.montantEcolage}" styleClass="upercase">
-							<p:ajax listener="#{fraisScolaireBean2.repartirVersNation}" event="blur"
+							<p:inputText value="#{fraisEcolageBean.ecolageNation.montantEcolage}" styleClass="upercase">
+							<p:ajax listener="#{fraisEcolageBean.repartirVersNation}" event="blur"
 								update="nfrais_grid" process="@this">
 							</p:ajax>
 								<f:convertNumber pattern="##,###.###"></f:convertNumber>
@@ -84,35 +84,35 @@
 							<p:outputLabel/>
 							
 							<p:outputLabel value="1er versement:" />
-							<p:inputText value="#{fraisScolaireBean2.ecolageNation.mtEchance1}">
+							<p:inputText value="#{fraisEcolageBean.ecolageNation.mtEchance1}">
 								<f:convertNumber pattern="##,###.###"></f:convertNumber>
 							</p:inputText>
 							<p:outputLabel value="Date:" />
-							<p:calendar value="#{fraisScolaireBean2.ecolageNation.dateEchance1}"
+							<p:calendar value="#{fraisEcolageBean.ecolageNation.dateEchance1}"
 							locale="fr" navigator="true" pattern="dd/MM/yyyy" required="true"/>
 							
 							<p:outputLabel value="2e versement:" />
-							<p:inputText value="#{fraisScolaireBean2.ecolageNation.mtEchance2}">
+							<p:inputText value="#{fraisEcolageBean.ecolageNation.mtEchance2}">
 								<f:convertNumber pattern="##,###.###"></f:convertNumber>
 							</p:inputText>
 							<p:outputLabel value="Date:" />
-							<p:calendar value="#{fraisScolaireBean2.ecolageNation.dateEchance2}"
+							<p:calendar value="#{fraisEcolageBean.ecolageNation.dateEchance2}"
 							locale="fr" navigator="true" pattern="dd/MM/yyyy" required="true"/>
 							
 							<p:outputLabel value="3e versement:" />
-							<p:inputText value="#{fraisScolaireBean2.ecolageNation.mtEchance3}">
+							<p:inputText value="#{fraisEcolageBean.ecolageNation.mtEchance3}">
 								<f:convertNumber pattern="##,###.###"></f:convertNumber>
 							</p:inputText>
 							<p:outputLabel value="Date:" />
-							<p:calendar value="#{fraisScolaireBean2.ecolageNation.dateEchance3}"
+							<p:calendar value="#{fraisEcolageBean.ecolageNation.dateEchance3}"
 							locale="fr" navigator="true" pattern="dd/MM/yyyy" required="true"/>
 							
 							<p:outputLabel value="4e versement:" />
-							<p:inputText value="#{fraisScolaireBean2.ecolageNation.mtEchance4}">
+							<p:inputText value="#{fraisEcolageBean.ecolageNation.mtEchance4}">
 								<f:convertNumber pattern="##,###.###"></f:convertNumber>
 							</p:inputText>
 							<p:outputLabel value="Date:" />
-							<p:calendar value="#{fraisScolaireBean2.ecolageNation.dateEchance4}"
+							<p:calendar value="#{fraisEcolageBean.ecolageNation.dateEchance4}"
 							locale="fr" navigator="true" pattern="dd/MM/yyyy" required="true"/> 
 							
 							</h:panelGrid>
@@ -122,13 +122,13 @@
 						<p:panel header="Frais Ecolage Non Nationaux">
 						
 						<br/>
-						<p:outputLabel value="#{fraisScolaireBean2.choosedMention.libMention}" style="font-size:20px; font-weight: bold; color: #FF0000;"></p:outputLabel>
+						<p:outputLabel value="#{fraisEcolageBean.choosedMention.libMention}" style="font-size:20px; font-weight: bold; color: #FF0000;"></p:outputLabel>
 					<br/>
 						
 							<h:panelGrid id="nnfrais_grid" columns="4" cellpadding="6">
 							<p:outputLabel value="Montant Ecolage:" />
-							<p:inputText value="#{fraisScolaireBean2.ecolageNonNation.montantEcolage}" styleClass="upercase">
-							<p:ajax listener="#{fraisScolaireBean2.repartirVersNonNation}" event="blur"
+							<p:inputText value="#{fraisEcolageBean.ecolageNonNation.montantEcolage}" styleClass="upercase">
+							<p:ajax listener="#{fraisEcolageBean.repartirVersNonNation}" event="blur"
 									update="nnfrais_grid" process="@this">
 							</p:ajax>
 								<f:convertNumber pattern="##,###.###"></f:convertNumber>
@@ -137,41 +137,41 @@
 							<p:outputLabel/>
 							
 							<p:outputLabel value="1er versement:" />
-							<p:inputText value="#{fraisScolaireBean2.ecolageNonNation.mtEchance1}">
+							<p:inputText value="#{fraisEcolageBean.ecolageNonNation.mtEchance1}">
 								<f:convertNumber pattern="##,###.###"></f:convertNumber>
 							</p:inputText>
 							<p:outputLabel value="Date:" />
-							<p:calendar value="#{fraisScolaireBean2.ecolageNonNation.dateEchance1}"
+							<p:calendar value="#{fraisEcolageBean.ecolageNonNation.dateEchance1}"
 							locale="fr" navigator="true" pattern="dd/MM/yyyy" required="true"/>
 							
 							<p:outputLabel value="2e versement:" />
-							<p:inputText value="#{fraisScolaireBean2.ecolageNonNation.mtEchance2}">
+							<p:inputText value="#{fraisEcolageBean.ecolageNonNation.mtEchance2}">
 								<f:convertNumber pattern="##,###.###"></f:convertNumber>
 							</p:inputText>
 							<p:outputLabel value="Date:" />
-							<p:calendar value="#{fraisScolaireBean2.ecolageNonNation.dateEchance2}"
+							<p:calendar value="#{fraisEcolageBean.ecolageNonNation.dateEchance2}"
 							locale="fr" navigator="true" pattern="dd/MM/yyyy" required="true"/>
 							
 							<p:outputLabel value="3e versement:" />
-							<p:inputText value="#{fraisScolaireBean2.ecolageNonNation.mtEchance3}">
+							<p:inputText value="#{fraisEcolageBean.ecolageNonNation.mtEchance3}">
 								<f:convertNumber pattern="##,###.###"></f:convertNumber>
 							</p:inputText>
 							<p:outputLabel value="Date:" />
-							<p:calendar value="#{fraisScolaireBean2.ecolageNonNation.dateEchance3}"
+							<p:calendar value="#{fraisEcolageBean.ecolageNonNation.dateEchance3}"
 							locale="fr" navigator="true" pattern="dd/MM/yyyy" required="true"/>
 							
 							<p:outputLabel value="4e versement:" />
-							<p:inputText value="#{fraisScolaireBean2.ecolageNonNation.mtEchance4}">
+							<p:inputText value="#{fraisEcolageBean.ecolageNonNation.mtEchance4}">
 								<f:convertNumber pattern="##,###.###"></f:convertNumber>
 							</p:inputText>
 							<p:outputLabel value="Date:" />
-							<p:calendar value="#{fraisScolaireBean2.ecolageNation.dateEchance4}"
+							<p:calendar value="#{fraisEcolageBean.ecolageNation.dateEchance4}"
 							locale="fr" navigator="true" pattern="dd/MM/yyyy" required="true"/> 
 							
 							</h:panelGrid>
 						</p:panel>
 
-                          <p:commandButton value="ENREGISTRER" action="#{fraisScolaireBean2.enregistrer}"  />
+                          <p:commandButton value="ENREGISTRER" action="#{fraisEcolageBean.enregistrer}"  />
 
 					</p:tab> 
 					
