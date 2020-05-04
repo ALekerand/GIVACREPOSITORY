@@ -71,9 +71,14 @@ public class FraisEcolageBean {
 		//Setter les type de nationalite
 		ecolageNation.setTypenationalite(reqTypeNationalite.recupererTypeNationalite(1).get(0));
 		ecolageNation.setFraisExam(fraisExam);
+		ecolageNation.setAnneesScolaire(anneEncoure);
+		ecolageNation.setMention(choosedMention);
 		
 		ecolageNonNation.setTypenationalite(reqTypeNationalite.recupererTypeNationalite(2).get(0));
 		ecolageNonNation.setFraisExam(fraisExam);
+		ecolageNonNation.setAnneesScolaire(anneEncoure);
+		ecolageNonNation.setMention(choosedMention);
+		
 		
 		//Faire l'enregistrement
 		service.addObject(ecolageNation);
@@ -96,27 +101,6 @@ public class FraisEcolageBean {
 	
 	public void enregistrerMentionEcolage() {
 		System.out.println("VRIFICATION Année:"+anneEncoure.getLibAnneeScolaire());
-
-		
-		//Créer les objets MentionEcolage
-				//Pour les nationaux
-		//MentionEcolage mentionEcolageNation = new MentionEcolage(); 
-		//MentionEcolageId  menTEcoNatId = new MentionEcolageId(ecolageNation.getCodeEcolage(), choosedMention.getCodeMention());
-		//mentionEcolageNation.setId(menTEcoNatId);
-		//mentionEcolageNation.setEcolages(ecolageNation);
-		//mentionEcolageNation.setMention(choosedMention);
-		//mentionEcolageNation.setAnneeScolaireEcolage(anneEncoure.getLibAnneeScolaire());
-		
-		//Pour les non nationaux
-		//MentionEcolage mentionEcolageNonNation = new MentionEcolage();
-		//MentionEcolageId  menTEcoNonNatId = new MentionEcolageId(ecolageNonNation.getCodeEcolage(), choosedMention.getCodeMention());
-		//mentionEcolageNonNation.setId(menTEcoNonNatId);
-		//mentionEcolageNonNation.setEcolages(ecolageNonNation);
-		//mentionEcolageNonNation.setMention(choosedMention);
-		//mentionEcolageNonNation.setAnneeScolaireEcolage(anneEncoure.getLibAnneeScolaire());
-		
-		//service.addObject(mentionEcolageNation);
-		//service.addObject(mentionEcolageNonNation);
 		
 	}
 

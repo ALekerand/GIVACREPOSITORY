@@ -9,6 +9,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -25,15 +26,19 @@ import org.springframework.stereotype.Component;
 
 import com.ARSTM.model.AnneesScolaire;
 import com.ARSTM.model.Diplomes;
+import com.ARSTM.model.Ecolages;
 import com.ARSTM.model.EtablScolarite;
 import com.ARSTM.model.Etudiants;
+import com.ARSTM.model.FraisAnnexe;
 import com.ARSTM.model.Inscriptions;
 import com.ARSTM.model.Matrimoniales;
 import com.ARSTM.model.Mention;
 import com.ARSTM.model.Niveaux;
 import com.ARSTM.model.Santes;
 import com.ARSTM.requetes.ReqAnneeScolaire;
+import com.ARSTM.requetes.ReqEcolage;
 import com.ARSTM.requetes.ReqEtudiant;
+import com.ARSTM.requetes.ReqFraisAnnexes;
 import com.ARSTM.requetes.RequeteInscription;
 import com.ARSTM.service.Iservice;
 
@@ -48,6 +53,10 @@ public class EtablisScolariteBean {
 	ReqEtudiant reqEtudiant;
 	@Autowired
 	RequeteInscription requeteInscription;
+	@Autowired
+	ReqEcolage reqEcolage;
+	@Autowired
+	ReqFraisAnnexes reqFraisAnnexes;
 
 	private AnneesScolaire anneEncoure = new AnneesScolaire();
 	private Etudiants etudiants = new Etudiants();
@@ -55,6 +64,8 @@ public class EtablisScolariteBean {
 	private Inscriptions inscriptions = new Inscriptions();
 	private Inscriptions selectedInscription = new Inscriptions();
 	private Mention  mention = new Mention();
+	private Ecolages ecolage = new Ecolages();
+	private FraisAnnexe fraisAnnexe = new FraisAnnexe();
 	private EtablScolarite etablScolarite = new EtablScolarite();
 	private boolean etatReduction;
 
@@ -94,10 +105,33 @@ public class EtablisScolariteBean {
 			inscriptions = requeteInscription.recupInscriptionByNumEtudiant(etudiants.getNumetudiant(),anneEncoure.getCodeAnnees()).get(0);
 			mention = inscriptions.getSection().getMention();
 			
-			
-			
+			//Ecolage
 			chargerPhoto();
 		}
+	}
+	
+	
+	public void chargerfrais() {
+		//Ecolage concerné
+		ecolage = reqEcolage.recupEcolage(mention.getCodeMention(), anneEncoure.getCodeAnnees());
+		
+		//Frais annexes concernés
+		fraisAnnexe = reqFraisAnnexes.recupFraisAnexByTypeNation(anneEncoure.getCodeAnnees(), 1);
+		
+		etablScolarite.setAnneesScolaire(anneEncoure);
+		etablScolarite.setFraisAssuranceSco(new BigDecimal(fraisAnnexe.getFraisAssurance()));
+		etablScolarite.setFraisElearningSco(new BigDecimal(fraisAnnexe.getFraisElearning()));
+		etablScolarite.setAutreFraisSco(new BigDecimal(fraisAnnexe.getAutreFrais()));
+		etablScolarite.setDateEchance1Sco(ecolage.getDateEchance1());
+		etablScolarite.setDateEchance2Eco(ecolage.getDateEchance2());
+		etablScolarite.setDateEchance3Sco(ecolage.getDateEchance3());
+		etablScolarite.setDateEchance4Eco(ecolage.getDateEchance4());
+		etablScolarite.setDateEtablissementSco(new Date());
+		//etablScolarite.setDateReduction(dateReduction);
+		etablScolarite.setEtudiants(etudiants);
+
+
+		
 	}
 	
 	
@@ -418,5 +452,5 @@ public StreamedContent viderPhoto() throws FileNotFoundException {
 	public void setEtatReduction(boolean etatReduction) {
 		this.etatReduction = etatReduction;
 	}
-	
+
 }
