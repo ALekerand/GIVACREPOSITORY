@@ -51,6 +51,12 @@
 							<p:inputText value="#{fraisAnnexeBean.fraisAnnexeNation.fraisOrdinateur}" styleClass="upercase">
 								<f:convertNumber pattern="##,###.###"></f:convertNumber>
 							</p:inputText>
+							
+							<p:outputLabel value="Autre Frais" />
+							<p:inputText value="#{fraisAnnexeBean.fraisAnnexeNation.autreFrais}" styleClass="upercase">
+								<f:convertNumber pattern="##,###.###"></f:convertNumber>
+							</p:inputText>
+							
 							</h:panelGrid>
 						</p:panel>
 					</p:tab>
@@ -91,6 +97,11 @@
 							
 							<p:outputLabel value="Frais Ordinateur" />
 							<p:inputText value="#{fraisAnnexeBean.fraisAnnexeNonNation.fraisOrdinateur}" styleClass="upercase">						
+							<f:convertNumber pattern="##,###.###"></f:convertNumber>
+							</p:inputText>
+							
+							<p:outputLabel value="Autre Frais" />
+							<p:inputText value="#{fraisAnnexeBean.fraisAnnexeNonNation.autreFrais}" styleClass="upercase">						
 							<f:convertNumber pattern="##,###.###"></f:convertNumber>
 							</p:inputText>
 							

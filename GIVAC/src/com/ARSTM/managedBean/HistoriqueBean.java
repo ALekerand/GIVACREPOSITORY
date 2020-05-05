@@ -88,8 +88,9 @@ public class HistoriqueBean {
 		}
 		
 		if (etudiants.getMle()!= null) {
-			inscriptions = requeteInscription.recupInscriptionByNumEtudiant(etudiants.getNumetudiant()).get(0);
+			inscriptions = requeteInscription.recupererListeSection(etudiants.getNumetudiant()).get(0);
 			chargerPhoto();
+			chargerSection();
 			
 		}
 	}
@@ -98,6 +99,7 @@ public class HistoriqueBean {
 	public void selectionner() throws FileNotFoundException {
 		etudiants = selectedEtudiant;
 		chargerPhoto();
+		chargerSection();
 		
 	}
 	
@@ -152,9 +154,14 @@ public StreamedContent viderPhoto() throws FileNotFoundException {
        
     }
     
+    public void chargerSection() {
+    	listInscription.clear();
+		 listInscription= requeteInscription.recupererListeSection(etudiants.getNumetudiant());	
+    }
+    
     
     public void chargerPhoto() throws FileNotFoundException {
-    	System.out.println("Chemin:======="+getEtudiants().getPhotoEtudiant());
+    	//System.out.println("Chemin:======="+getEtudiants().getPhotoEtudiant());
     	cheminFinal = getEtudiants().getPhotoEtudiant();
     	InputStream is = new FileInputStream(cheminFinal);
 			//is.close();  
@@ -163,6 +170,35 @@ public StreamedContent viderPhoto() throws FileNotFoundException {
     	
     }
     
+    public void annuler() throws FileNotFoundException {
+		etudiants.setNomEtudiant(null);
+		etudiants.setMle(null);
+		etudiants.setPrenomEtudiant(null);
+		etudiants.setDatenais(null);
+		etudiants.setLieunais(null);
+		etudiants.setSections(null);
+		etudiants.setMailEtudiant(null);
+		etudiants.setTelEtudiant(null);
+		etudiants.setNumcni(null);
+		etudiants.setEcoleAncienneEtudiant(null);
+		etudiants.setNomPrenomsPere(null);
+		etudiants.setFonctionPere(null);
+		etudiants.setTelPere(null);
+		etudiants.setNomPrenomsMere(null);
+		etudiants.setFonctionMere(null);
+		etudiants.setTelMere(null);
+		etudiants.setNomPrenomsTuteur(null);
+		etudiants.setTelTuteur(null);
+		etudiants.setNomPrenomsDocteur(null);
+		etudiants.setTelDocteur(null);
+		inscriptions.setSection(null);
+		inscriptions.setAnneesScolaire(null);
+		matriculeRecherche = "";
+		listInscription.clear();
+		viderPhoto();
+		
+	}
+       
     /****** Accesseurs ***********************************/
     
     //Pour charger le graphiqueImage
@@ -341,8 +377,8 @@ public StreamedContent viderPhoto() throws FileNotFoundException {
 
 
 	public List getListInscription() {
-		  listInscription.clear();
-		  listInscription= requeteInscription.recupererListeSection(etudiants.getNumetudiant());	 
+		  //listInscription.clear();
+		  //listInscription= requeteInscription.recupererListeSection(etudiants.getNumetudiant());	 
 		return listInscription;
 	}
 
