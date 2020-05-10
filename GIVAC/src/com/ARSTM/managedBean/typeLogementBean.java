@@ -60,6 +60,7 @@ public class typeLogementBean {
 		listeTypeLogement = getService().getObjects("TypeLogement");
 		}
 	
+	
 	public void selectionner(){
 		setTypelogement(selectedTypeLogement);
 		btnSuprimer.setDisabled(false);
