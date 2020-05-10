@@ -17,14 +17,6 @@
 						<p:outputLabel for="type_logement" value="Libellé Type Logement" />
 						<p:inputText id="type_logement"
 							value="#{typeLogementBean.typelogement.libtypeLogement}" required="true" />
-						
-						<p:outputLabel for="cout_typelogement" value="Montant Logement" styleClass="outputDecalage" />
-						<p:inputText id="cout_typelogement"
-							value="#{typeLogementBean.typelogement.mtTypeLogement}" required="true" />
-							
-						<p:outputLabel for="cout_typelogementcaution" value="Caution Logement" styleClass="outputDecalage" />
-						<p:inputText id="cout_typelogementcaution"
-							value="#{typeLogementBean.typelogement.mtTypeLogementCaution}" required="true" />
 					</h:panelGrid>
 
 					<br></br>
@@ -64,18 +56,7 @@
 					<p:ajax event="rowSelect" listener="#{typeLogementBean.selectionner}"
 						update=":form" />
 					<f:facet name="header">LISTE DES TYPES DE LOGEMENTS</f:facet>
-					<p:column headerText="Type Logement" style="width:50%">#{tata.libtypeLogement}</p:column>
-					<p:column headerText="Coût Annuel" style="width:25%">
-					<h:outputText value="#{tata.mtTypeLogement}">
-					<f:convertNumber pattern="##,###.###"></f:convertNumber>
-					</h:outputText>
-					</p:column>
-					
-					<p:column headerText="Caution Annuelle" style="width:25%">
-					<h:outputText value="#{tata.mtTypeLogementCaution}">
-					<f:convertNumber pattern="##,###.###"></f:convertNumber>
-					</h:outputText>
-					</p:column>
+					<p:column headerText="Type Logement" style="width:100%">#{tata.libtypeLogement}</p:column>
 				</p:dataTable>
 				<!-- </h:form> -->
 
