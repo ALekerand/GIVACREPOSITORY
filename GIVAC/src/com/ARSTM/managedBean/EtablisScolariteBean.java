@@ -112,12 +112,23 @@ public class EtablisScolariteBean {
 	
 	
 	public void chargerfrais() {
-		//Ecolage concerné
-		ecolage = reqEcolage.recupEcolage(mention.getCodeMention(), anneEncoure.getCodeAnnees());
+		
+		if (etudiants.getNationalites().getCodenationalite()==1) {
+			
+			//Ecolage concerné en fonction du type de Nationalité
+			ecolage = reqEcolage.recupEcolage(mention.getCodeMention(), anneEncoure.getCodeAnnees(), 1);
+			etablScolarite.setMontantEcolageSco(ecolage.getMontantEcolage());
+			
+			//Recuperer les frais logement
+			
+			
+		}
+		
+		
 		
 		//Frais annexes concernés
 		fraisAnnexe = reqFraisAnnexes.recupFraisAnexByTypeNation(anneEncoure.getCodeAnnees(), 1);
-		
+		etablScolarite.setFraisInscriptionSco(fraisAnnexe.getFraisInscription());    
 		etablScolarite.setAnneesScolaire(anneEncoure);
 		etablScolarite.setFraisAssuranceSco(new BigDecimal(fraisAnnexe.getFraisAssurance()));
 		etablScolarite.setFraisElearningSco(new BigDecimal(fraisAnnexe.getFraisElearning()));
@@ -127,11 +138,13 @@ public class EtablisScolariteBean {
 		etablScolarite.setDateEchance3Sco(ecolage.getDateEchance3());
 		etablScolarite.setDateEchance4Eco(ecolage.getDateEchance4());
 		etablScolarite.setDateEtablissementSco(new Date());
-		//etablScolarite.setDateReduction(dateReduction);
 		etablScolarite.setEtudiants(etudiants);
-
-
 		
+		if (etatReduction == true) {
+			etablScolarite.setDateReduction(new Date());
+		}
+		
+
 	}
 	
 	
@@ -161,7 +174,7 @@ public class EtablisScolariteBean {
 		etudiants.setPrenomEtudiant(null);
 		etudiants.setDatenais(null);
 		etudiants.setLieunais(null);
-		etudiants.setSections(null);
+	//	etudiants.setSections(null);
 		etudiants.setMailEtudiant(null);
 		etudiants.setTelEtudiant(null);
 		etudiants.setNumcni(null);

@@ -135,7 +135,7 @@ public class ComplementBean {
 		etudiants.setPrenomEtudiant(null);
 		etudiants.setDatenais(null);
 		etudiants.setLieunais(null);
-		etudiants.setSections(null);
+	//	etudiants.setSections(null);
 		etudiants.setMailEtudiant(null);
 		etudiants.setTelEtudiant(null);
 		etudiants.setNumcni(null);

@@ -204,7 +204,7 @@ public String genererMatricule() {
 		  objEtudiants.setNbsoeurs(null);
 		  objEtudiants.setSantes(null);
 		  objEtudiants.setSexe(null);
-		  objEtudiants.setSections(null);
+		 // objEtudiants.setSections(null);
 		  objEtudiants.setTelEtudiant(null);
 		  objEtudiants.setNationalites(null);
 		  objEtudiants.setNiveaux(null);

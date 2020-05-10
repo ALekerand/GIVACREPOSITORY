@@ -13,8 +13,8 @@ public class ReqEcolage {
 	@Autowired
 	SessionFactory sessionFactory;
 	
-	public Ecolages recupEcolage(int codeMention, int codeanneescolaire){
-	String query = "SELECT * FROM `ecolages` WHERE ((CODE_MENTION = '"+codeMention+"') AND (CODE_ANNEES = '"+codeanneescolaire+"'))";
+	public Ecolages recupEcolage(int codeMention, int codeanneescolaire, int codeTypeNationalite){
+	String query = "SELECT * FROM `ecolages` WHERE ((CODE_MENTION = '"+codeMention+"') AND (CODE_ANNEES = '"+codeanneescolaire+"') AND (CODE_TYPENATIONALITE = '"+codeTypeNationalite+"'))";
 	Ecolages object = (Ecolages) getSessionFactory().getCurrentSession().createSQLQuery(query).addEntity(Ecolages.class).uniqueResult();		
 	return object;
 	}
