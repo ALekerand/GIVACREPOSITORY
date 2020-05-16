@@ -87,14 +87,14 @@ public class FraisEcolageBean {
 	
 	public void repartirVersNation() {
 		ecolageNation.setMtEchance1((ecolageNation.getMontantEcolage().multiply(new BigDecimal("0.4"))));
-		ecolageNation.setMtEchance2((ecolageNation.getMontantEcolage().multiply(new BigDecimal("03"))));
+		ecolageNation.setMtEchance2((ecolageNation.getMontantEcolage().multiply(new BigDecimal("0.3"))));
 		ecolageNation.setMtEchance3((ecolageNation.getMontantEcolage().multiply(new BigDecimal("0.2"))));
 		ecolageNation.setMtEchance4((ecolageNation.getMontantEcolage().multiply(new BigDecimal("0.1"))));
 	}
 	
 	public void repartirVersNonNation() {
 		ecolageNonNation.setMtEchance1((ecolageNonNation.getMontantEcolage().multiply(new BigDecimal("0.4"))));
-		ecolageNonNation.setMtEchance2((ecolageNonNation.getMontantEcolage().multiply(new BigDecimal("03"))));
+		ecolageNonNation.setMtEchance2((ecolageNonNation.getMontantEcolage().multiply(new BigDecimal("0.3"))));
 		ecolageNonNation.setMtEchance3((ecolageNonNation.getMontantEcolage().multiply(new BigDecimal("0.2"))));
 		ecolageNonNation.setMtEchance4((ecolageNonNation.getMontantEcolage().multiply(new BigDecimal("0.1"))));
 	}

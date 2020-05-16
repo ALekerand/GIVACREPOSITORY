@@ -31,6 +31,9 @@
 
 					<p:tab id="nationaux" title="Nationaux">
 						<p:panel header="Frais Type Logements Nationaux">
+						<br/>
+						<p:outputLabel value="#{fraisLogementBean.choosedTypeLogement.libtypeLogement}" style="font-size:20px; font-weight: bold; color: #FF0000;"></p:outputLabel>
+						<br/>
 							<h:panelGrid id="lognfrais_grid" columns="4" cellpadding="6">
 							<p:outputLabel value="Montant Type Logement:" />
 							<p:inputText value="#{fraisLogementBean.typeLogementNation.montantTypeLogement}" styleClass="upercase">
@@ -48,6 +51,9 @@
 
 					 <p:tab id="non_nationaux" title="Non nationaux">
 						<p:panel header="Frais Type Logement Non Nationaux">
+						<br/>
+						<p:outputLabel value="#{fraisLogementBean.choosedTypeLogement.libtypeLogement}" style="font-size:20px; font-weight: bold; color: #FF0000;"></p:outputLabel>
+						<br/>
 							<h:panelGrid id="lognnfrais_grid" columns="4" cellpadding="6">
 							
 							<p:outputLabel value="Montant Type Logement:" />

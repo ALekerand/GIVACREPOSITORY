@@ -50,11 +50,8 @@ public class typeLogementBean {
 	}
 	
 	public void vider(TypeLogement objTypeLogement) {
-		/*
-		 * objTypeLogement.setLibtypeLogement(null);
-		 * objTypeLogement.setMtTypeLogement(null);
-		 * objTypeLogement.setMtTypeLogementCaution(null);
-		 */
+		  objTypeLogement.setLibtypeLogement(null);
+		 
 	}
 	
 	public void actualiserList(){
@@ -75,8 +72,6 @@ public class typeLogementBean {
 		TypeLogement typeLogementTemp = new TypeLogement();
 		typeLogementTemp.setCodetypeLogement(selectedTypeLogement.getCodetypeLogement());
 		typeLogementTemp.setLibtypeLogement(selectedTypeLogement.getLibtypeLogement());
-		//typeLogementTemp.setMtTypeLogement(selectedTypeLogement.getMtTypeLogement());
-		//typeLogementTemp.setMtTypeLogementCaution(selectedTypeLogement.getMtTypeLogementCaution());
 		
 		getService().deleteObject(selectedTypeLogement);
 		vider(selectedTypeLogement);
