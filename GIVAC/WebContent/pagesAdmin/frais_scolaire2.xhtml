@@ -71,6 +71,9 @@
 						<p:outputLabel value="#{fraisEcolageBean.choosedMention.libMention}" style="font-size:20px; font-weight: bold; color: #FF0000;"></p:outputLabel>
 					<br/>
 							
+					<br/>
+						<p:outputLabel value="#{fraisEcolageBean.anneEncoure.libAnneeScolaire}" style="font-size:20px; font-weight: bold; color: #FF0000;"></p:outputLabel>
+					<br/>
 							<h:panelGrid id="nfrais_grid" columns="4" cellpadding="6">
 							<p:outputLabel value="Montant Ecolage:" />
 							<p:inputText value="#{fraisEcolageBean.ecolageNation.montantEcolage}" styleClass="upercase">
@@ -123,7 +126,11 @@
 						
 						<br/>
 						<p:outputLabel value="#{fraisEcolageBean.choosedMention.libMention}" style="font-size:20px; font-weight: bold; color: #FF0000;"></p:outputLabel>
-					<br/>
+						<br/>
+						
+						<br/>
+						<p:outputLabel value="#{fraisEcolageBean.anneEncoure.libAnneeScolaire}" style="font-size:20px; font-weight: bold; color: #FF0000;"></p:outputLabel>
+						<br/>
 						
 							<h:panelGrid id="nnfrais_grid" columns="4" cellpadding="6">
 							<p:outputLabel value="Montant Ecolage:" />
@@ -165,13 +172,13 @@
 								<f:convertNumber pattern="##,###.###"></f:convertNumber>
 							</p:inputText>
 							<p:outputLabel value="Date:" />
-							<p:calendar value="#{fraisEcolageBean.ecolageNation.dateEchance4}"
+							<p:calendar value="#{fraisEcolageBean.ecolageNonNation.dateEchance4}"
 							locale="fr" navigator="true" pattern="dd/MM/yyyy" required="true"/> 
 							
 							</h:panelGrid>
 						</p:panel>
 
-                          <p:commandButton value="ENREGISTRER" action="#{fraisEcolageBean.enregistrer}"  />
+                          <p:commandButton value="ENREGISTRER" action="#{fraisEcolageBean.enregistrer}" update="@parent, :form" oncomplete="document.location.reload(false)" />
 
 					</p:tab> 
 					

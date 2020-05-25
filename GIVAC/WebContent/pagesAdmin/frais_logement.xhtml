@@ -37,13 +37,25 @@
 							<h:panelGrid id="lognfrais_grid" columns="4" cellpadding="6">
 							<p:outputLabel value="Montant Type Logement:" />
 							<p:inputText value="#{fraisLogementBean.typeLogementNation.montantTypeLogement}" styleClass="upercase">
+							
+							<p:ajax event="blur"
+								update="lognfrais_grid">
+							</p:ajax>
+								<f:convertNumber pattern="##,###.###"></f:convertNumber>
 							</p:inputText>
 							
 							<p:outputLabel/>
 							<p:outputLabel/>
 							
 							<p:outputLabel value="Montant Caution Type Logement:" />
-							<p:inputText value="#{fraisLogementBean.typeLogementNation.cautionTypeLogement}" styleClass="upercase"/>
+							<p:inputText value="#{fraisLogementBean.typeLogementNation.cautionTypeLogement}" styleClass="upercase">
+							
+							<p:ajax event="blur"
+								update="lognfrais_grid">
+							</p:ajax>
+								<f:convertNumber pattern="##,###.###"></f:convertNumber>	
+							</p:inputText>
+							
 							
 							</h:panelGrid>
 						</p:panel>
@@ -58,18 +70,29 @@
 							
 							<p:outputLabel value="Montant Type Logement:" />
 							<p:inputText value="#{fraisLogementBean.typeLogementNonNation.montantTypeLogement}" styleClass="upercase">
+							
+							<p:ajax event="blur"
+								update="lognnfrais_grid">
+							</p:ajax>
+								<f:convertNumber pattern="##,###.###"></f:convertNumber>
 							</p:inputText>		
 									
 							<p:outputLabel/>
 							<p:outputLabel/>
 							
 							<p:outputLabel value="Montant Caution Type Logement:" />
-							<p:inputText value="#{fraisLogementBean.typeLogementNonNation.cautionTypeLogement}" styleClass="upercase"/>
+							<p:inputText value="#{fraisLogementBean.typeLogementNonNation.cautionTypeLogement}" styleClass="upercase">
+							
+							<p:ajax event="blur"
+								update="lognnfrais_grid">
+							</p:ajax>
+								<f:convertNumber pattern="##,###.###"></f:convertNumber>	
+							</p:inputText>
 							
 							</h:panelGrid>
 						</p:panel>
 						
-						 <p:commandButton value="ENREGISTRER" action="#{fraisLogementBean.enregistrer}"  />
+						 <p:commandButton value="ENREGISTRER" action="#{fraisLogementBean.enregistrer}" update="@parent, :form" oncomplete="document.location.reload(false)" />
 
 					</p:tab> 
 					
