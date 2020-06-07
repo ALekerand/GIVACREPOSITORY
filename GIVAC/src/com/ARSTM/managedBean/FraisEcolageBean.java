@@ -69,12 +69,12 @@ public class FraisEcolageBean {
 	
 	public void enregistrerEcolage(){
 		//Setter les type de nationalite
-		ecolageNation.setTypenationalite(reqTypeNationalite.recupererTypeNationalite(1).get(0));
+		ecolageNation.setTypenationalite(reqTypeNationalite.recupererTypeNationalite(1));
 		ecolageNation.setFraisExam(fraisExam);
 		ecolageNation.setAnneesScolaire(anneEncoure);
 		ecolageNation.setMention(choosedMention);
 		
-		ecolageNonNation.setTypenationalite(reqTypeNationalite.recupererTypeNationalite(2).get(0));
+		ecolageNonNation.setTypenationalite(reqTypeNationalite.recupererTypeNationalite(2));
 		ecolageNonNation.setFraisExam(fraisExam);
 		ecolageNonNation.setAnneesScolaire(anneEncoure);
 		ecolageNonNation.setMention(choosedMention);

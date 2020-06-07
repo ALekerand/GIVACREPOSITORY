@@ -215,10 +215,11 @@
 										itemValue="#{tata}"></f:selectItems>
 								</p:selectOneMenu>
 								
+
 								<h:outputLabel for="typelog_eleve" value="Hébergement" />
-								<p:selectOneMenu id="typelog_eleve"
-									value="#{inscriptionBean.choosedTypeLogement}"
-									converter="#{entityConverter}">
+								<p:selectOneMenu id="typelog_eleve" value="#{inscriptionBean.choosedTypeLogement}" 
+								converter="#{entityConverter}">
+								<p:ajax event="change" process="@this"></p:ajax>
 									<f:selectItem itemLabel="Selectionnez" itemValue="" />
 									<f:selectItems value="#{inscriptionBean.listeTypeLogement}"
 										var="tata" itemLabel="#{tata.libtypeLogement}"

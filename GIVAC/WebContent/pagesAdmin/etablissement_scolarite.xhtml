@@ -66,70 +66,111 @@
 				<legend>Frais ecolage</legend>
 					<h:panelGrid id="ecolage_gid" columns="4" cellpadding="8">
 					<p:outputLabel for="fr_ecol" value="Montant écolage:" />
-					<p:inputText id="fr_ecol" value="#{etablisScolariteBean.etablScolarite.montantEcolageSco}" />
-					
-					
+					<p:inputText id="fr_ecol" value="#{etablisScolariteBean.etablScolarite.montantEcolageSco}" >
+					<f:convertNumber pattern="##,###.###"></f:convertNumber>
+					</p:inputText>
 					
 					<p:outputLabel for="check" value="Appliquer une réduction" styleClass="outputDecalage"/>
-					<p:selectBooleanCheckbox id="check" value="#{etablisScolariteBean.etatReduction}">
-              </p:selectBooleanCheckbox>
+					<p:selectBooleanCheckbox id="check" binding="#{etablisScolariteBean.checkBox}">
+					<p:ajax listener="#{etablisScolariteBean.activerChamp}" update="ecolage_gid"></p:ajax>
+              		</p:selectBooleanCheckbox>
               
+            <legend>Réduction</legend>
+            <p:outputLabel/>
+            <p:outputLabel/>
+            <p:outputLabel/>
             
-            <p:outputLabel for="p_reduc" value="Taux:"  />
-					<p:inputText id="p_reduc" value="#{etablisScolariteBean.etablScolarite.tauxReduction}" />
+            <p:outputLabel for="p_reduc" value="Taux (en %):"  />
+					<p:inputText id="p_reduc" value="#{etablisScolariteBean.etablScolarite.tauxReduction}" binding="#{etablisScolariteBean.imputTaux}" />
 					
 			<p:outputLabel for="mt_reduct" value="Montant:" styleClass="outputDecalage"/>
-			<p:inputText id="mt_reduct" value=" " />
+			<p:inputText id="mt_reduct" value="" binding="#{etablisScolariteBean.imputMontant}">
+			<f:convertNumber pattern="##,###.###"></f:convertNumber>
+			</p:inputText>
 			
-			<p:outputLabel for="lib_reduc" value="libéllé:"  />
-			<p:inputText id="lib_reduc" value="#{etablisScolariteBean.etablScolarite.libeleReduction}" />
-			
-       
+			<p:outputLabel for="lib_reduc" value="libellé réduction:"/>
+			<p:inputText id="lib_reduc" value="#{etablisScolariteBean.etablScolarite.libeleReduction}" binding="#{etablisScolariteBean.imputTReduction}" >
+
+			</p:inputText>
 			</h:panelGrid>
 			</fieldset>
 			
 	<legend>Frais annexes</legend>
 				<h:panelGrid id="annex_grid" columns="4" cellpadding="6">
-				<p:outputLabel for="f_ins" value="Inscription:" styleClass="outputDecalage" />
-				<p:inputText id="f_ins" value="#{etablisScolariteBean.etablScolarite.fraisInscriptionSco}" />
+				<p:outputLabel for="f_ins" value="Inscription:" />
+				<p:inputText id="f_ins" value="#{etablisScolariteBean.etablScolarite.fraisInscriptionSco}">
+				<f:convertNumber pattern="##,###.###"></f:convertNumber>
+				</p:inputText>
 				
 				<p:outputLabel for="assur" value="Assurance:" styleClass="outputDecalage" />
-				<p:inputText id="assur" value="#{etablisScolariteBean.etablScolarite.fraisAssuranceSco}" />
+				<p:inputText id="assur" value="#{etablisScolariteBean.etablScolarite.fraisAssuranceSco}">
+				<f:convertNumber pattern="##,###.###"></f:convertNumber>
+				</p:inputText>
 				
-				<p:outputLabel for="t_complet" value="Tenue complet" styleClass="outputDecalage" />
-				<p:inputText id="t_complet" value="#{etablisScolariteBean.etablScolarite.fraisTenueCompletSco}" />
+				<p:outputLabel for="t_complet" value="Tenue complet"/>
+				<p:inputText id="t_complet" value="#{etablisScolariteBean.etablScolarite.fraisTenueCompletSco}">
+				<f:convertNumber pattern="##,###.###"></f:convertNumber>
+				</p:inputText>
 				
 				<p:outputLabel for="t_sport" value="Tenue sport" styleClass="outputDecalage" />
-				<p:inputText id="t_sport" value="#{etablisScolariteBean.etablScolarite.fraisTenueSportSco}" />
+				<p:inputText id="t_sport" value="#{etablisScolariteBean.etablScolarite.fraisTenueSportSco}">
+				<f:convertNumber pattern="##,###.###"></f:convertNumber>
+				</p:inputText>
 				
-				<p:outputLabel for="f_resto" value="restauration:" styleClass="outputDecalage" />
-				<p:inputText id="f_resto" value="#{etablisScolariteBean.etablScolarite.fraisRestaurationSco}" />
+				<p:outputLabel for="f_resto" value="restauration:"/>
+				<p:inputText id="f_resto" value="#{etablisScolariteBean.etablScolarite.fraisRestaurationSco}">
+				<f:convertNumber pattern="##,###.###"></f:convertNumber>
+				</p:inputText>
 				
-				<p:outputLabel for="f_elearning" value="E-learning:" styleClass="outputDecalage" />
-				<p:inputText id="f_elearning" value="#{etablisScolariteBean.etablScolarite.fraisElearningSco}" />
+				<p:outputLabel for="f_elearning" value="E-learning:" styleClass="outputDecalage"/>
+				<p:inputText id="f_elearning" value="#{etablisScolariteBean.etablScolarite.fraisElearningSco}">
+				<f:convertNumber pattern="##,###.###"></f:convertNumber>
+				</p:inputText>
 				
-				<p:outputLabel for="f_medical" value="Viste médicale:" styleClass="outputDecalage" />
-				<p:inputText id="f_medical" value="#{etablisScolariteBean.etablScolarite.fraisVisiteMedicSco}" />
+				<p:outputLabel for="f_medical" value="Viste médicale:" />
+				<p:inputText id="f_medical" value="#{etablisScolariteBean.etablScolarite.fraisVisiteMedicSco}">
+				<f:convertNumber pattern="##,###.###"></f:convertNumber>
+				</p:inputText>
 				
-				<p:outputLabel for="f_ordi" value="Ordianteur:" styleClass="outputDecalage" />
-				<p:inputText id="f_ordi" value="#{etablisScolariteBean.etablScolarite.fraisOrdinateurSco}" />
+				<p:outputLabel for="f_ordi" value="Ordianteur:" styleClass="outputDecalage"/>
+				<p:inputText id="f_ordi" value="#{etablisScolariteBean.etablScolarite.fraisOrdinateurSco}">
+				<f:convertNumber pattern="##,###.###"></f:convertNumber>
+				</p:inputText>
 				
-				<p:outputLabel for="f_autre" value="Autres:" styleClass="outputDecalage" />
-				<p:inputText id="f_autre" value="#{etablisScolariteBean.etablScolarite.autreFraisSco}" />
-			</h:panelGrid>			
-					<p:toolbar >
+				<p:outputLabel for="f_autre" value="Autres:" />
+				<p:inputText id="f_autre" value="#{etablisScolariteBean.etablScolarite.autreFraisSco}" >
+				<f:convertNumber pattern="##,###.###"></f:convertNumber>
+				</p:inputText>
+			
+			<p:outputLabel/>
+			<p:outputLabel/>
+			
+			<legend>Frais logement</legend>
+			<p:outputLabel/>
+			<p:outputLabel/>
+			<p:outputLabel/>
+			
+			<p:outputLabel for="mt_logem" value="Montant:"/>
+				<p:inputText id="mt_logem" value="#{etablisScolariteBean.etablScolarite.montantLogementSco}" >
+				<f:convertNumber pattern="##,###.###"></f:convertNumber>
+				</p:inputText>
+				
+				<p:outputLabel for="mt_caution" value="coaution:" styleClass="outputDecalage" />
+				<p:inputText id="mt_caution" value="#{etablisScolariteBean.etablScolarite.cautionLogementSco}" >
+				<f:convertNumber pattern="##,###.###"></f:convertNumber>
+				</p:inputText>
+			
+			
+			
+				</h:panelGrid>
+			<p:toolbar >
 			<f:facet name="right">
 				<p:commandButton value="Enregistrer" action="#{etablisScolariteBean.enregistrer}"  binding="#{etablisScolariteBean.btnValider}" update="form"></p:commandButton>
 				<p:commandButton value="Annuler" action="#{etablisScolariteBean.annuler}" binding="#{etablisScolariteBean.btnAnuler}" update="form" process="@this"> </p:commandButton>
 			</f:facet>
 		</p:toolbar>
-					
-					
 				</p:panel>
-
 				<br />
-
-				
 
 			</div>
 			<!-- Boite de confirmation -->

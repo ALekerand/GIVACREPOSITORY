@@ -17,10 +17,10 @@ public class ReqTypeNationalite {
 	@Autowired
 	SessionFactory sessionFactory;
 
-	public List<Typenationalite> recupererTypeNationalite(int codeTypeNation){
+	public Typenationalite recupererTypeNationalite(int codeTypeNation){
 		String query = "SELECT `typenationalite`.* FROM `typenationalite` where `typenationalite`.`CODE_TYPENATIONALITE`='"+codeTypeNation+"'";
-		List liste = getSessionFactory().getCurrentSession().createSQLQuery(query).addEntity(Typenationalite.class).list();
-		return liste;
+		Typenationalite typenationalite = (Typenationalite) getSessionFactory().getCurrentSession().createSQLQuery(query).addEntity(Typenationalite.class).uniqueResult();
+		return typenationalite;
 	}
 	
 	

@@ -18,42 +18,47 @@
 							<h:panelGrid id="nfrais_grid" columns="4" cellpadding="6">
 							
 							<p:outputLabel value="Droit Inscription:" />
-							<p:inputText value="#{fraisAnnexeBean.fraisAnnexeNation.fraisInscription}" styleClass="upercase">
+							<p:inputText value="#{fraisAnnexeBean.fraisAnnexeNation.fraisInscription}" >
 								<f:convertNumber pattern="##,###.###"></f:convertNumber>
 							</p:inputText>
 							
 							<p:outputLabel value="Frais Assurance:" />
-							<p:inputText value="#{fraisAnnexeBean.fraisAnnexeNation.fraisAssurance}" styleClass="upercase">
+							<p:inputText value="#{fraisAnnexeBean.fraisAnnexeNation.fraisAssurance}" >
 								<f:convertNumber pattern="##,###.###"></f:convertNumber>
 							</p:inputText>
 							
 							<p:outputLabel value="Frais Tenue Complète:" />
-							<p:inputText value="#{fraisAnnexeBean.fraisAnnexeNation.fraisTenueComplet}" styleClass="upercase">
+							<p:inputText value="#{fraisAnnexeBean.fraisAnnexeNation.fraisTenueComplet}" >
 								<f:convertNumber pattern="##,###.###"></f:convertNumber>
 							</p:inputText>
 							
 							<p:outputLabel value="Frais Tenue Sport:" />
-							<p:inputText value="#{fraisAnnexeBean.fraisAnnexeNation.fraisTenueSport}" styleClass="upercase">
+							<p:inputText value="#{fraisAnnexeBean.fraisAnnexeNation.fraisTenueSport}" >
 								<f:convertNumber pattern="##,###.###"></f:convertNumber>
 							</p:inputText>
 							
 							<p:outputLabel value="Frais Restauration"/>
-							<p:inputText value="#{fraisAnnexeBean.fraisAnnexeNation.fraisRestauration}" styleClass="upercase">
+							<p:inputText value="#{fraisAnnexeBean.fraisAnnexeNation.fraisRestauration}" >
 								<f:convertNumber pattern="##,###.###"></f:convertNumber>
 							</p:inputText>
 							
 							<p:outputLabel value="Frais E-Learning" />
-							<p:inputText value="#{fraisAnnexeBean.fraisAnnexeNation.fraisElearning}" styleClass="upercase">
+							<p:inputText value="#{fraisAnnexeBean.fraisAnnexeNation.fraisElearning}" >
+								<f:convertNumber pattern="##,###.###"></f:convertNumber>
+							</p:inputText>
+							
+							<p:outputLabel value="Frais Visite médicale"/>
+							<p:inputText value="#{fraisAnnexeBean.fraisAnnexeNation.fraisVisiteMedic}" >
 								<f:convertNumber pattern="##,###.###"></f:convertNumber>
 							</p:inputText>
 							
 							<p:outputLabel value="Frais Ordinateur" />
-							<p:inputText value="#{fraisAnnexeBean.fraisAnnexeNation.fraisOrdinateur}" styleClass="upercase">
+							<p:inputText value="#{fraisAnnexeBean.fraisAnnexeNation.fraisOrdinateur}" >
 								<f:convertNumber pattern="##,###.###"></f:convertNumber>
 							</p:inputText>
 							
 							<p:outputLabel value="Autre Frais" />
-							<p:inputText value="#{fraisAnnexeBean.fraisAnnexeNation.autreFrais}" styleClass="upercase">
+							<p:inputText value="#{fraisAnnexeBean.fraisAnnexeNation.autreFrais}" >
 								<f:convertNumber pattern="##,###.###"></f:convertNumber>
 							</p:inputText>
 							
@@ -66,42 +71,47 @@
 							<h:panelGrid id="nnfrais_grid" columns="4" cellpadding="6">
 														
 							<p:outputLabel value="Droit Inscription:" />
-							<p:inputText value="#{fraisAnnexeBean.fraisAnnexeNonNation.fraisInscription}" styleClass="upercase">
+							<p:inputText value="#{fraisAnnexeBean.fraisAnnexeNonNation.fraisInscription}" >
 							<f:convertNumber pattern="##,###.###"></f:convertNumber>
 							</p:inputText>
 							
 							<p:outputLabel value="Frais Assurance:" />
-							<p:inputText value="#{fraisAnnexeBean.fraisAnnexeNonNation.fraisAssurance}" styleClass="upercase">
+							<p:inputText value="#{fraisAnnexeBean.fraisAnnexeNonNation.fraisAssurance}" >
 							<f:convertNumber pattern="##,###.###"></f:convertNumber>
 							</p:inputText>
 							
 							<p:outputLabel value="Frais Tenue Complète:" />
-							<p:inputText value="#{fraisAnnexeBean.fraisAnnexeNonNation.fraisTenueComplet}" styleClass="upercase">
+							<p:inputText value="#{fraisAnnexeBean.fraisAnnexeNonNation.fraisTenueComplet}" >
 							<f:convertNumber pattern="##,###.###"></f:convertNumber>
 							</p:inputText>
 							
 							<p:outputLabel value="Frais Tenue Sport:" />
-							<p:inputText value="#{fraisAnnexeBean.fraisAnnexeNonNation.fraisTenueSport}" styleClass="upercase">
+							<p:inputText value="#{fraisAnnexeBean.fraisAnnexeNonNation.fraisTenueSport}" >
 							<f:convertNumber pattern="##,###.###"></f:convertNumber>
 							</p:inputText>
 							
 							<p:outputLabel value="Frais Restauration"/>
-							<p:inputText value="#{fraisAnnexeBean.fraisAnnexeNonNation.fraisRestauration}" styleClass="upercase">
+							<p:inputText value="#{fraisAnnexeBean.fraisAnnexeNonNation.fraisRestauration}" >
 							<f:convertNumber pattern="##,###.###"></f:convertNumber>
 							</p:inputText>
 													
 							<p:outputLabel value="Frais E-Learning" />
-							<p:inputText value="#{fraisAnnexeBean.fraisAnnexeNonNation.fraisElearning}" styleClass="upercase">
+							<p:inputText value="#{fraisAnnexeBean.fraisAnnexeNonNation.fraisElearning}" >
 							<f:convertNumber pattern="##,###.###"></f:convertNumber>
 							</p:inputText>
 							
+							<p:outputLabel value="Frais Visite médicale"/>
+							<p:inputText value="#{fraisAnnexeBean.fraisAnnexeNonNation.fraisVisiteMedic}" >
+								<f:convertNumber pattern="##,###.###"></f:convertNumber>
+							</p:inputText>
+							
 							<p:outputLabel value="Frais Ordinateur" />
-							<p:inputText value="#{fraisAnnexeBean.fraisAnnexeNonNation.fraisOrdinateur}" styleClass="upercase">						
+							<p:inputText value="#{fraisAnnexeBean.fraisAnnexeNonNation.fraisOrdinateur}" >						
 							<f:convertNumber pattern="##,###.###"></f:convertNumber>
 							</p:inputText>
 							
 							<p:outputLabel value="Autre Frais" />
-							<p:inputText value="#{fraisAnnexeBean.fraisAnnexeNonNation.autreFrais}" styleClass="upercase">						
+							<p:inputText value="#{fraisAnnexeBean.fraisAnnexeNonNation.autreFrais}" >						
 							<f:convertNumber pattern="##,###.###"></f:convertNumber>
 							</p:inputText>
 							

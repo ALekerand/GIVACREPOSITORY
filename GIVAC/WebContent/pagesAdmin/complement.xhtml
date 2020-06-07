@@ -15,7 +15,6 @@
 			<table>
   <tr>
     <td>
-    
     <h:panelGrid columns="2" cellpadding="1">
     <p:inputText id="matricule" value="#{complementBean.matriculeRecherche}" placeholder="Recherche par le matricule" />
 			<p:commandButton actionListener="#{complementBean.rechercher}" partialSubmit="true" process="@this,matricule" update="form" icon="ui-icon-search"></p:commandButton>
@@ -37,12 +36,7 @@
 </table>
 
 	<fieldset>
-	
 				<legend>Informations de base</legend>		
-			
-		
-				
-					
 					<table>
 					  <tr valign="top">
 					    <td>
@@ -75,8 +69,6 @@
 					    </td>
 					  </tr>
 					</table>
-	
-					
 	</fieldset>				
 			<fieldset>
 				<legend>Informations complémentaires</legend>
@@ -86,20 +78,9 @@
 				<p:outputLabel for="cni" value="Numéro CNI/PASS:" />
 				<p:inputText id="cni" value="#{complementBean.etudiants.numcni}" required="true" />
 				
-
-						
 						<p:outputLabel for="ecol_p" value="Etablis précédent:" styleClass="outputDecalage" />
 						<p:inputText id="ecol_p" value="#{complementBean.etudiants.ecoleAncienneEtudiant}" required="true" />
-						
-						
-						
-
 			</h:panelGrid>
-			
-		
-			
-	
-	
 			</fieldset>
 			
 <legend>Informations parents</legend>
@@ -114,8 +95,6 @@
 				<p:outputLabel for="tel_pere" value="Telephone:" />
 				<p:inputText id="tel_pere" value="#{complementBean.etudiants.telPere}" required="true" />
 				
-				
-				
 				<p:outputLabel for="mere" value="Nom mère:" styleClass="outputDecalage" />
 				<p:inputText id="mere" value="#{complementBean.etudiants.nomPrenomsMere}" required="true"/>
 				
@@ -124,8 +103,6 @@
 				
 				<p:outputLabel for="tel_mere" value="Telephone:" styleClass="outputDecalage" />
 				<p:inputText id="tel_mere" value="#{complementBean.etudiants.telMere}" required="true"/>
-				
-				
 				
 				<p:outputLabel for="nom_cor" value="Nom corespondant:"/>
 				<p:inputText id="nom_cor" value="#{complementBean.etudiants.nomPrenomsTuteur}" required="true" />
@@ -154,12 +131,8 @@
 			</f:facet>
 		</p:toolbar>
 					
-					
 				</p:panel>
-
 				<br />
-
-				
 
 			</div>
 			<!-- Boite de confirmation -->

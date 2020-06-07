@@ -112,17 +112,25 @@ public class ComplementBean {
 	}
 	
 	public void enregistrer() throws FileNotFoundException {
-		//Enregistrement du complement
-		inscriptions.setEtatComplemnt(true);
-		etudiants.setPhotoEtudiant(cheminFinal);
-		service.updateObject(etudiants);
-		service.updateObject(inscriptions);
+		if (cheminFinal.equalsIgnoreCase("C:/photo/avatar.jpg")) {
+			//Message à l'utilisateur
+			FacesContext.getCurrentInstance().addMessage(null,
+			new FacesMessage(FacesMessage.SEVERITY_ERROR, "Veuillez joindre une photo de l'étudiant", null));
+		}else {
+			//Enregistrement du complement
+			inscriptions.setEtatComplemnt(true);
+			etudiants.setPhotoEtudiant(cheminFinal);
+			service.updateObject(etudiants);
+			service.updateObject(inscriptions);
+			
+			//Vider la page 
+			annuler();
+			
+			//Actualiser la liste des complements à faire
+			getListInscription();
+		}
 		
-		//Vider la page 
-		annuler();
-		
-		//Actualiser la liste des complements à faire
-		getListInscription();
+
 	}
 	
 	
@@ -135,7 +143,6 @@ public class ComplementBean {
 		etudiants.setPrenomEtudiant(null);
 		etudiants.setDatenais(null);
 		etudiants.setLieunais(null);
-	//	etudiants.setSections(null);
 		etudiants.setMailEtudiant(null);
 		etudiants.setTelEtudiant(null);
 		etudiants.setNumcni(null);

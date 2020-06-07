@@ -2,6 +2,23 @@
 ************************** MODIFICATION A APPORTER*****************************
 	MCD
 	*Revoir le lien entre Ecolage et Mention (Pas besoin que l'association evienne une table)
+	
+	
+	
+	Frais logement: ramener le wizard au depart après enregistrement
+	parcours.xhtml:vider les champs àprès enregistrement
+	Se pencher sur les scope des bean
+	Se pencher sur les combos et autres info Mis à jour par l'administrateur (Ne doit pas nécessiter le redeùmarrage deu serveur)
+
+	
+	
+	06/06/2020
+	Voir la page Ecolage (gerer le wizard et aussi un tableau recap)
+	- Page complement: Gerer le fait que la photo ne soit pas renseigner avant enregistrement
+	
+	07/06/2020
+	- Erreur (Stream close lors de l'enregistrement de l'établissement de la scolarité)
+	- Etablissemen Scolarité Verifier après mapping le type des mt ecolage (Bigdecimaux) et corriger dans Etablisemant scolariteBean
 
 
 

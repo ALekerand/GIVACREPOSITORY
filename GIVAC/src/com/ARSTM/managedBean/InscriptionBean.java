@@ -37,6 +37,7 @@ import com.ARSTM.model.Nationalites;
 import com.ARSTM.model.Niveaux;
 import com.ARSTM.model.Pays;
 import com.ARSTM.model.Regime;
+import com.ARSTM.model.Residence;
 import com.ARSTM.model.Santes;
 import com.ARSTM.model.Section;
 import com.ARSTM.model.Sexe;
@@ -47,6 +48,7 @@ import com.ARSTM.model.TypeLogement;
 import com.ARSTM.model.UserAuthentication;
 import com.ARSTM.model.UserAuthorization;
 import com.ARSTM.requetes.ReqAnneeScolaire;
+import com.ARSTM.requetes.ReqTypeNationalite;
 import com.ARSTM.requetes.RequeteEnseignant;
 import com.ARSTM.requetes.RequeteFiliere;
 import com.ARSTM.requetes.RequeteInscription;
@@ -72,6 +74,9 @@ public class InscriptionBean {
 	@Autowired
 	ReqAnneeScolaire reqAnneeScolaire;
 	
+	@Autowired
+	ReqTypeNationalite  reqTypeNationalite;
+	
 	
 	private Etudiants etudiants = new Etudiants();
 	private Enseignant selectedEnseignant = new Enseignant();
@@ -91,6 +96,8 @@ public class InscriptionBean {
 	private Tformation choosedTformation = new Tformation();
 	private Nationalites choosedNationalites = new Nationalites();
 	private Inscriptions inscriptions = new Inscriptions();
+	private Residence residence = new Residence();
+	
 	
 	public Matrimoniales getChoosedMatrimoniale() {
 		return choosedMatrimoniale;
@@ -134,11 +141,12 @@ public class InscriptionBean {
 public String genererMatricule() {
 		try {
 			maxNumeEtudiant = requeteInscription.recupMaxNumetudiant().get(0).getNumetudiant();
+			matricule = ((maxNumeEtudiant+1) +" - "+anneEncoure.getAnneesDebut());
 		} catch (IndexOutOfBoundsException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			// Cas ou la base de donnée est vide allors comencer la numérotation par 1
+			matricule = ((1) +" - "+anneEncoure.getAnneesDebut());
 		}
-		matricule = ((maxNumeEtudiant+1) +" - "+anneEncoure.getAnneesDebut());
+		
 		return matricule;
 	}
 	
@@ -150,6 +158,7 @@ public String genererMatricule() {
 	public void enregistrerTout() {
 		enregistrerEtudiant();
 		enregistrerInscription();
+		enregistrerResidence();
 		vider(etudiants);
 	}
 	
@@ -161,7 +170,16 @@ public String genererMatricule() {
 		inscriptions.setDateInscription(new Date());
 		inscriptions.setEtatComplemnt(false);
 		inscriptions.setEtatEtabScolarite(false);
+		inscriptions.setTypeLogement(choosedTypeLogement);
 		getService().addObject(inscriptions);
+		
+	}
+	
+	
+	public void enregistrerResidence() {
+		residence.setAnneesScolaire(anneEncoure);
+		residence.setEtudiants(etudiants);
+		getService().addObject(residence);
 	}
 	
 	
@@ -178,6 +196,14 @@ public String genererMatricule() {
 		  etudiants.setPays(choosedPays);
 		  etudiants.setSantes(choosedSante);
 		  etudiants.setDiplomes(choosedDiplome);
+		  
+		//Si la nationalité est ivoirienne alors faire migner Typetionalité Lacal dans l'etudiant
+			if (choosedNationalites.getCodenationalite()==1) {
+				etudiants.setTypenationalite(reqTypeNationalite.recupererTypeNationalite(1));
+			}else {
+				etudiants.setTypenationalite(reqTypeNationalite.recupererTypeNationalite(2));
+			}
+		  
 		  getService().addObject(etudiants);
 		  
 		  //Recharger le Matricule pour un nouvel enregistrement
@@ -204,7 +230,6 @@ public String genererMatricule() {
 		  objEtudiants.setNbsoeurs(null);
 		  objEtudiants.setSantes(null);
 		  objEtudiants.setSexe(null);
-		 // objEtudiants.setSections(null);
 		  objEtudiants.setTelEtudiant(null);
 		  objEtudiants.setNationalites(null);
 		  objEtudiants.setNiveaux(null);

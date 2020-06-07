@@ -57,11 +57,11 @@ public class FraisLogementBean {
 	
 	
 	public void enregistrerTypeLogement(){
-		typeLogementNation.setTypenationalite(reqTypeNationalite.recupererTypeNationalite(1).get(0));
+		typeLogementNation.setTypenationalite(reqTypeNationalite.recupererTypeNationalite(1));
 		typeLogementNation.setAnneesScolaire(anneEncoure);
 		typeLogementNation.setTypeLogement(choosedTypeLogement);
 		
-		typeLogementNonNation.setTypenationalite(reqTypeNationalite.recupererTypeNationalite(2).get(0));
+		typeLogementNonNation.setTypenationalite(reqTypeNationalite.recupererTypeNationalite(2));
 		typeLogementNonNation.setAnneesScolaire(anneEncoure);
 		typeLogementNonNation.setTypeLogement(choosedTypeLogement);
 		//Faire l'enregistrement

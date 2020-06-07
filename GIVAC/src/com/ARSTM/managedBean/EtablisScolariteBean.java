@@ -17,6 +17,8 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.component.commandbutton.CommandButton;
+import org.primefaces.component.inputtext.InputText;
+import org.primefaces.component.selectbooleancheckbox.SelectBooleanCheckbox;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
@@ -35,10 +37,12 @@ import com.ARSTM.model.Matrimoniales;
 import com.ARSTM.model.Mention;
 import com.ARSTM.model.Niveaux;
 import com.ARSTM.model.Santes;
+import com.ARSTM.model.TypeLogementNationalite;
 import com.ARSTM.requetes.ReqAnneeScolaire;
 import com.ARSTM.requetes.ReqEcolage;
 import com.ARSTM.requetes.ReqEtudiant;
 import com.ARSTM.requetes.ReqFraisAnnexes;
+import com.ARSTM.requetes.ReqTypelogemTypeNation;
 import com.ARSTM.requetes.RequeteInscription;
 import com.ARSTM.service.Iservice;
 
@@ -57,6 +61,8 @@ public class EtablisScolariteBean {
 	ReqEcolage reqEcolage;
 	@Autowired
 	ReqFraisAnnexes reqFraisAnnexes;
+	@Autowired
+	ReqTypelogemTypeNation reqTypelogemTypeNation;
 
 	private AnneesScolaire anneEncoure = new AnneesScolaire();
 	private Etudiants etudiants = new Etudiants();
@@ -68,27 +74,30 @@ public class EtablisScolariteBean {
 	private FraisAnnexe fraisAnnexe = new FraisAnnexe();
 	private EtablScolarite etablScolarite = new EtablScolarite();
 	private boolean etatReduction;
-
-	
 	// Pour l'upload
 	private String destination = "C:/photo/";
 	private String cheminFinal ="";
-	private	StreamedContent content = new DefaultStreamedContent() ;
-	
+	private	StreamedContent content = new DefaultStreamedContent();
 	private List listEtudiant = new ArrayList<>();
 	private List listInscription = new ArrayList<>();
-	
+	private List listeEtudiant = new ArrayList<>();
 	// Contrôle de coposant
 	private CommandButton btnValider = new CommandButton();
 	private CommandButton btnAnuler = new CommandButton();
-	private List listeEtudiant = new ArrayList<>();
-	
+	private InputText imputTaux = new InputText();
+	private InputText imputMontant = new InputText();
+	private InputText imputTReduction = new InputText();
+	private SelectBooleanCheckbox checkBox = new SelectBooleanCheckbox();
 	
 	// Méthodes
 	@PostConstruct
 	public AnneesScolaire recupererAnne(){
 		//Charger l'année scolaire en cours
 		anneEncoure = reqAnneeScolaire.recupererDerniereAnneeScolaire().get(0);
+		
+		imputMontant.setDisabled(true);
+		imputTaux.setDisabled(true);
+		imputTReduction.setDisabled(true);
 		return anneEncoure;
 	}
 	
@@ -104,7 +113,6 @@ public class EtablisScolariteBean {
 		if (etudiants.getMle()!= null) {
 			inscriptions = requeteInscription.recupInscriptionByNumEtudiant(etudiants.getNumetudiant(),anneEncoure.getCodeAnnees()).get(0);
 			mention = inscriptions.getSection().getMention();
-			
 			//Ecolage
 			chargerPhoto();
 		}
@@ -112,39 +120,38 @@ public class EtablisScolariteBean {
 	
 	
 	public void chargerfrais() {
-		
-		if (etudiants.getNationalites().getCodenationalite()==1) {
-			
 			//Ecolage concerné en fonction du type de Nationalité
-			ecolage = reqEcolage.recupEcolage(mention.getCodeMention(), anneEncoure.getCodeAnnees(), 1);
+			ecolage = reqEcolage.recupEcolage(inscriptions.getSection().getMention().getCodeMention(), anneEncoure.getCodeAnnees(), etudiants.getTypenationalite().getCodeTypenationalite());
 			etablScolarite.setMontantEcolageSco(ecolage.getMontantEcolage());
-			
 			//Recuperer les frais logement
+			TypeLogementNationalite typeLogementNationalite = reqTypelogemTypeNation.recupTypelogeTypenation(inscriptions.getTypeLogement().getCodetypeLogement(), etudiants.getTypenationalite().getCodeTypenationalite(), anneEncoure.getCodeAnnees());
 			
-			
-		}
-		
-		
-		
 		//Frais annexes concernés
 		fraisAnnexe = reqFraisAnnexes.recupFraisAnexByTypeNation(anneEncoure.getCodeAnnees(), 1);
 		etablScolarite.setFraisInscriptionSco(fraisAnnexe.getFraisInscription());    
-		etablScolarite.setAnneesScolaire(anneEncoure);
 		etablScolarite.setFraisAssuranceSco(new BigDecimal(fraisAnnexe.getFraisAssurance()));
 		etablScolarite.setFraisElearningSco(new BigDecimal(fraisAnnexe.getFraisElearning()));
+		etablScolarite.setFraisTenueCompletSco(new BigDecimal(fraisAnnexe.getFraisTenueComplet()));
+		etablScolarite.setFraisTenueSportSco(new BigDecimal(fraisAnnexe.getFraisTenueSport()));
+		etablScolarite.setFraisVisiteMedicSco(new BigDecimal(fraisAnnexe.getFraisVisiteMedic()));
+		etablScolarite.setFraisRestaurationSco(new BigDecimal(fraisAnnexe.getFraisRestauration()));
+		etablScolarite.setFraisOrdinateurSco(new BigDecimal(fraisAnnexe.getFraisOrdinateur()));
 		etablScolarite.setAutreFraisSco(new BigDecimal(fraisAnnexe.getAutreFrais()));
+		
+		//Pour l'ecolage et echeance
+		etablScolarite.setMtEchance1Sco(ecolage.getMtEchance1().longValue());
+		etablScolarite.setMtEchance2Eco(ecolage.getMtEchance2().longValue());
+		etablScolarite.setMtEchance3Sco(ecolage.getMtEchance3().longValue());
+		etablScolarite.setMtEchance4Eco(ecolage.getMtEchance4().longValue());
 		etablScolarite.setDateEchance1Sco(ecolage.getDateEchance1());
 		etablScolarite.setDateEchance2Eco(ecolage.getDateEchance2());
 		etablScolarite.setDateEchance3Sco(ecolage.getDateEchance3());
 		etablScolarite.setDateEchance4Eco(ecolage.getDateEchance4());
 		etablScolarite.setDateEtablissementSco(new Date());
-		etablScolarite.setEtudiants(etudiants);
 		
-		if (etatReduction == true) {
-			etablScolarite.setDateReduction(new Date());
-		}
-		
-
+		//Pour le logemment
+		etablScolarite.setMontantLogementSco(typeLogementNationalite.getMontantTypeLogement());
+		etablScolarite.setCautionLogementSco(typeLogementNationalite.getCautionTypeLogement());
 	}
 	
 	
@@ -152,20 +159,39 @@ public class EtablisScolariteBean {
 		inscriptions = selectedInscription;
 		etudiants = selectedInscription.getEtudiants();
 		chargerPhoto();
+		
+		//Charger les frais
+		chargerfrais();
+	}
+	
+	public void activerChamp() {
+		if (checkBox.isSelected()) {
+			imputMontant.setDisabled(false);
+			imputTaux.setDisabled(false);
+			imputTReduction.setDisabled(false);
+		}else {
+			imputMontant.setDisabled(true);
+			imputTaux.setDisabled(true);
+			imputTReduction.setDisabled(true);
+		}
+		
 	}
 	
 	public void enregistrer() throws FileNotFoundException {
-		//Enregistrement du complement
-		inscriptions.setEtatComplemnt(true);
-		etudiants.setPhotoEtudiant(cheminFinal);
-		service.updateObject(etudiants);
-		service.updateObject(inscriptions);
+		etablScolarite.setEtudiants(etudiants);
+		etablScolarite.setAnneesScolaire(anneEncoure);
+		etablScolarite.setSection(inscriptions.getSection());
+		inscriptions.setEtatEtabScolarite(true);
+		if (checkBox.isSelected()) {
+			System.out.println("=========Checkbox activé================");
+			etablScolarite.setDateReduction(new Date());
+		}
 		
-		//Vider la page 
+		getService().updateObject(inscriptions);
+		getService().addObject(etablScolarite);
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Scolarité de l'étudiant établi!", null));
 		annuler();
-		
-		//Actualiser la liste des complements à faire
-		getListInscription();
+		viderPhoto();
 	}
 	
 	
@@ -174,7 +200,6 @@ public class EtablisScolariteBean {
 		etudiants.setPrenomEtudiant(null);
 		etudiants.setDatenais(null);
 		etudiants.setLieunais(null);
-	//	etudiants.setSections(null);
 		etudiants.setMailEtudiant(null);
 		etudiants.setTelEtudiant(null);
 		etudiants.setNumcni(null);
@@ -191,8 +216,18 @@ public class EtablisScolariteBean {
 		etudiants.setTelDocteur(null);
 		inscriptions.setSection(null);
 		matriculeRecherche = "";
+		etablScolarite.setMontantEcolageSco(null);
+		etablScolarite.setTauxReduction(null);
+		etablScolarite.setFraisInscriptionSco(null);
+		etablScolarite.setFraisAssuranceSco(null);
+		etablScolarite.setFraisElearningSco(null);
+		etablScolarite.setFraisOrdinateurSco(null);
+		etablScolarite.setFraisRestaurationSco(null);
+		etablScolarite.setFraisTenueCompletSco(null);
+		etablScolarite.setFraisTenueSportSco(null);
+		etablScolarite.setFraisVisiteMedicSco(null);
+		etablScolarite.setAutreFraisSco(null);
 		viderPhoto();
-		
 	}
 	
 	
@@ -242,8 +277,6 @@ public StreamedContent viderPhoto() throws FileNotFoundException {
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
-        
-       
     }
     
     
@@ -252,8 +285,6 @@ public StreamedContent viderPhoto() throws FileNotFoundException {
     	InputStream is = new FileInputStream(cheminFinal);
 			//is.close();  
 			content	= new DefaultStreamedContent(is);
-			
-    	
     }
     
     /****** Accesseurs ***********************************/
@@ -320,83 +351,17 @@ public StreamedContent viderPhoto() throws FileNotFoundException {
 		this.etudiants = etudiants;
 	}
 
-	/*
-	 * public List getListMatrimonale() { listMatrimonale =
-	 * service.getObjects("Matrimoniales"); return listMatrimonale; }
-	 * 
-	 * public void setListMatrimonale(List listMatrimonale) { this.listMatrimonale =
-	 * listMatrimonale; }
-	 */
-
-	/*
-	 * public Matrimoniales getChoosedMatrimoniales() { return choosedMatrimoniales;
-	 * }
-	 * 
-	 * public void setChoosedMatrimoniales(Matrimoniales choosedMatrimoniales) {
-	 * this.choosedMatrimoniales = choosedMatrimoniales; }
-	 * 
-	 * public Santes getChooseedsantes() { return chooseedsantes; }
-	 * 
-	 * public void setChooseedsantes(Santes chooseedsantes) { this.chooseedsantes =
-	 * chooseedsantes; }
-	 */
-
-	/*
-	 * public List getListeSante() { listeSante = service.getObjects("Santes");
-	 * return listeSante; }
-	 * 
-	 * public void setListeSante(List listeSante) { this.listeSante = listeSante; }
-	 */
-
-	/*
-	 * public Niveaux getChoosedNiveaux() { return choosedNiveaux; }
-	 * 
-	 * public void setChoosedNiveaux(Niveaux choosedNiveaux) { this.choosedNiveaux =
-	 * choosedNiveaux; }
-	 */
-
-	/*
-	 * public List getListeNiveaux() { listeNiveaux = service.getObjects("Niveaux");
-	 * return listeNiveaux; }
-	 * 
-	 * public void setListeNiveaux(List listeNiveaux) { this.listeNiveaux =
-	 * listeNiveaux; }
-	 */
-
-	/*
-	 * public Diplomes getChoosedDiplomes() { return choosedDiplomes; }
-	 * 
-	 * public void setChoosedDiplomes(Diplomes choosedDiplomes) {
-	 * this.choosedDiplomes = choosedDiplomes; }
-	 */
-
-	/*
-	 * public List getListDiplome() { listDiplome = service.getObjects("Diplomes");
-	 * return listDiplome; }
-	 * 
-	 * public void setListDiplome(List listDiplome) { this.listDiplome =
-	 * listDiplome; }
-	 */
-
-
-
 	public String getMatriculeRecherche() {
 		return matriculeRecherche;
 	}
-
-
 
 	public void setMatriculeRecherche(String matriculeRecherche) {
 		this.matriculeRecherche = matriculeRecherche;
 	}
 
-
-
 	public Inscriptions getInscriptions() {
 		return inscriptions;
 	}
-
-
 
 	public void setInscriptions(Inscriptions inscriptions) {
 		this.inscriptions = inscriptions;
@@ -464,6 +429,38 @@ public StreamedContent viderPhoto() throws FileNotFoundException {
 
 	public void setEtatReduction(boolean etatReduction) {
 		this.etatReduction = etatReduction;
+	}
+
+	public InputText getImputTaux() {
+		return imputTaux;
+	}
+
+	public void setImputTaux(InputText imputTaux) {
+		this.imputTaux = imputTaux;
+	}
+
+	public InputText getImputMontant() {
+		return imputMontant;
+	}
+
+	public void setImputMontant(InputText imputMontant) {
+		this.imputMontant = imputMontant;
+	}
+
+	public InputText getImputTReduction() {
+		return imputTReduction;
+	}
+
+	public void setImputTReduction(InputText imputTReduction) {
+		this.imputTReduction = imputTReduction;
+	}
+
+	public SelectBooleanCheckbox getCheckBox() {
+		return checkBox;
+	}
+
+	public void setCheckBox(SelectBooleanCheckbox checkBox) {
+		this.checkBox = checkBox;
 	}
 
 }

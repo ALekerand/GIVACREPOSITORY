@@ -50,9 +50,9 @@ public class FraisAnnexeBean {
 	
 	public void enregistrerFraisAnnexe(){
 		//Setter les type de nationalite
-		fraisAnnexeNation.setTypenationalite(reqTypeNationalite.recupererTypeNationalite(1).get(0));
+		fraisAnnexeNation.setTypenationalite(reqTypeNationalite.recupererTypeNationalite(1));
 		fraisAnnexeNation.setAnneesScolaire(anneEncoure);
-		fraisAnnexeNonNation.setTypenationalite(reqTypeNationalite.recupererTypeNationalite(2).get(0));
+		fraisAnnexeNonNation.setTypenationalite(reqTypeNationalite.recupererTypeNationalite(2));
 		fraisAnnexeNonNation.setAnneesScolaire(anneEncoure);
 		
 		//Faire l'enregistrement
