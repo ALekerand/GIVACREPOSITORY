@@ -55,7 +55,7 @@ public class FraisEcolageBean {
 	@PostConstruct
 	public AnneesScolaire recupererAnne(){
 		anneEncoure = reqAnneeScolaire.recupererDerniereAnneeScolaire().get(0);
-		//System.out.println("Année:"+anneEncoure.getLibAnneeScolaire());
+		System.out.println("Année:"+anneEncoure.getLibAnneeScolaire());
 		return anneEncoure;
 		
 	}
@@ -193,14 +193,6 @@ public class FraisEcolageBean {
 
 	public void setFraisExam(BigDecimal fraisExam) {
 		this.fraisExam = fraisExam;
-	}
-
-	public AnneesScolaire getAnneEncoure() {
-		return anneEncoure;
-	}
-
-	public void setAnneEncoure(AnneesScolaire anneEncoure) {
-		this.anneEncoure = anneEncoure;
 	}
 
 }
