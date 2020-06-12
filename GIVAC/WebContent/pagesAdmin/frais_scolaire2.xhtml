@@ -57,7 +57,7 @@
 								</p:selectOneMenu>
 								<p:outputLabel value="Droit examen:" />
 								<p:inputText value="#{fraisEcolageBean.fraisExam}">
-								<p:ajax event="click" update="@this" />
+								<p:ajax event="blur" update="@this" />
 									<f:convertNumber pattern="##,###.###"></f:convertNumber>
 								</p:inputText>
 								

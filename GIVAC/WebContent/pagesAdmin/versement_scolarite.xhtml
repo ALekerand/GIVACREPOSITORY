@@ -55,6 +55,12 @@
 						
 						<p:outputLabel for="ses" value="Section/Parcours" styleClass="outputDecalage"/>
 						<p:inputText id="ses" value="#{versementScolariteBean.inscriptions.section.abrevSection}" />
+						
+						<p:outputLabel for="nas" value="Nationalité"/>
+						<p:inputText id="nas" value="#{versementScolariteBean.etudiants.nationalites.libnationalite}" />
+						
+						<p:outputLabel for="reg" value="Regime" styleClass="outputDecalage"/>
+						<p:inputText id="reg" value="#{versementScolariteBean.inscriptions.regime.libRegime}" />
 </h:panelGrid>
 			 </td>
 			<td align="right">

@@ -57,7 +57,7 @@
 								</p:selectOneMenu>
 								<p:outputLabel value="Droit examen:" />
 								<p:inputText value="#{fraisEcolageBean.fraisExam}">
-								<p:ajax event="click" update="@this" />
+								<p:ajax event="blur" update="@this" />
 									<f:convertNumber pattern="##,###.###"></f:convertNumber>
 								</p:inputText>
 								
@@ -85,7 +85,8 @@
 							
 							<p:outputLabel value="1er versement:" />
 							<p:inputText value="#{fraisEcolageBean.ecolageNation.mtEchance1}">
-								<f:convertNumber pattern="##,###.###"></f:convertNumber>
+							<p:ajax event="blur" update="@this" />
+							<f:convertNumber pattern="##,###.###"></f:convertNumber>
 							</p:inputText>
 							<p:outputLabel value="Date:" />
 							<p:calendar value="#{fraisEcolageBean.ecolageNation.dateEchance1}"
@@ -93,7 +94,8 @@
 							
 							<p:outputLabel value="2e versement:" />
 							<p:inputText value="#{fraisEcolageBean.ecolageNation.mtEchance2}">
-								<f:convertNumber pattern="##,###.###"></f:convertNumber>
+							<p:ajax event="blur" update="@this" />
+							<f:convertNumber pattern="##,###.###"></f:convertNumber>
 							</p:inputText>
 							<p:outputLabel value="Date:" />
 							<p:calendar value="#{fraisEcolageBean.ecolageNation.dateEchance2}"
@@ -101,7 +103,8 @@
 							
 							<p:outputLabel value="3e versement:" />
 							<p:inputText value="#{fraisEcolageBean.ecolageNation.mtEchance3}">
-								<f:convertNumber pattern="##,###.###"></f:convertNumber>
+							<p:ajax event="blur" update="@this" />
+							<f:convertNumber pattern="##,###.###"></f:convertNumber>
 							</p:inputText>
 							<p:outputLabel value="Date:" />
 							<p:calendar value="#{fraisEcolageBean.ecolageNation.dateEchance3}"
@@ -109,7 +112,8 @@
 							
 							<p:outputLabel value="4e versement:" />
 							<p:inputText value="#{fraisEcolageBean.ecolageNation.mtEchance4}">
-								<f:convertNumber pattern="##,###.###"></f:convertNumber>
+							<p:ajax event="blur" update="@this" />
+							<f:convertNumber pattern="##,###.###"></f:convertNumber>
 							</p:inputText>
 							<p:outputLabel value="Date:" />
 							<p:calendar value="#{fraisEcolageBean.ecolageNation.dateEchance4}"
@@ -118,13 +122,12 @@
 							</h:panelGrid>
 						</p:panel>
 					</p:tab>
+					
 						<p:tab id="non_nationaux" title="Non nationaux">
 						<p:panel header="Frais Ecolage Non Nationaux">
-						
 						<br/>
 						<p:outputLabel value="#{fraisEcolageBean.choosedMention.libMention}" style="font-size:20px; font-weight: bold; color: #FF0000;"></p:outputLabel>
 					<br/>
-						
 							<h:panelGrid id="nnfrais_grid" columns="4" cellpadding="6">
 							<p:outputLabel value="Montant Ecolage:" />
 							<p:inputText value="#{fraisEcolageBean.ecolageNonNation.montantEcolage}" styleClass="upercase">
@@ -138,7 +141,8 @@
 							
 							<p:outputLabel value="1er versement:" />
 							<p:inputText value="#{fraisEcolageBean.ecolageNonNation.mtEchance1}">
-								<f:convertNumber pattern="##,###.###"></f:convertNumber>
+							<p:ajax event="blur" update="@this" />
+							<f:convertNumber pattern="##,###.###"></f:convertNumber>
 							</p:inputText>
 							<p:outputLabel value="Date:" />
 							<p:calendar value="#{fraisEcolageBean.ecolageNonNation.dateEchance1}"
@@ -146,7 +150,8 @@
 							
 							<p:outputLabel value="2e versement:" />
 							<p:inputText value="#{fraisEcolageBean.ecolageNonNation.mtEchance2}">
-								<f:convertNumber pattern="##,###.###"></f:convertNumber>
+							<p:ajax event="blur" update="@this" />
+							<f:convertNumber pattern="##,###.###"></f:convertNumber>
 							</p:inputText>
 							<p:outputLabel value="Date:" />
 							<p:calendar value="#{fraisEcolageBean.ecolageNonNation.dateEchance2}"
@@ -154,7 +159,8 @@
 							
 							<p:outputLabel value="3e versement:" />
 							<p:inputText value="#{fraisEcolageBean.ecolageNonNation.mtEchance3}">
-								<f:convertNumber pattern="##,###.###"></f:convertNumber>
+							<p:ajax event="blur" update="@this" />
+							<f:convertNumber pattern="##,###.###"></f:convertNumber>
 							</p:inputText>
 							<p:outputLabel value="Date:" />
 							<p:calendar value="#{fraisEcolageBean.ecolageNonNation.dateEchance3}"
@@ -162,7 +168,8 @@
 							
 							<p:outputLabel value="4e versement:" />
 							<p:inputText value="#{fraisEcolageBean.ecolageNonNation.mtEchance4}">
-								<f:convertNumber pattern="##,###.###"></f:convertNumber>
+							<p:ajax event="blur" update="@this" />
+							<f:convertNumber pattern="##,###.###"></f:convertNumber>
 							</p:inputText>
 							<p:outputLabel value="Date:" />
 							<p:calendar value="#{fraisEcolageBean.ecolageNonNation.dateEchance4}"
@@ -171,7 +178,11 @@
 							</h:panelGrid>
 						</p:panel>
 
-                          <p:commandButton value="ENREGISTRER" action="#{fraisEcolageBean.enregistrer}"  />
+                          <p:commandButton value="ENREGISTRER" action="#{fraisEcolageBean.enregistrer}" immediate="true" update="@parent, :form"
+								oncomplete="document.location.reload(false)">
+								<p:confirm header="Confirmation"
+								message="Confirmez-vous l'enregistrement?" icon="ui-icon-alert" />
+								</p:commandButton>
 
 					</p:tab> 
 					

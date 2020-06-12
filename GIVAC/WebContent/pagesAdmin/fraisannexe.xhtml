@@ -18,47 +18,56 @@
 							<h:panelGrid id="nfrais_grid" columns="4" cellpadding="6">
 							
 							<p:outputLabel value="Droit Inscription:" />
-							<p:inputText value="#{fraisAnnexeBean.fraisAnnexeNation.fraisInscription}" >
-								<f:convertNumber pattern="##,###.###"></f:convertNumber>
+							<p:inputText value="#{fraisAnnexeBean.fraisAnnexeNation.fraisInscription}">
+							<p:ajax event="blur" update="@this" />
+							<f:convertNumber pattern="##,###.###"></f:convertNumber>
 							</p:inputText>
 							
 							<p:outputLabel value="Frais Assurance:" />
 							<p:inputText value="#{fraisAnnexeBean.fraisAnnexeNation.fraisAssurance}" >
+								<p:ajax event="blur" update="@this" />
 								<f:convertNumber pattern="##,###.###"></f:convertNumber>
 							</p:inputText>
 							
 							<p:outputLabel value="Frais Tenue Complète:" />
 							<p:inputText value="#{fraisAnnexeBean.fraisAnnexeNation.fraisTenueComplet}" >
+								<p:ajax event="blur" update="@this" />
 								<f:convertNumber pattern="##,###.###"></f:convertNumber>
 							</p:inputText>
 							
 							<p:outputLabel value="Frais Tenue Sport:" />
 							<p:inputText value="#{fraisAnnexeBean.fraisAnnexeNation.fraisTenueSport}" >
+								<p:ajax event="blur" update="@this" />
 								<f:convertNumber pattern="##,###.###"></f:convertNumber>
 							</p:inputText>
 							
 							<p:outputLabel value="Frais Restauration"/>
 							<p:inputText value="#{fraisAnnexeBean.fraisAnnexeNation.fraisRestauration}" >
+								<p:ajax event="blur" update="@this" />
 								<f:convertNumber pattern="##,###.###"></f:convertNumber>
 							</p:inputText>
 							
 							<p:outputLabel value="Frais E-Learning" />
-							<p:inputText value="#{fraisAnnexeBean.fraisAnnexeNation.fraisElearning}" >
+							<p:inputText value="#{fraisAnnexeBean.fraisAnnexeNation.fraisElearning}">
+								<p:ajax event="blur" update="@this" />
 								<f:convertNumber pattern="##,###.###"></f:convertNumber>
 							</p:inputText>
 							
 							<p:outputLabel value="Frais Visite médicale"/>
 							<p:inputText value="#{fraisAnnexeBean.fraisAnnexeNation.fraisVisiteMedic}" >
+								<p:ajax event="blur" update="@this" />
 								<f:convertNumber pattern="##,###.###"></f:convertNumber>
 							</p:inputText>
 							
 							<p:outputLabel value="Frais Ordinateur" />
 							<p:inputText value="#{fraisAnnexeBean.fraisAnnexeNation.fraisOrdinateur}" >
+								<p:ajax event="blur" update="@this" />
 								<f:convertNumber pattern="##,###.###"></f:convertNumber>
 							</p:inputText>
 							
 							<p:outputLabel value="Autre Frais" />
 							<p:inputText value="#{fraisAnnexeBean.fraisAnnexeNation.autreFrais}" >
+								<p:ajax event="blur" update="@this" />
 								<f:convertNumber pattern="##,###.###"></f:convertNumber>
 							</p:inputText>
 							
@@ -72,46 +81,55 @@
 														
 							<p:outputLabel value="Droit Inscription:" />
 							<p:inputText value="#{fraisAnnexeBean.fraisAnnexeNonNation.fraisInscription}" >
+							<p:ajax event="blur" update="@this" />
 							<f:convertNumber pattern="##,###.###"></f:convertNumber>
 							</p:inputText>
 							
 							<p:outputLabel value="Frais Assurance:" />
 							<p:inputText value="#{fraisAnnexeBean.fraisAnnexeNonNation.fraisAssurance}" >
+							<p:ajax event="blur" update="@this" />
 							<f:convertNumber pattern="##,###.###"></f:convertNumber>
 							</p:inputText>
 							
 							<p:outputLabel value="Frais Tenue Complète:" />
 							<p:inputText value="#{fraisAnnexeBean.fraisAnnexeNonNation.fraisTenueComplet}" >
+							<p:ajax event="blur" update="@this" />
 							<f:convertNumber pattern="##,###.###"></f:convertNumber>
 							</p:inputText>
 							
 							<p:outputLabel value="Frais Tenue Sport:" />
 							<p:inputText value="#{fraisAnnexeBean.fraisAnnexeNonNation.fraisTenueSport}" >
+							<p:ajax event="blur" update="@this" />
 							<f:convertNumber pattern="##,###.###"></f:convertNumber>
 							</p:inputText>
 							
 							<p:outputLabel value="Frais Restauration"/>
 							<p:inputText value="#{fraisAnnexeBean.fraisAnnexeNonNation.fraisRestauration}" >
+							<p:ajax event="blur" update="@this" />
 							<f:convertNumber pattern="##,###.###"></f:convertNumber>
 							</p:inputText>
 													
 							<p:outputLabel value="Frais E-Learning" />
 							<p:inputText value="#{fraisAnnexeBean.fraisAnnexeNonNation.fraisElearning}" >
+							<p:ajax event="blur" update="@this" />
 							<f:convertNumber pattern="##,###.###"></f:convertNumber>
 							</p:inputText>
 							
 							<p:outputLabel value="Frais Visite médicale"/>
 							<p:inputText value="#{fraisAnnexeBean.fraisAnnexeNonNation.fraisVisiteMedic}" >
+								<p:ajax event="blur" update="@this" />
 								<f:convertNumber pattern="##,###.###"></f:convertNumber>
 							</p:inputText>
 							
 							<p:outputLabel value="Frais Ordinateur" />
-							<p:inputText value="#{fraisAnnexeBean.fraisAnnexeNonNation.fraisOrdinateur}" >						
+							<p:inputText value="#{fraisAnnexeBean.fraisAnnexeNonNation.fraisOrdinateur}" >
+							<p:ajax event="blur" update="@this" />						
 							<f:convertNumber pattern="##,###.###"></f:convertNumber>
 							</p:inputText>
 							
 							<p:outputLabel value="Autre Frais" />
-							<p:inputText value="#{fraisAnnexeBean.fraisAnnexeNonNation.autreFrais}" >						
+							<p:inputText value="#{fraisAnnexeBean.fraisAnnexeNonNation.autreFrais}" >
+							<p:ajax event="blur" update="@this" />						
 							<f:convertNumber pattern="##,###.###"></f:convertNumber>
 							</p:inputText>
 							

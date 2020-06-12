@@ -33,7 +33,9 @@ import com.ARSTM.model.FraisAnnexe;
 import com.ARSTM.model.Inscriptions;
 import com.ARSTM.model.Matrimoniales;
 import com.ARSTM.model.Mention;
+import com.ARSTM.model.Nationalites;
 import com.ARSTM.model.Niveaux;
+import com.ARSTM.model.Regime;
 import com.ARSTM.model.Santes;
 import com.ARSTM.model.VersementScolarite;
 import com.ARSTM.requetes.ReqAnneeScolaire;
@@ -66,6 +68,8 @@ public class VersementScolariteBean {
 	private Inscriptions selectedInscription = new Inscriptions();
 	private Mention  mention = new Mention();
 	private Ecolages ecolage = new Ecolages();
+	private Nationalites nationalites = new Nationalites();
+	private Regime regime= new Regime();
 	private FraisAnnexe fraisAnnexe = new FraisAnnexe();
 	private EtablScolarite etablScolarite = new EtablScolarite();
 	private VersementScolarite versementScolarite = new VersementScolarite();
@@ -295,6 +299,22 @@ public StreamedContent viderPhoto() throws FileNotFoundException {
 	}
 
 	
+	public Nationalites getNationalites() {
+		return nationalites;
+	}
+
+	public void setNationalites(Nationalites nationalites) {
+		this.nationalites = nationalites;
+	}
+
+	public Regime getRegime() {
+		return regime;
+	}
+
+	public void setRegime(Regime regime) {
+		this.regime = regime;
+	}
+
 	public String getMatriculeRecherche() {
 		return matriculeRecherche;
 	}
@@ -338,7 +358,7 @@ public StreamedContent viderPhoto() throws FileNotFoundException {
 	public List getListInscription() {
 		listInscription.clear();
 		listInscription = requeteInscription.recupListeEtabScolarite(anneEncoure.getCodeAnnees());
-		System.out.println("Taille du fichier:"+listInscription.size());
+		//System.out.println("Taille du fichier:"+listInscription.size());
 		return listInscription;
 	}
 

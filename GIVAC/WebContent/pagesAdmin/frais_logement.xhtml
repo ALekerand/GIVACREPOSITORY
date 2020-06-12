@@ -37,14 +37,18 @@
 							<h:panelGrid id="lognfrais_grid" columns="4" cellpadding="6">
 							<p:outputLabel value="Montant Type Logement:" />
 							<p:inputText value="#{fraisLogementBean.typeLogementNation.montantTypeLogement}" styleClass="upercase">
+							<p:ajax event="blur" update="@this" />
+							<f:convertNumber pattern="##,###.###"></f:convertNumber>
 							</p:inputText>
 							
 							<p:outputLabel/>
 							<p:outputLabel/>
 							
 							<p:outputLabel value="Montant Caution Type Logement:" />
-							<p:inputText value="#{fraisLogementBean.typeLogementNation.cautionTypeLogement}" styleClass="upercase"/>
-							
+							<p:inputText value="#{fraisLogementBean.typeLogementNation.cautionTypeLogement}" styleClass="upercase">
+							<p:ajax event="blur" update="@this" />
+							<f:convertNumber pattern="##,###.###"></f:convertNumber>
+							</p:inputText>
 							</h:panelGrid>
 						</p:panel>
 					</p:tab>
@@ -58,14 +62,18 @@
 							
 							<p:outputLabel value="Montant Type Logement:" />
 							<p:inputText value="#{fraisLogementBean.typeLogementNonNation.montantTypeLogement}" styleClass="upercase">
+							<p:ajax event="blur" update="@this" />
+							<f:convertNumber pattern="##,###.###"></f:convertNumber>
 							</p:inputText>		
 									
 							<p:outputLabel/>
 							<p:outputLabel/>
 							
 							<p:outputLabel value="Montant Caution Type Logement:" />
-							<p:inputText value="#{fraisLogementBean.typeLogementNonNation.cautionTypeLogement}" styleClass="upercase"/>
-							
+							<p:inputText value="#{fraisLogementBean.typeLogementNonNation.cautionTypeLogement}" styleClass="upercase">
+							<p:ajax event="blur" update="@this" />
+							<f:convertNumber pattern="##,###.###"></f:convertNumber>
+							</p:inputText>	
 							</h:panelGrid>
 						</p:panel>
 						
