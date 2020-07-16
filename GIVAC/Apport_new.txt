@@ -16,9 +16,10 @@
 	Voir la page Ecolage (gerer le wizard et aussi un tableau recap)
 	- Page complement: Gerer le fait que la photo ne soit pas renseigner avant enregistrement
 	
-	07/06/2020
-	- Erreur (Stream close lors de l'enregistrement de l'établissement de la scolarité)
-	- Etablissemen Scolarité Verifier après mapping le type des mt ecolage (Bigdecimaux) et corriger dans Etablisemant scolariteBean
+	05/06/2020: gérer le taux de réduction dans etablissement scolarité afin de prende en compte les virgules
+		- Mettre un etat soldé dans l'inscription pour faciliter les requettes sur les versement (OK Mis dans le MCD)
+	
+	
 
 
 

@@ -16,6 +16,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
+import org.hibernate.cfg.beanvalidation.BeanValidationIntegrator;
 import org.primefaces.component.commandbutton.CommandButton;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.DefaultStreamedContent;
@@ -33,6 +34,7 @@ import com.ARSTM.model.FraisAnnexe;
 import com.ARSTM.model.Inscriptions;
 import com.ARSTM.model.Matrimoniales;
 import com.ARSTM.model.Mention;
+import com.ARSTM.model.Mode;
 import com.ARSTM.model.Nationalites;
 import com.ARSTM.model.Niveaux;
 import com.ARSTM.model.Regime;
@@ -40,8 +42,10 @@ import com.ARSTM.model.Santes;
 import com.ARSTM.model.VersementScolarite;
 import com.ARSTM.requetes.ReqAnneeScolaire;
 import com.ARSTM.requetes.ReqEcolage;
+import com.ARSTM.requetes.ReqEtablissementScolarite;
 import com.ARSTM.requetes.ReqEtudiant;
 import com.ARSTM.requetes.ReqFraisAnnexes;
+import com.ARSTM.requetes.ReqVersemtscolarite;
 import com.ARSTM.requetes.RequeteInscription;
 import com.ARSTM.service.Iservice;
 
@@ -57,23 +61,22 @@ public class VersementScolariteBean {
 	@Autowired
 	RequeteInscription requeteInscription;
 	@Autowired
-	ReqEcolage reqEcolage;
+	ReqEtablissementScolarite reqEtablissementScolarite;
 	@Autowired
-	ReqFraisAnnexes reqFraisAnnexes;
-
+	ReqVersemtscolarite reqVersemtscolarite;
+	
 	private AnneesScolaire anneEncoure = new AnneesScolaire();
 	private Etudiants etudiants = new Etudiants();
 	private String matriculeRecherche;
 	private Inscriptions inscriptions = new Inscriptions();
 	private Inscriptions selectedInscription = new Inscriptions();
-	private Mention  mention = new Mention();
-	private Ecolages ecolage = new Ecolages();
-	private Nationalites nationalites = new Nationalites();
-	private Regime regime= new Regime();
-	private FraisAnnexe fraisAnnexe = new FraisAnnexe();
+	private BigDecimal totalScolarite;
+	private BigDecimal totalVersement = new BigDecimal(0);
+	private BigDecimal resteVersement = new BigDecimal(0);
 	private EtablScolarite etablScolarite = new EtablScolarite();
 	private VersementScolarite versementScolarite = new VersementScolarite();
-	private boolean etatReduction;
+	private List listMode = new ArrayList<>();
+	private Mode choosedMode = new Mode();
 
 	
 	// Pour l'upload
@@ -81,14 +84,13 @@ public class VersementScolariteBean {
 	private String cheminFinal ="";
 	private	StreamedContent content = new DefaultStreamedContent() ;
 	
-	private List listEtudiant = new ArrayList<>();
+	//private List listEtudiant = new ArrayList<>();
 	private List listInscription = new ArrayList<>();
 	
 	// Contrôle de coposant
 	private CommandButton btnValider = new CommandButton();
 	private CommandButton btnAnuler = new CommandButton();
 	private List listeEtudiant = new ArrayList<>();
-	
 	
 	// Méthodes
 	@PostConstruct
@@ -99,7 +101,7 @@ public class VersementScolariteBean {
 	}
 	
 	public void rechercher() throws FileNotFoundException {
-		//annuler();
+		annuler();
 		try {
 			etudiants = reqEtudiant.recupererEtudiantByMlle(matriculeRecherche).get(0);
 		} catch (IndexOutOfBoundsException e) {
@@ -108,57 +110,57 @@ public class VersementScolariteBean {
 		}
 		
 		if (etudiants.getMle()!= null) {
-			inscriptions = requeteInscription.recupInscriptionByNumEtudiant(etudiants.getNumetudiant(),anneEncoure.getCodeAnnees()).get(0);
-			mention = inscriptions.getSection().getMention();
+			inscriptions = requeteInscription.recupInscriptionEtabScilariteByEtudiant(etudiants.getNumetudiant(),anneEncoure.getCodeAnnees()).get(0);
+			//mention = inscriptions.getSection().getMention();
 			
 			//Ecolage
 			chargerPhoto();
+			
 		}
 	}
 	
 	
-	public void chargerfrais() {
-		//Ecolage concerné
-		//ecolage = reqEcolage.recupEcolage(mention.getCodeMention(), anneEncoure.getCodeAnnees());
+	public void chargerMontant() {
 		
-		//Frais annexes concernés
-		fraisAnnexe = reqFraisAnnexes.recupFraisAnexByTypeNation(anneEncoure.getCodeAnnees(), 1);
+			//Calculet le total de la scolarité
+		if (inscriptions.getRegime().getCodeRegime() == 1) {
+			setTotalScolarite(new BigDecimal(etablScolarite.getMtEchance1Sco()));
+
+		} else {
+			setTotalScolarite(new BigDecimal(etablScolarite.getMtEchance1Sco()).add(new BigDecimal(etablScolarite.getMtEchance2Eco())).add(new BigDecimal(etablScolarite.getMtEchance3Sco())).add(new BigDecimal(etablScolarite.getMtEchance4Eco())));
+
+		}
+
+		//Calculer les montants déja versés
+		for (VersementScolarite var : reqVersemtscolarite.recupVersemtbyEtudiantAnne(etudiants.getNumetudiant(), anneEncoure.getCodeAnnees())) {
+			totalVersement = totalVersement.add(var.getMontantVersementScolarite());
+		}
 		
-		etablScolarite.setAnneesScolaire(anneEncoure);
-		etablScolarite.setFraisAssuranceSco(new BigDecimal(fraisAnnexe.getFraisAssurance()));
-		etablScolarite.setFraisElearningSco(new BigDecimal(fraisAnnexe.getFraisElearning()));
-		etablScolarite.setAutreFraisSco(new BigDecimal(fraisAnnexe.getAutreFrais()));
-		etablScolarite.setDateEchance1Sco(ecolage.getDateEchance1());
-		etablScolarite.setDateEchance2Eco(ecolage.getDateEchance2());
-		etablScolarite.setDateEchance3Sco(ecolage.getDateEchance3());
-		etablScolarite.setDateEchance4Eco(ecolage.getDateEchance4());
-		etablScolarite.setDateEtablissementSco(new Date());
-		//etablScolarite.setDateReduction(dateReduction);
-		etablScolarite.setEtudiants(etudiants);
-
-
+		//Calculer le reste à payer
+		setResteVersement(totalScolarite.subtract(totalVersement));
 		
 	}
 	
-	
+
 	public void selectionner() throws FileNotFoundException {
+		annuler();
 		inscriptions = selectedInscription;
 		etudiants = selectedInscription.getEtudiants();
 		chargerPhoto();
+		
+		//Charger les informations sur l'établissement
+		etablScolarite =  reqEtablissementScolarite.recupEtablisScolarite(etudiants.getMle(),anneEncoure.getCodeAnnees());
+		System.out.println("======= Etablissement"+etablScolarite.getMtEchance1Sco());
+		//Charger les montants
+		chargerMontant();
 	}
 	
 	public void enregistrer() throws FileNotFoundException {
-		//Enregistrement du complement
-		inscriptions.setEtatComplemnt(true);
-		etudiants.setPhotoEtudiant(cheminFinal);
-		service.updateObject(etudiants);
-		service.updateObject(inscriptions);
-		
-		//Vider la page 
-		annuler();
-		
-		//Actualiser la liste des complements à faire
-		getListInscription();
+		//Enregistrement du versement
+		versementScolarite.setAnneesScolaire(anneEncoure);
+		versementScolarite.setEtudiants(etudiants);
+		versementScolarite.setDateVersementSco(new Date());
+		service.addObject(versementScolarite);
 	}
 	
 	
@@ -299,21 +301,16 @@ public StreamedContent viderPhoto() throws FileNotFoundException {
 	}
 
 	
-	public Nationalites getNationalites() {
-		return nationalites;
-	}
-
-	public void setNationalites(Nationalites nationalites) {
-		this.nationalites = nationalites;
-	}
-
-	public Regime getRegime() {
-		return regime;
-	}
-
-	public void setRegime(Regime regime) {
-		this.regime = regime;
-	}
+	/*
+	 * public Nationalites getNationalites() { return nationalites; }
+	 * 
+	 * public void setNationalites(Nationalites nationalites) { this.nationalites =
+	 * nationalites; }
+	 * 
+	 * public Regime getRegime() { return regime; }
+	 * 
+	 * public void setRegime(Regime regime) { this.regime = regime; }
+	 */
 
 	public String getMatriculeRecherche() {
 		return matriculeRecherche;
@@ -337,13 +334,6 @@ public StreamedContent viderPhoto() throws FileNotFoundException {
 		this.inscriptions = inscriptions;
 	}
 
-	public List getListEtudiant() {
-		return listEtudiant;
-	}
-
-	public void setListEtudiant(List listEtudiant) {
-		this.listEtudiant = listEtudiant;
-	}
 
 	public CommandButton getBtnAnuler() {
 		return btnAnuler;
@@ -357,7 +347,8 @@ public StreamedContent viderPhoto() throws FileNotFoundException {
 
 	public List getListInscription() {
 		listInscription.clear();
-		listInscription = requeteInscription.recupListeEtabScolarite(anneEncoure.getCodeAnnees());
+		listInscription = requeteInscription.recupListeInscriptionComplet(anneEncoure.getCodeAnnees());
+
 		//System.out.println("Taille du fichier:"+listInscription.size());
 		return listInscription;
 	}
@@ -377,13 +368,6 @@ public StreamedContent viderPhoto() throws FileNotFoundException {
 		this.selectedInscription = selectedInscription;
 	}
 
-	public Mention getMention() {
-		return mention;
-	}
-
-	public void setMention(Mention mention) {
-		this.mention = mention;
-	}
 
 	public EtablScolarite getEtablScolarite() {
 		return etablScolarite;
@@ -402,12 +386,45 @@ public StreamedContent viderPhoto() throws FileNotFoundException {
 		this.versementScolarite = versementScolarite;
 	}
 
-	public boolean isEtatReduction() {
-		return etatReduction;
+	public BigDecimal getTotalScolarite() {
+		return totalScolarite;
 	}
 
-	public void setEtatReduction(boolean etatReduction) {
-		this.etatReduction = etatReduction;
+	public void setTotalScolarite(BigDecimal totalScolarite) {
+		this.totalScolarite = totalScolarite;
+	}
+
+	public BigDecimal getTotalVersement() {
+		return totalVersement;
+	}
+
+	public void setTotalVersement(BigDecimal totalVersement) {
+		this.totalVersement = totalVersement;
+	}
+
+	public BigDecimal getResteVersement() {
+		return resteVersement;
+	}
+
+	public void setResteVersement(BigDecimal resteVersement) {
+		this.resteVersement = resteVersement;
+	}
+
+	public List getListMode() {
+		listMode = service.getObjects("Mode");
+		return listMode;
+	}
+
+	public void setListMode(List listMode) {
+		this.listMode = listMode;
+	}
+
+	public Mode getChoosedMode() {
+		return choosedMode;
+	}
+
+	public void setChoosedMode(Mode choosedMode) {
+		this.choosedMode = choosedMode;
 	}
 
 }

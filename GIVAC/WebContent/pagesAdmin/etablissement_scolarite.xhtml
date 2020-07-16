@@ -7,7 +7,7 @@
 <ui:composition template="/templates/templateAdministrateur.xhtml">
 	<ui:define name="body">
 		<h:form id="form">
-			<h1 class="page-title">COMPLEMENT SCOLARITE</h1>
+			<h1 class="page-title">ETABLISSEMENT SCOLARITE</h1>
 			<p:messages autoUpdate="true" closable="true" showDetail="false" />
 			<div class="widget-content">
 			<p:panel header="Enregistrement">
@@ -25,10 +25,14 @@
 						rowKey="#{tata.codeInscription}" emptyMessage="Aucun enregistrement">
 						<p:ajax event="rowSelect" listener="#{etablisScolariteBean.selectionner}" update=":form" />
 						<f:facet name="header">LISTE DES ETUDIANTS</f:facet>
+						<p:column headerText="Mle" style="width:25%">#{tata.etudiants.mle}</p:column>
 						<p:column headerText="Nom" style="width:20%">#{tata.etudiants.nomEtudiant}</p:column>
-						<p:column headerText="Prenoms" style="width:50%">#{tata.etudiants.prenomEtudiant}</p:column>
-						<p:column headerText="Date Naissance" style="width:30%">#{tata.etudiants.datenais}</p:column>
-						<p:column headerText="Nationalité" style="width:30%">#{tata.etudiants.nationalites.libnationalite}</p:column>
+						<p:column headerText="Prenoms" style="width:40%">#{tata.etudiants.prenomEtudiant}</p:column>
+						<p:column headerText="Date Naissance" style="width:25%">
+						<p:outputLabel id="dat_nais" value="#{tata.etudiants.datenais}" pattern="dd/MM/yyyy">
+						<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+						</p:outputLabel></p:column>
+						<p:column headerText="Nationalité" style="width:20%">#{tata.etudiants.nationalites.libnationalite}</p:column>
 					</p:dataTable>
     </td>
   </tr>
@@ -40,7 +44,7 @@
 					<table>
 					  <tr valign="top">
 					    <td>
-					    <h:panelGrid id="annee_grid" columns="4" cellpadding="6">
+			<h:panelGrid id="annee_grid" columns="4" cellpadding="6">
 						<p:outputLabel for="name" value="Nom:" />
 						<p:inputText id="name" value="#{etablisScolariteBean.etudiants.nomEtudiant}" readonly="true"  />
 						
@@ -48,13 +52,16 @@
 						<p:inputText id="pren" value="#{etablisScolariteBean.etudiants.prenomEtudiant}" readonly="true" />
 						
 						<p:outputLabel for="dat_nais" value="Date naissance" />
-						<p:inputText id="dat_nais" value="#{etablisScolariteBean.etudiants.datenais}" pattern="dd/MM/yyyy">
+						<p:inputText id="dat_nais" value="#{etablisScolariteBean.etudiants.datenais}" pattern="dd/MM/yyyy" readonly="true">
 						<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
 						</p:inputText>
 						
 						<p:outputLabel for="ses" value="Session" styleClass="outputDecalage"/>
-						<p:inputText id="ses" value="#{etablisScolariteBean.inscriptions.section.abrevSection}" />
-</h:panelGrid>
+						<p:inputText id="ses" value="#{etablisScolariteBean.inscriptions.section.abrevSection}" readonly="true"/>
+						
+						<p:outputLabel for="reg" value="Session"/>
+						<p:inputText id="reg" value="#{etablisScolariteBean.inscriptions.regime.libRegime}" readonly="true" />
+				</h:panelGrid>
 			 </td>
 			<td align="right">
 					<p:graphicImage id="graphIm" value="#{etablisScolariteBean.content}" height="110" width="110"></p:graphicImage>	
@@ -66,7 +73,7 @@
 				<legend>Frais ecolage</legend>
 					<h:panelGrid id="ecolage_gid" columns="4" cellpadding="8">
 					<p:outputLabel for="fr_ecol" value="Montant écolage:" />
-					<p:inputText id="fr_ecol" value="#{etablisScolariteBean.etablScolarite.montantEcolageSco}" >
+					<p:inputText id="fr_ecol" value="#{etablisScolariteBean.etablScolarite.montantEcolageSco}" binding="#{etablisScolariteBean.inputMontantEcolage}" readonly="true">
 					<f:convertNumber pattern="##,###.###"></f:convertNumber>
 					</p:inputText>
 					
@@ -81,10 +88,14 @@
             <p:outputLabel/>
             
             <p:outputLabel for="p_reduc" value="Taux (en %):"  />
-					<p:inputText id="p_reduc" value="#{etablisScolariteBean.etablScolarite.tauxReduction}" binding="#{etablisScolariteBean.imputTaux}" />
+			<p:inputText id="p_reduc" value="#{etablisScolariteBean.etablScolarite.tauxReduction}" binding="#{etablisScolariteBean.imputTaux}" >
+			<p:ajax event="keyup" listener="#{etablisScolariteBean.calculerMtreduction}" update="mt_reduct"></p:ajax>
+			<f:convertNumber pattern="##,###.###"></f:convertNumber>
+			</p:inputText>
 					
 			<p:outputLabel for="mt_reduct" value="Montant:" styleClass="outputDecalage"/>
-			<p:inputText id="mt_reduct" value="" binding="#{etablisScolariteBean.imputMontant}">
+			<p:inputText id="mt_reduct" value="#{etablisScolariteBean.etablScolarite.mtReductionSco}" binding="#{etablisScolariteBean.imputMontant}">
+			<p:ajax event="keyup" listener="#{etablisScolariteBean.calculerPourcentage}" update="p_reduc"></p:ajax>
 			<f:convertNumber pattern="##,###.###"></f:convertNumber>
 			</p:inputText>
 			
@@ -161,6 +172,42 @@
 				</p:inputText>
 			
 			
+			<legend>Montants et échéances </legend>
+			<p:outputLabel/>
+			<p:outputLabel/>
+			<p:outputLabel/>
+			
+			<p:outputLabel value="1er versement:" />
+			<p:inputText value="#{etablisScolariteBean.etablScolarite.mtEchance1Sco}">
+			<f:convertNumber pattern="##,###.###"></f:convertNumber>
+			</p:inputText>
+			<p:outputLabel value="Date:" />
+			<p:calendar value="#{etablisScolariteBean.etablScolarite.dateEchance1Sco}"
+			locale="fr" navigator="true" pattern="dd/MM/yyyy"/>
+			
+			<p:outputLabel value="2e versement:" />
+			<p:inputText value="#{etablisScolariteBean.etablScolarite.mtEchance2Eco}">
+			<f:convertNumber pattern="##,###.###"></f:convertNumber>
+			</p:inputText>
+			<p:outputLabel value="Date:" />
+			<p:calendar value="#{etablisScolariteBean.etablScolarite.dateEchance2Eco}"
+			locale="fr" navigator="true" pattern="dd/MM/yyyy" />
+			
+			<p:outputLabel value="3e versement:" />
+			<p:inputText value="#{etablisScolariteBean.etablScolarite.mtEchance3Sco}">
+			<f:convertNumber pattern="##,###.###"></f:convertNumber>
+			</p:inputText>
+			<p:outputLabel value="Date:" />
+			<p:calendar value="#{etablisScolariteBean.etablScolarite.dateEchance3Sco}"
+			locale="fr" navigator="true" pattern="dd/MM/yyyy"/>
+			
+			<p:outputLabel value="4e versement:" />
+			<p:inputText value="#{etablisScolariteBean.etablScolarite.mtEchance4Eco}">
+			<f:convertNumber pattern="##,###.###"></f:convertNumber>
+			</p:inputText>
+			<p:outputLabel value="Date:" />
+			<p:calendar value="#{etablisScolariteBean.etablScolarite.dateEchance4Eco}"
+			locale="fr" navigator="true" pattern="dd/MM/yyyy"/> 
 			
 				</h:panelGrid>
 			<p:toolbar >

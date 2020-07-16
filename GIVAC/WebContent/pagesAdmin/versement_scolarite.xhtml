@@ -27,7 +27,7 @@
 						rowKey="#{tata.codeInscription}" emptyMessage="Aucun enregistrement">
 						<p:ajax event="rowSelect" listener="#{versementScolariteBean.selectionner}" update=":form" />
 						<f:facet name="header">LISTE DES ETUDIANTS</f:facet>
-						<p:column headerText="Nom" style="width:20%" sortBy="#{tata.etudiants.nomEtudiant}" >>#{tata.etudiants.nomEtudiant}</p:column>
+						<p:column headerText="Nom" style="width:20%" sortBy="#{tata.etudiants.nomEtudiant}" >#{tata.etudiants.nomEtudiant}</p:column>
 						<p:column headerText="Prenoms" style="width:50%">#{tata.etudiants.prenomEtudiant}</p:column>
 						<p:column headerText="Date Naissance" style="width:30%">#{tata.etudiants.datenais}</p:column>
 						<p:column headerText="Nationalité" style="width:30%">#{tata.etudiants.nationalites.libnationalite}</p:column>
@@ -73,28 +73,38 @@
 				<legend>Frais Scolarité</legend>
 				
 					<h:panelGrid id="e_grid" columns="4" cellpadding="8">
-					<p:outputLabel for="fr_sc" value="Montant scolarité:" />
-					<p:inputText id="fr_sc" value="#{versementScolariteBean.etablScolarite.montantEcolageSco}" />
+					<p:outputLabel for="mt_scolarite" value="Montant scolarité:" />
+					<p:inputText id="mt_scolarite" value="#{versementScolariteBean.totalScolarite}" />
               
             
             <p:outputLabel for="p_vers" value="Montant déjà versé"  />
-			<p:inputText id="p_vers" value=" " />
+			<p:inputText id="p_vers" value="#{versementScolariteBean.totalVersement}"/>
 					
-			<p:outputLabel for="mt_rest" value="Reste à verser" />
-			<p:inputText id="mt_rest" value=" " />
+			<p:outputLabel for="mt_rest" value="Reste à verser"/>
+			<p:inputText id="mt_rest" value="#{versementScolariteBean.resteVersement}"/>
 			
-			<p:outputLabel for="lib_vers" value="Libellé versement"  />
+			<p:outputLabel for="lib_vers" value="Libellé versement"/>
 			<p:inputText id="lib_vers" value=" " />
 			
 			<p:outputLabel for="mt_vers" value="Montant versement"  />
-			<p:inputText id="mt_vers" value=" " />
+			<p:inputText id="mt_vers" value="#{versementScolariteBean.versementScolarite.montantVersementScolarite}"/>
+			
+			<h:outputLabel for="mod" value="Mode" />
+			<p:selectOneMenu id="mod"
+				value="#{versementScolariteBean.choosedMode}"
+				converter="#{entityConverter}">
+				
+				<f:selectItem itemLabel="Selectionnez" itemValue="" />
+				<f:selectItems value="#{versementScolariteBean.listMode}" var="tata"
+					itemLabel="#{tata.libMode}" itemValue="#{tata}"></f:selectItems>
+			</p:selectOneMenu>
        
 			</h:panelGrid>
 			</fieldset>
 					
 		<p:toolbar >
 			<f:facet name="right">
-				<p:commandButton value="Verser" action="#{versementScolariteBean.enregistrer}"  binding="#{versementScolariteBean.btnValider}" update="form"></p:commandButton>
+				<h:commandButton value="Verser" action="#{versementScolariteBean.enregistrer}"   update="form"></h:commandButton>
 				<p:commandButton value="Annuler" action="#{versementScolariteBean.annuler}" binding="#{versementScolariteBean.btnAnuler}" update="form" process="@this"> </p:commandButton>
 			</f:facet>
 		</p:toolbar>

@@ -30,6 +30,47 @@ public class RequeteInscription {
 	List list = getSessionFactory().getCurrentSession().createSQLQuery(query).addEntity(Inscriptions.class).list();		
 	return list;
 	}
+	
+	/**
+	 * @author A.Lekerand
+	 * Permet de recuperer l'inscription de l'année en cours du'un étudiant 
+	 * dont le complement est fait
+	 * @param numeroEtudiant
+	 * @param codeAnneeScolaire
+	 * @return
+	 */
+	public List<Inscriptions> recupInscriptionCompletByEtudiant(int numeroEtudiant, int codeAnneeScolaire){
+	String query = "SELECT * FROM `inscriptions` WHERE ((inscriptions.NUMETUDIANT = '"+numeroEtudiant+"') AND (inscriptions.CODE_ANNEES = '"+codeAnneeScolaire+"') AND (inscriptions.ETAT_COMPLEMNT = '1'  ))";
+	List list = getSessionFactory().getCurrentSession().createSQLQuery(query).addEntity(Inscriptions.class).list();		
+	return list;
+	}
+	
+	
+	/**
+	 * @author A.Lekerand
+	 * Permet de recupérer l'inscription de l'étudiant dont la scolarité est établie
+	 * @param numeroEtudiant
+	 * @param codeAnneeScolaire
+	 * @return
+	 */
+	public List<Inscriptions> recupInscriptionEtabScilariteByEtudiant(int numeroEtudiant, int codeAnneeScolaire){
+		String query = "SELECT * FROM `inscriptions` WHERE ((inscriptions.NUMETUDIANT = '"+numeroEtudiant+"') AND (inscriptions.CODE_ANNEES = '"+codeAnneeScolaire+"') AND (ETAT_ETAB_SCOLARITE = '1'  ))";
+		List list = getSessionFactory().getCurrentSession().createSQLQuery(query).addEntity(Inscriptions.class).list();		
+		return list;
+		}
+	
+	/**
+	 * Permet de donner la liste des inscription dont la scolarité est établie mais dont la scolarité est non soldée
+	 * @author A.Lekerand
+	 * @param codeAnneeScolaire
+	 * @return
+	 */
+	public List<Inscriptions> recupListeInscriptionComplet(int codeAnneeScolaire){
+		String query = "SELECT `inscriptions`.* FROM `inscriptions` WHERE ((`inscriptions`.`ETAT_COMPLEMNT` = '1') AND (`inscriptions`.`CODE_ANNEES` = '"+codeAnneeScolaire+"'))";
+		List list = getSessionFactory().getCurrentSession().createSQLQuery(query).addEntity(Inscriptions.class).list();		
+		return list;
+		}
+	
 	public SessionFactory getSessionFactory() {
 		return sessionFactory;
 	}
@@ -41,7 +82,7 @@ public class RequeteInscription {
 	}
 	
 	public List<Inscriptions> recupListeEtabScolarite(int codeAnneeScolaire){
-		String query = "SELECT `inscriptions`.* FROM `inscriptions` WHERE ((`inscriptions`.`ETAT_ETAB_SCOLARITE` = '0') AND (`inscriptions`.`CODE_ANNEES` = '"+codeAnneeScolaire+"'))";
+		String query = "SELECT `inscriptions`.* FROM `inscriptions` WHERE ((`inscriptions`.`ETAT_ETAB_SCOLARITE` = '0') AND (`inscriptions`.`ETAT_COMPLEMNT` = '1') AND (`inscriptions`.`CODE_ANNEES` = '"+codeAnneeScolaire+"'))";
 		List list = getSessionFactory().getCurrentSession().createSQLQuery(query).addEntity(Inscriptions.class).list();		
 		return list;
 		}
@@ -56,6 +97,5 @@ public class RequeteInscription {
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
 	}
-
 
 }

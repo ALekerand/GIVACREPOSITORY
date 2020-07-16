@@ -160,8 +160,7 @@ public void upload(FileUploadEvent event) {
 
 		}
 		}
-
-
+		
 	//**************************ACCESSEURS*************************//*
 
 	public Iservice getService() {
