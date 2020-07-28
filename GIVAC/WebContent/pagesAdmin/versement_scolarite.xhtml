@@ -75,9 +75,8 @@
 					<h:panelGrid id="e_grid" columns="4" cellpadding="8">
 					<p:outputLabel for="mt_scolarite" value="Montant scolarité:" />
 					<p:inputText id="mt_scolarite" value="#{versementScolariteBean.totalScolarite}" />
-              
-            
-            <p:outputLabel for="p_vers" value="Montant déjà versé"  />
+                         
+            <p:outputLabel for="p_vers" value="Montant déjà versé"/>
 			<p:inputText id="p_vers" value="#{versementScolariteBean.totalVersement}"/>
 					
 			<p:outputLabel for="mt_rest" value="Reste à verser"/>
@@ -89,24 +88,22 @@
 			<p:outputLabel for="mt_vers" value="Montant versement"  />
 			<p:inputText id="mt_vers" value="#{versementScolariteBean.versementScolarite.montantVersementScolarite}"/>
 			
-			<h:outputLabel for="mod" value="Mode" />
-			<p:selectOneMenu id="mod"
-				value="#{versementScolariteBean.choosedMode}"
-				converter="#{entityConverter}">
-				
+			<h:outputLabel for="mod" value="Mode"/>
+			 <p:selectOneMenu id="mod" value="#{versementScolariteBean.codeMode}">
+			 <p:ajax event="change" process="@this"/>
 				<f:selectItem itemLabel="Selectionnez" itemValue="" />
 				<f:selectItems value="#{versementScolariteBean.listMode}" var="tata"
-					itemLabel="#{tata.libMode}" itemValue="#{tata}"></f:selectItems>
+					itemLabel="#{tata.libMode}" itemValue="#{tata.codeMode}"></f:selectItems>
 			</p:selectOneMenu>
        
 			</h:panelGrid>
 			</fieldset>
 					
 		<p:toolbar >
-			<f:facet name="right">
-				<h:commandButton value="Verser" action="#{versementScolariteBean.enregistrer}"   update="form"></h:commandButton>
-				<p:commandButton value="Annuler" action="#{versementScolariteBean.annuler}" binding="#{versementScolariteBean.btnAnuler}" update="form" process="@this"> </p:commandButton>
-			</f:facet>
+		<f:facet name="right">
+			<p:commandButton value="Verser" action="#{versementScolariteBean.enregistrer}"   update="form"></p:commandButton>
+			<p:commandButton value="Annuler" action="#{versementScolariteBean.annuler}" binding="#{versementScolariteBean.btnAnuler}" update="form" process="@this"> </p:commandButton>
+		</f:facet>
 		</p:toolbar>
 					
 					

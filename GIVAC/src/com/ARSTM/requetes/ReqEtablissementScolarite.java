@@ -17,9 +17,9 @@ public class ReqEtablissementScolarite {
 	@Autowired
 	SessionFactory sessionFactory;
 
-	public EtablScolarite recupEtablisScolarite(String mleEtudiant, int codeAnneescolaire){
+	public EtablScolarite recupEtablisScolarite(int numEtudiant, int codeAnneescolaire){
 		
-	String query = "SELECT * FROM `etabl_scolarite` WHERE ((etabl_scolarite.NUMETUDIANT = '"+mleEtudiant+"') AND (etabl_scolarite.CODE_ANNEES = '"+codeAnneescolaire+"'))";
+	String query = "SELECT * FROM `etabl_scolarite` WHERE ((etabl_scolarite.NUMETUDIANT = '"+numEtudiant+"') AND (etabl_scolarite.CODE_ANNEES = '"+codeAnneescolaire+"'))";
 		EtablScolarite  etablScolarite = (EtablScolarite) getSessionFactory().getCurrentSession().createSQLQuery(query).addEntity(EtablScolarite.class).uniqueResult();
 		return etablScolarite;
 	}

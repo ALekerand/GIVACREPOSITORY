@@ -45,6 +45,7 @@ import com.ARSTM.requetes.ReqEcolage;
 import com.ARSTM.requetes.ReqEtablissementScolarite;
 import com.ARSTM.requetes.ReqEtudiant;
 import com.ARSTM.requetes.ReqFraisAnnexes;
+import com.ARSTM.requetes.ReqOrigine;
 import com.ARSTM.requetes.ReqVersemtscolarite;
 import com.ARSTM.requetes.RequeteInscription;
 import com.ARSTM.service.Iservice;
@@ -64,19 +65,22 @@ public class VersementScolariteBean {
 	ReqEtablissementScolarite reqEtablissementScolarite;
 	@Autowired
 	ReqVersemtscolarite reqVersemtscolarite;
+	@Autowired
+	ReqOrigine reqOrigine;
 	
 	private AnneesScolaire anneEncoure = new AnneesScolaire();
 	private Etudiants etudiants = new Etudiants();
 	private String matriculeRecherche;
 	private Inscriptions inscriptions = new Inscriptions();
 	private Inscriptions selectedInscription = new Inscriptions();
-	private BigDecimal totalScolarite;
+	private BigDecimal totalScolarite = new BigDecimal(0);
 	private BigDecimal totalVersement = new BigDecimal(0);
 	private BigDecimal resteVersement = new BigDecimal(0);
 	private EtablScolarite etablScolarite = new EtablScolarite();
 	private VersementScolarite versementScolarite = new VersementScolarite();
 	private List listMode = new ArrayList<>();
-	private Mode choosedMode = new Mode();
+	//private Mode choosedMode = new Mode();
+	private int codeMode;
 
 	
 	// Pour l'upload
@@ -96,9 +100,10 @@ public class VersementScolariteBean {
 	@PostConstruct
 	public AnneesScolaire recupererAnne(){
 		//Charger l'année scolaire en cours
-		anneEncoure = reqAnneeScolaire.recupererDerniereAnneeScolaire().get(0);
+	anneEncoure = reqAnneeScolaire.recupererDerniereAnneeScolaire().get(0);
 		return anneEncoure;
 	}
+	
 	
 	public void rechercher() throws FileNotFoundException {
 		annuler();
@@ -121,23 +126,30 @@ public class VersementScolariteBean {
 	
 	
 	public void chargerMontant() {
-		
 			//Calculet le total de la scolarité
 		if (inscriptions.getRegime().getCodeRegime() == 1) {
 			setTotalScolarite(new BigDecimal(etablScolarite.getMtEchance1Sco()));
-
 		} else {
 			setTotalScolarite(new BigDecimal(etablScolarite.getMtEchance1Sco()).add(new BigDecimal(etablScolarite.getMtEchance2Eco())).add(new BigDecimal(etablScolarite.getMtEchance3Sco())).add(new BigDecimal(etablScolarite.getMtEchance4Eco())));
-
 		}
 
 		//Calculer les montants déja versés
-		for (VersementScolarite var : reqVersemtscolarite.recupVersemtbyEtudiantAnne(etudiants.getNumetudiant(), anneEncoure.getCodeAnnees())) {
-			totalVersement = totalVersement.add(var.getMontantVersementScolarite());
+		List<VersementScolarite> listeVersement = reqVersemtscolarite.recupVersemtbyEtudiantAnne(etudiants.getNumetudiant(), anneEncoure.getCodeAnnees());
+			System.out.println("==================Taille liste versement"+listeVersement.size());
+			double monTo = 0;
+			for (VersementScolarite var : listeVersement){
+			System.out.println("============ Montant de la scolarité"+var.getMontantVersementScolarite());
+			 monTo += var.getMontantVersementScolarite().doubleValue(); 
+			//totalVersement.add(var.getMontantVersementScolarite());
 		}
+		System.out.println("============ Total versement"+monTo);
+		
+		setTotalVersement(new BigDecimal(monTo));
+		//setTotalScolarite(new BigDecimal(monTo));
+		System.out.println("=========Total versement:"+totalVersement);
 		
 		//Calculer le reste à payer
-		setResteVersement(totalScolarite.subtract(totalVersement));
+		setResteVersement(totalScolarite.subtract(new BigDecimal(monTo)));
 		
 	}
 	
@@ -149,27 +161,60 @@ public class VersementScolariteBean {
 		chargerPhoto();
 		
 		//Charger les informations sur l'établissement
-		etablScolarite =  reqEtablissementScolarite.recupEtablisScolarite(etudiants.getMle(),anneEncoure.getCodeAnnees());
+		etablScolarite =  reqEtablissementScolarite.recupEtablisScolarite(etudiants.getNumetudiant(),anneEncoure.getCodeAnnees());
 		System.out.println("======= Etablissement"+etablScolarite.getMtEchance1Sco());
 		//Charger les montants
 		chargerMontant();
 	}
 	
 	public void enregistrer() throws FileNotFoundException {
-		//Enregistrement du versement
-		versementScolarite.setAnneesScolaire(anneEncoure);
-		versementScolarite.setEtudiants(etudiants);
-		versementScolarite.setDateVersementSco(new Date());
-		service.addObject(versementScolarite);
+		
+		
+		int mtPositif = versementScolarite.getMontantVersementScolarite().compareTo(BigDecimal.ZERO);
+		int mtpayeExact = versementScolarite.getMontantVersementScolarite().compareTo(resteVersement);
+		
+		//Vérifier si le montant n'est pas null ou superieur aureste à payer
+		if ((mtPositif == 1) && (mtpayeExact != 1)){
+			//Faire l'enregistrement
+			//Enregistrement du versement
+			versementScolarite.setAnneesScolaire(anneEncoure);
+			versementScolarite.setEtudiants(etudiants);
+			versementScolarite.setMode((Mode) service.getObjectById(codeMode, "Mode"));
+			versementScolarite.setOrigine(reqOrigine.recupOrigineById(1));
+			versementScolarite.setDateVersementSco(new Date());
+			service.addObject(versementScolarite);
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Réglement effectué!", null));
+
+			//Vider le champs
+			annuler();
+			
+			
+		
+		}else {
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Veuillez vérifier le montant du versement!", null));
+
+			
+		}
+		
 	}
 	
 	
 	public void annuler() throws FileNotFoundException {
+		//Info personnelle étudiant
 		etudiants.setNomEtudiant(null);
 		etudiants.setPrenomEtudiant(null);
-		//etudiants.setSections(null);
 		etudiants.setTelEtudiant(null);
+		etudiants.setNationalites(null);
+		
+		inscriptions.setRegime(null);
 		inscriptions.setSection(null);
+		
+		setTotalVersement(new BigDecimal(0));
+		setTotalScolarite(new BigDecimal(0));
+		setResteVersement(new BigDecimal(0));
+		versementScolarite.setMontantVersementScolarite(new BigDecimal(0));
+		
+		setCodeMode(0);
 		matriculeRecherche = "";
 		viderPhoto();
 		
@@ -419,12 +464,12 @@ public StreamedContent viderPhoto() throws FileNotFoundException {
 		this.listMode = listMode;
 	}
 
-	public Mode getChoosedMode() {
-		return choosedMode;
+	public int getCodeMode() {
+		return codeMode;
 	}
 
-	public void setChoosedMode(Mode choosedMode) {
-		this.choosedMode = choosedMode;
+	public void setCodeMode(int codeMode) {
+		this.codeMode = codeMode;
 	}
 
 }

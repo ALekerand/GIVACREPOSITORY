@@ -76,6 +76,7 @@ public class EtablisScolariteBean {
 	private boolean etatReduction;
 	private BigDecimal totalfrais;
 	
+	
 	// Pour l'upload
 	private String destination = "C:/photo/";
 	private String cheminFinal ="";
@@ -128,19 +129,19 @@ public class EtablisScolariteBean {
 	
 	public void chargerfrais() {
 		//Frais annexes concernés
-				fraisAnnexe = reqFraisAnnexes.recupFraisAnexByTypeNation(anneEncoure.getCodeAnnees(), 1);
-				etablScolarite.setFraisInscriptionSco(fraisAnnexe.getFraisInscription());    
-				etablScolarite.setFraisAssuranceSco(new BigDecimal(fraisAnnexe.getFraisAssurance()));
-				etablScolarite.setFraisElearningSco(new BigDecimal(fraisAnnexe.getFraisElearning()));
-				etablScolarite.setFraisTenueCompletSco(new BigDecimal(fraisAnnexe.getFraisTenueComplet()));
-				etablScolarite.setFraisTenueSportSco(new BigDecimal(fraisAnnexe.getFraisTenueSport()));
-				etablScolarite.setFraisVisiteMedicSco(new BigDecimal(fraisAnnexe.getFraisVisiteMedic()));
-				etablScolarite.setFraisRestaurationSco(new BigDecimal(fraisAnnexe.getFraisRestauration()));
-				etablScolarite.setFraisOrdinateurSco(new BigDecimal(fraisAnnexe.getFraisOrdinateur()));
-				etablScolarite.setAutreFraisSco(new BigDecimal(fraisAnnexe.getAutreFrais()));
+		fraisAnnexe = reqFraisAnnexes.recupFraisAnexByTypeNation(anneEncoure.getCodeAnnees(), 1);
+		etablScolarite.setFraisInscriptionSco(fraisAnnexe.getFraisInscription());    
+		etablScolarite.setFraisAssuranceSco(new BigDecimal(fraisAnnexe.getFraisAssurance()));
+		etablScolarite.setFraisElearningSco(new BigDecimal(fraisAnnexe.getFraisElearning()));
+		etablScolarite.setFraisTenueCompletSco(new BigDecimal(fraisAnnexe.getFraisTenueComplet()));
+		etablScolarite.setFraisTenueSportSco(new BigDecimal(fraisAnnexe.getFraisTenueSport()));
+		etablScolarite.setFraisVisiteMedicSco(new BigDecimal(fraisAnnexe.getFraisVisiteMedic()));
+		etablScolarite.setFraisRestaurationSco(new BigDecimal(fraisAnnexe.getFraisRestauration()));
+		etablScolarite.setFraisOrdinateurSco(new BigDecimal(fraisAnnexe.getFraisOrdinateur()));
+		etablScolarite.setAutreFraisSco(new BigDecimal(fraisAnnexe.getAutreFrais()));
 				
 				//Totaliser les frais
-		totalfrais = etablScolarite.getFraisInscriptionSco().add(etablScolarite.getFraisAssuranceSco().add(etablScolarite.getFraisElearningSco().add(etablScolarite.getFraisTenueCompletSco().add(etablScolarite.getFraisTenueSportSco().add(etablScolarite.getFraisVisiteMedicSco().add(etablScolarite.getFraisRestaurationSco().add(etablScolarite.getFraisOrdinateurSco().add(etablScolarite.getAutreFraisSco()))))))));
+		totalfrais = etablScolarite.getFraisInscriptionSco().add(etablScolarite.getFraisAssuranceSco().add(etablScolarite.getFraisElearningSco().add(etablScolarite.getFraisTenueCompletSco().add(etablScolarite.getFraisTenueSportSco().add(etablScolarite.getFraisVisiteMedicSco().add(etablScolarite.getFraisRestaurationSco().add(etablScolarite.getFraisOrdinateurSco().add(etablScolarite.getAutreFraisSco().add(etablScolarite.getMontantLogementSco())))))))));
 
 		
 		if(inscriptions.getRegime().getCodeRegime() == 2) {
@@ -553,5 +554,4 @@ public StreamedContent viderPhoto() throws FileNotFoundException {
 	public void setInputMontantEcolage(InputText inputMontantEcolage) {
 		this.inputMontantEcolage = inputMontantEcolage;
 	}
-
 }
