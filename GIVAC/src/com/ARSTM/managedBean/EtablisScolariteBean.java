@@ -139,7 +139,17 @@ public class EtablisScolariteBean {
 		etablScolarite.setFraisRestaurationSco(new BigDecimal(fraisAnnexe.getFraisRestauration()));
 		etablScolarite.setFraisOrdinateurSco(new BigDecimal(fraisAnnexe.getFraisOrdinateur()));
 		etablScolarite.setAutreFraisSco(new BigDecimal(fraisAnnexe.getAutreFrais()));
-				
+		
+		System.out.println("==========Frais insciption: "+etablScolarite.getFraisInscriptionSco());	//Clean after	
+		System.out.println("==========Assurance: "+etablScolarite.getFraisAssuranceSco());	//Clean after
+		System.out.println("==========E-learning: "+etablScolarite.getFraisElearningSco());	//Clean after
+		System.out.println("==========Tenuecomplet: "+etablScolarite.getFraisTenueCompletSco());	//Clean after
+		System.out.println("==========Tenue sport: "+etablScolarite.getFraisTenueSportSco());	//Clean after
+		System.out.println("==========frais visite: "+etablScolarite.getFraisVisiteMedicSco());	//Clean after
+		System.out.println("==========Restauration: "+etablScolarite.getFraisRestaurationSco());	//Clean after
+		System.out.println("==========Ordinateur: "+etablScolarite.getFraisOrdinateurSco());	//Clean after
+		System.out.println("==========Autre frais: "+etablScolarite.getAutreFraisSco());	//Clean after
+		System.out.println("==========Logement: "+etablScolarite.getMontantLogementSco());	//Clean after
 				//Totaliser les frais
 		totalfrais = etablScolarite.getFraisInscriptionSco().add(etablScolarite.getFraisAssuranceSco().add(etablScolarite.getFraisElearningSco().add(etablScolarite.getFraisTenueCompletSco().add(etablScolarite.getFraisTenueSportSco().add(etablScolarite.getFraisVisiteMedicSco().add(etablScolarite.getFraisRestaurationSco().add(etablScolarite.getFraisOrdinateurSco().add(etablScolarite.getAutreFraisSco().add(etablScolarite.getMontantLogementSco())))))))));
 
