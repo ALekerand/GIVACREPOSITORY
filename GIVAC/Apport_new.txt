@@ -1,4 +1,3 @@
-
 ************************** MODIFICATION A APPORTER*****************************
 	MCD
 	*Revoir le lien entre Ecolage et Mention (Pas besoin que l'association evienne une table)

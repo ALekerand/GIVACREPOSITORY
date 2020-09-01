@@ -156,10 +156,10 @@ public class EtablisScolariteBean {
 			etablScolarite.setMontantEcolageSco(ecolage.getMontantEcolage());
 			
 			//Pour l'ecolage et echeance
-			etablScolarite.setMtEchance1Sco(ecolage.getMtEchance1().longValue());
-			etablScolarite.setMtEchance2Eco(ecolage.getMtEchance2().longValue());
-			etablScolarite.setMtEchance3Sco(ecolage.getMtEchance3().longValue());
-			etablScolarite.setMtEchance4Eco(ecolage.getMtEchance4().longValue());
+			etablScolarite.setMtEchance1Sco(ecolage.getMtEchance1());
+			etablScolarite.setMtEchance2Eco(ecolage.getMtEchance2());
+			etablScolarite.setMtEchance3Sco(ecolage.getMtEchance3());
+			etablScolarite.setMtEchance4Eco(ecolage.getMtEchance4());
 			etablScolarite.setDateEchance1Sco(ecolage.getDateEchance1());
 			etablScolarite.setDateEchance2Eco(ecolage.getDateEchance2());
 			etablScolarite.setDateEchance3Sco(ecolage.getDateEchance3());
@@ -167,7 +167,9 @@ public class EtablisScolariteBean {
 			etablScolarite.setDateEtablissementSco(new Date());
 			
 			//Totaliser les frais et actualiser le montant du premier versement
-			etablScolarite.setMtEchance1Sco(etablScolarite.getMtEchance1Sco().longValue()+totalfrais.longValue());		
+				
+			etablScolarite.setMtEchance1Sco(etablScolarite.getMtEchance1Sco().add(totalfrais)) ;
+			
 		
 		
 		}else {
@@ -176,7 +178,7 @@ public class EtablisScolariteBean {
 			
 			//Pour l'ecolage et echeance
 			//etablScolarite.setMtEchance1Sco(null);
-			etablScolarite.setMtEchance1Sco(totalfrais.longValue());
+			etablScolarite.setMtEchance1Sco(totalfrais);
 			etablScolarite.setMtEchance2Eco(null);
 			etablScolarite.setMtEchance3Sco(null);
 			etablScolarite.setMtEchance4Eco(null);

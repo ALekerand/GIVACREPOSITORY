@@ -128,9 +128,10 @@ public class VersementScolariteBean {
 	public void chargerMontant() {
 			//Calculet le total de la scolarité
 		if (inscriptions.getRegime().getCodeRegime() == 1) {
-			setTotalScolarite(new BigDecimal(etablScolarite.getMtEchance1Sco()));
+			//setTotalScolarite(new BigDecimal(etablScolarite.getMtEchance1Sco()));
+			setTotalScolarite(etablScolarite.getMtEchance1Sco());
 		} else {
-			setTotalScolarite(new BigDecimal(etablScolarite.getMtEchance1Sco()).add(new BigDecimal(etablScolarite.getMtEchance2Eco())).add(new BigDecimal(etablScolarite.getMtEchance3Sco())).add(new BigDecimal(etablScolarite.getMtEchance4Eco())));
+			setTotalScolarite(etablScolarite.getMtEchance1Sco().add((etablScolarite.getMtEchance2Eco()).add(etablScolarite.getMtEchance3Sco()).add(etablScolarite.getMtEchance4Eco())));
 		}
 
 		//Calculer les montants déja versés

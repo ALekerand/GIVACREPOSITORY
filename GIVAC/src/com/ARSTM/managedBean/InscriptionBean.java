@@ -1,10 +1,5 @@
 package com.ARSTM.managedBean;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -14,20 +9,14 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.component.commandbutton.CommandButton;
-import org.primefaces.component.inputtext.InputText;
-import org.primefaces.component.outputlabel.OutputLabel;
-import org.primefaces.event.FileUploadEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import com.ARSTM.model.Anneeconcours;
 import com.ARSTM.model.AnneesScolaire;
 import com.ARSTM.model.Diplomes;
 import com.ARSTM.model.Ecole;
 import com.ARSTM.model.Enseignant;
-import com.ARSTM.model.EnseignatStatut;
-import com.ARSTM.model.EnseignatStatutId;
 import com.ARSTM.model.Etudiants;
 import com.ARSTM.model.Filieres;
 import com.ARSTM.model.Inscriptions;
@@ -41,17 +30,15 @@ import com.ARSTM.model.Residence;
 import com.ARSTM.model.Santes;
 import com.ARSTM.model.Section;
 import com.ARSTM.model.Sexe;
-import com.ARSTM.model.Specialite;
-import com.ARSTM.model.Statut;
 import com.ARSTM.model.Tformation;
 import com.ARSTM.model.TypeLogement;
 import com.ARSTM.model.UserAuthentication;
 import com.ARSTM.model.UserAuthorization;
 import com.ARSTM.requetes.ReqAnneeScolaire;
 import com.ARSTM.requetes.ReqTypeNationalite;
-import com.ARSTM.requetes.RequeteEnseignant;
 import com.ARSTM.requetes.RequeteFiliere;
 import com.ARSTM.requetes.RequeteInscription;
+import com.ARSTM.requetes.RequeteLogement;
 import com.ARSTM.requetes.RequeteMention;
 import com.ARSTM.requetes.RequeteSection;
 import com.ARSTM.service.Iservice;
@@ -76,6 +63,9 @@ public class InscriptionBean {
 	
 	@Autowired
 	ReqTypeNationalite  reqTypeNationalite;
+	
+	@Autowired
+	RequeteLogement requeteLogement;
 	
 	
 	private Etudiants etudiants = new Etudiants();
@@ -121,7 +111,6 @@ public class InscriptionBean {
 	private List listeSante = new ArrayList<>();
 	private List listeMatrimoniale = new ArrayList<>();
 	private List listeDiplome =  new ArrayList<>();
-	private UserAuthentication userAuthentication = new UserAuthentication();
 	private UserAuthorization userAuthorization = new UserAuthorization();
 	private int maxNumeEtudiant = (int) 0;
 	private String matricule;
@@ -179,6 +168,9 @@ public String genererMatricule() {
 	public void enregistrerResidence() {
 		residence.setAnneesScolaire(anneEncoure);
 		residence.setEtudiants(etudiants);
+		
+		//Recuperer le type de logement
+		residence.setLogement(requeteLogement.recupLogByTypeLogement(choosedTypeLogement.getCodetypeLogement()).get(0));
 		getService().addObject(residence);
 	}
 	
@@ -194,6 +186,7 @@ public String genererMatricule() {
 		  etudiants.setNiveaux(choosedNiveau);
 		  etudiants.setPaysNaissanceEtudiant(choosedPaysNaiss.getLibpays());
 		  etudiants.setPays(choosedPays);
+		  System.out.println("======== Santé choisie: "+choosedSante); // Clean after
 		  etudiants.setSantes(choosedSante);
 		  etudiants.setDiplomes(choosedDiplome);
 		  
