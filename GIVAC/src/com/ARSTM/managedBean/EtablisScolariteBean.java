@@ -327,7 +327,7 @@ public StreamedContent viderPhoto() throws FileNotFoundException {
 	}
 	
 	
-//************************Pour le traitement de la photo
+//************************Pour le traitement de la photo*********************************
 	
 	public void upload(FileUploadEvent event) {
         FacesMessage msg = new FacesMessage("Photo validée!");
