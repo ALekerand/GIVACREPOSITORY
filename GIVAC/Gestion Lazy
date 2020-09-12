@@ -7,3 +7,5 @@ ETUDIANT: Nationalite
 INSCRIPTION: Etudiant, Nationalité, Section, Regime
 
 Etablisseent: Etudiant,
+
+type_logement_nationalite: typeLogement

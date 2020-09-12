@@ -138,6 +138,7 @@ public class FraisLogementBean {
 	}
 
 	public List getListTypeLogementNationalite() {
+		listTypeLogementNationalite = service.getObjects("TypeLogementNationalite");
 		return listTypeLogementNationalite;
 	}
 
