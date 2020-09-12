@@ -82,6 +82,21 @@
 					</p:tab> 
 					
 				</p:wizard>
+				
+				
+				<p:dataTable id="table"  var="tata"
+						value="#{fraisLogementBean.listInscription}" selection="#{fraisLogementBean.selectedInscription}"
+						rowKey="#{tata.codeInscription}" emptyMessage="Aucun enregistrement">
+						<f:facet name="header">LISTE DES ETUDIANTS</f:facet>
+						<p:column headerText="Mle" style="width:25%">#{tata.}</p:column>
+						<p:column headerText="Nom" style="width:20%">#{tata}</p:column>
+						<p:column headerText="Prenoms" style="width:40%">#{tata}</p:column>
+						<p:column headerText="Date Naissance" style="width:25%">
+						<p:outputLabel id="dat_nais" value="#{tata.etudiants.datenais}" pattern="dd/MM/yyyy">
+						<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+						</p:outputLabel></p:column>
+						<p:column headerText="Nationalité" style="width:20%">#{tata.etudiants.nationalites.libnationalite}</p:column>
+					</p:dataTable>
 			</div>
 			
 			<!-- Boite de confirmation -->

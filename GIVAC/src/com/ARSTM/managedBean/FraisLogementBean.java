@@ -33,7 +33,7 @@ public class FraisLogementBean {
 	
 	private TypeLogement choosedTypeLogement = new TypeLogement();
 	private List listTypeLogement = new ArrayList<>();
-	//private Float fraisExam;
+	private List listTypeLogementNationalite = new ArrayList<>();
 	
 	private TypeLogementNationalite typeLogementNation = new TypeLogementNationalite();
 	private TypeLogementNationalite typeLogementNonNation = new TypeLogementNationalite();
@@ -45,7 +45,6 @@ public class FraisLogementBean {
 	@PostConstruct
 	public AnneesScolaire recupererAnne(){
 		anneEncoure = reqAnneeScolaire.recupererDerniereAnneeScolaire().get(0);
-		//System.out.println("Année:"+anneEncoure.getLibAnneeScolaire());
 		return anneEncoure;
 	}
 	
@@ -66,9 +65,7 @@ public class FraisLogementBean {
 		typeLogementNonNation.setTypeLogement(choosedTypeLogement);
 		//Faire l'enregistrement
 		service.addObject(typeLogementNation);
-		//System.out.println("Enregistrement 1");
 		service.addObject(typeLogementNonNation);
-		//System.out.println("Enregistrement 2");
 	}
 	
 	/**************************ACCESSEURS*************************/
@@ -140,6 +137,13 @@ public class FraisLogementBean {
 		this.choosedTypeLogement = choosedTypeLogement;
 	}
 
-	
+	public List getListTypeLogementNationalite() {
+		return listTypeLogementNationalite;
+	}
+
+	public void setListTypeLogementNationalite(List listTypeLogementNationalite) {
+		this.listTypeLogementNationalite = listTypeLogementNationalite;
+	}
+
 
 }
