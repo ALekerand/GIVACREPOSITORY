@@ -139,6 +139,7 @@ public class EtablisScolariteBean {
 		etablScolarite.setFraisRestaurationSco(new BigDecimal(fraisAnnexe.getFraisRestauration()));
 		etablScolarite.setFraisOrdinateurSco(new BigDecimal(fraisAnnexe.getFraisOrdinateur()));
 		etablScolarite.setAutreFraisSco(new BigDecimal(fraisAnnexe.getAutreFrais()));
+		chargerMontantLogement();
 		
 		System.out.println("==========Frais insciption: "+etablScolarite.getFraisInscriptionSco());	//Clean after	
 		System.out.println("==========Assurance: "+etablScolarite.getFraisAssuranceSco());	//Clean after
@@ -177,11 +178,11 @@ public class EtablisScolariteBean {
 			etablScolarite.setDateEtablissementSco(new Date());
 			
 			//Totaliser les frais et actualiser le montant du premier versement
-				
-			etablScolarite.setMtEchance1Sco(etablScolarite.getMtEchance1Sco().add(totalfrais)) ;
 			
-		
-		
+			etablScolarite.setMtEchance1Sco(etablScolarite.getMtEchance1Sco().add(totalfrais)) ;
+			//chargerMontantLogement();
+			
+	
 		}else {
 			
 			desactiverEcolage();
@@ -199,12 +200,22 @@ public class EtablisScolariteBean {
 			etablScolarite.setDateEtablissementSco(new Date());
 		}
 		
-		//Recuperer les frais logement
-		TypeLogementNationalite typeLogementNationalite = reqTypelogemTypeNation.recupTypelogeTypenation(inscriptions.getTypeLogement().getCodetypeLogement(), etudiants.getTypenationalite().getCodeTypenationalite(), anneEncoure.getCodeAnnees());
+	
 		
-		//Pour le logemment
-		etablScolarite.setMontantLogementSco(typeLogementNationalite.getMontantTypeLogement());
-		etablScolarite.setCautionLogementSco(typeLogementNationalite.getCautionTypeLogement());
+		chargerMontantLogement();
+	}
+	
+	
+	
+	public void chargerMontantLogement() {
+		//Recuperer les frais logement
+				TypeLogementNationalite typeLogementNationalite = reqTypelogemTypeNation.recupTypelogeTypenation(inscriptions.getTypeLogement().getCodetypeLogement(), etudiants.getTypenationalite().getCodeTypenationalite(), anneEncoure.getCodeAnnees());
+				
+				//Pour le logemment
+				System.out.println("=========== Montant du logement"+typeLogementNationalite.getMontantTypeLogement());
+				etablScolarite.setMontantLogementSco(typeLogementNationalite.getMontantTypeLogement());
+				etablScolarite.setCautionLogementSco(typeLogementNationalite.getCautionTypeLogement());
+		
 	}
 	
 	

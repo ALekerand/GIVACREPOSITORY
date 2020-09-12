@@ -17,6 +17,12 @@
 	
 	05/06/2020: gérer le taux de réduction dans etablissement scolarité afin de prende en compte les virgules
 		- Mettre un etat soldé dans l'inscription pour faciliter les requettes sur les versement (OK Mis dans le MCD)
+		
+	12/09/2020
+		Mettre un tableau recap des montant logement
+		vider les champs apres enregistrement et remettre le wizard au depart
+		
+		revoir les dates echéances dans écolage(celle desnon nationaux ne s'enregistre pas)
 	
 	
 

@@ -82,7 +82,7 @@ public class RequeteInscription {
 	}
 	
 	public List<Inscriptions> recupListeEtabScolarite(int codeAnneeScolaire){
-		String query = "SELECT `inscriptions`.* FROM `inscriptions` WHERE ((`inscriptions`.`ETAT_ETAB_SCOLARITE` = '0') AND (`inscriptions`.`ETAT_COMPLEMNT` = '1') AND (`inscriptions`.`CODE_ANNEES` = '"+codeAnneeScolaire+"'))";
+		String query = "SELECT `inscriptions`.* FROM `inscriptions` WHERE ((`inscriptions`.`ETAT_ETAB_SCOLARITE` = '0') AND (`inscriptions`.`ETAT_COMPLEMNT` = '1') AND (`inscriptions`.`CODE_ANNEES` = '"+codeAnneeScolaire+"') AND ETAT_PAYEMENT_SCOLARITE ='0')";
 		List list = getSessionFactory().getCurrentSession().createSQLQuery(query).addEntity(Inscriptions.class).list();		
 		return list;
 		}

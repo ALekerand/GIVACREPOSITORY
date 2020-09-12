@@ -178,36 +178,36 @@
 			<p:outputLabel/>
 			
 			<p:outputLabel value="1er versement:" />
-			<p:inputText value="#{etablisScolariteBean.etablScolarite.mtEchance1Sco}">
+			<p:inputText value="#{etablisScolariteBean.etablScolarite.mtEchance1Sco}" readonly="true">
 			<f:convertNumber pattern="##,###.###"></f:convertNumber>
 			</p:inputText>
 			<p:outputLabel value="Date:" />
 			<p:calendar value="#{etablisScolariteBean.etablScolarite.dateEchance1Sco}"
-			locale="fr" navigator="true" pattern="dd/MM/yyyy"/>
+			locale="fr" navigator="true" pattern="dd/MM/yyyy" readonly="true"/>
 			
 			<p:outputLabel value="2e versement:" />
-			<p:inputText value="#{etablisScolariteBean.etablScolarite.mtEchance2Eco}">
+			<p:inputText value="#{etablisScolariteBean.etablScolarite.mtEchance2Eco}" readonly="true">
 			<f:convertNumber pattern="##,###.###"></f:convertNumber>
 			</p:inputText>
 			<p:outputLabel value="Date:" />
 			<p:calendar value="#{etablisScolariteBean.etablScolarite.dateEchance2Eco}"
-			locale="fr" navigator="true" pattern="dd/MM/yyyy" />
+			locale="fr" navigator="true" pattern="dd/MM/yyyy" readonly="true"/>
 			
 			<p:outputLabel value="3e versement:" />
-			<p:inputText value="#{etablisScolariteBean.etablScolarite.mtEchance3Sco}">
+			<p:inputText value="#{etablisScolariteBean.etablScolarite.mtEchance3Sco}" readonly="true">
 			<f:convertNumber pattern="##,###.###"></f:convertNumber>
 			</p:inputText>
 			<p:outputLabel value="Date:" />
 			<p:calendar value="#{etablisScolariteBean.etablScolarite.dateEchance3Sco}"
-			locale="fr" navigator="true" pattern="dd/MM/yyyy"/>
+			locale="fr" navigator="true" pattern="dd/MM/yyyy" readonly="true"/>
 			
 			<p:outputLabel value="4e versement:" />
-			<p:inputText value="#{etablisScolariteBean.etablScolarite.mtEchance4Eco}">
+			<p:inputText value="#{etablisScolariteBean.etablScolarite.mtEchance4Eco}" readonly="true">
 			<f:convertNumber pattern="##,###.###"></f:convertNumber>
 			</p:inputText>
 			<p:outputLabel value="Date:" />
 			<p:calendar value="#{etablisScolariteBean.etablScolarite.dateEchance4Eco}"
-			locale="fr" navigator="true" pattern="dd/MM/yyyy"/> 
+			locale="fr" navigator="true" pattern="dd/MM/yyyy" readonly="true"/> 
 			
 				</h:panelGrid>
 			<p:toolbar >
